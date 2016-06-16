@@ -1,0 +1,41 @@
+<?xml version="1.0" standalone="yes"?>
+<DocumentElement>
+  <datos>
+    <Tarea>1</Tarea>
+    <Tiempo>11</Tiempo>
+  </datos>
+  <datos>
+    <Tarea>2</Tarea>
+    <Tiempo>17</Tiempo>
+    <Precedencia>1</Precedencia>
+  </datos>
+  <datos>
+    <Tarea>3</Tarea>
+    <Tiempo>9</Tiempo>
+    <Precedencia>2</Precedencia>
+  </datos>
+  <datos>
+    <Tarea>4</Tarea>
+    <Tiempo>5</Tiempo>
+    <Precedencia>2</Precedencia>
+  </datos>
+  <datos>
+    <Tarea>5</Tarea>
+    <Tiempo>8</Tiempo>
+    <Precedencia>3</Precedencia>
+  </datos>
+  <datos>
+    <Tarea>6</Tarea>
+    <Tiempo>12</Tiempo>
+    <Precedencia>3,4</Precedencia>
+  </datos>
+  <datos>
+    <Tarea>7</Tarea>
+    <Tiempo>10</Tiempo>
+    <Precedencia>5</Precedencia>
+  </datos>
+  <datos>
+    <Tarea>8</Tarea>
+    <Tiempo>3</Tiempo>
+  </datos>
+</DocumentElement>
