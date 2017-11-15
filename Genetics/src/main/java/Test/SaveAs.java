@@ -20,13 +20,7 @@ public class SaveAs extends JDialog {
 	public final JDialog contentPanel = new JDialog();
 	private JTextField textField;
 	private String name;
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the dialog.
-	 */
 	public SaveAs() {
 		setBounds(100, 100, 150, 130);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -35,7 +29,6 @@ public class SaveAs extends JDialog {
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.getContentPane().setLayout(gbl_contentPanel);
-		//getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JLabel lblCycleTime = new JLabel("Save As:");
 			GridBagConstraints gbc_label = new GridBagConstraints();
@@ -59,9 +52,8 @@ public class SaveAs extends JDialog {
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
-				okButton.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent ae)
-					{
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ae) {
 						setName(textField.getText());
 						setVisible(false);
 					}

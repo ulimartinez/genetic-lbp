@@ -82,23 +82,6 @@ public class Solution extends AbstractCellEditor
 		editButton.setBorder( focusBorder );
 	}
 
-	public int getMnemonic()
-	{
-		return mnemonic;
-	}
-
-	/**
-	 *  The mnemonic to activate the button when the cell has focus
-	 *
-	 *  @param mnemonic the mnemonic
-	 */
-	public void setMnemonic(int mnemonic)
-	{
-		this.mnemonic = mnemonic;
-		renderButton.setMnemonic(mnemonic);
-		editButton.setMnemonic(mnemonic);
-	}
-
 	@Override
 	public Component getTableCellEditorComponent(
 		JTable table, Object value, boolean isSelected, int row, int column)
@@ -129,9 +112,6 @@ public class Solution extends AbstractCellEditor
 		return editorValue;
 	}
 
-//
-//  Implement TableCellRenderer interface
-//
 	public Component getTableCellRendererComponent(
 		JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column)
 	{
@@ -155,7 +135,6 @@ public class Solution extends AbstractCellEditor
 			renderButton.setBorder( originalBorder );
 		}
 
-//		renderButton.setText( (value == null) ? "" : value.toString() );
 		if (value == null)
 		{
 			renderButton.setText( "" );

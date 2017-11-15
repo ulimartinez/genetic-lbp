@@ -15,18 +15,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
-public class children extends JDialog {
+class children extends JDialog {
 
-	public final JDialog contentPanel = new JDialog();
 	private JTextField textField;
 	private double percentage;
-	/**
-	 * Launch the application.
-	 */
 
-	/**
-	 * Create the dialog.
-	 */
 	public children() {
 		setBounds(100, 100, 150, 130);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -34,8 +27,8 @@ public class children extends JDialog {
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
 		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		JDialog contentPanel = new JDialog();
 		contentPanel.getContentPane().setLayout(gbl_contentPanel);
-		//getContentPane().add(contentPanel, BorderLayout.CENTER);
 		{
 			JLabel lblCycleTime = new JLabel("Children %");
 			GridBagConstraints gbc_label = new GridBagConstraints();

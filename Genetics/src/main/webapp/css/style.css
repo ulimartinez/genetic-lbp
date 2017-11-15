@@ -1,0 +1,32 @@
+.minHeight {
+    min-height: 900px;
+}
+
+#demoProgress, #dbowlizerProgress {
+    display: none;
+    z-index: 1;
+}
+
+.input-field input:focus + label {
+    color: cornflowerblue !important;
+}
+
+/* label underline focus color */
+.row .input-field input:focus {
+    border-bottom: 1px solid cornflowerblue !important;
+    box-shadow: 0 1px 0 0 cornflowerblue !important
+}
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:after {
+    background-color: cornflowerblue;
+    border: 2px solid cornflowerblue;
+
+}
+
+[type="radio"]:checked+label:after, [type="radio"].with-gap:checked+label:before, [type="radio"].with-gap:checked+label:after {
+    border: 2px solid cornflowerblue;
+}
+
+ul.dropdown-content.select-dropdown li span {
+    color: lightslategrey; /* no need for !important :) */
+}

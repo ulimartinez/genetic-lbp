@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+ <title>DBOWLizer Endpoint Service</title>
+ 
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+ <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+ <meta name="viewport" content="width=device-width, initial-scale=1"/>
+ <meta name="description" content=""/>
+ <meta name="author" content=""/>
+ 
+ <link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
+ <link th:href="@{/assets/noty-3.1.0/noty.css}" rel="stylesheet"/>
+ <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+ <link type="text/css" rel="stylesheet" th:href="@{/assets/materialize/css/materialize.min.css}"
+       media="screen,projection"/>
+ <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" media="screen,projection"/>
+ 
+ 
+ <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+ <!--[if lt IE 9]>
+ <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+ <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+ <![endif]-->
+
+</head>
+<body>
+<nav>
+ <div class="nav-wrapper orange">
+  <img th:src="@{/img/logo.png}" class="responsive-img" style="margin-top:10px"/>
+  <a th:href="@{/dbowlizer}" class="brand-logo center">DBOWLizer Endpoint</a>
+  <ul id="nav-mobile" class="right hide-on-med-and-down">
+   <li><a href="http://dbowlizer.cybershare.utep.edu/">home</a></li>
+   <li><a th:href="@{/dbowlizer}">Run Process</a></li>
+   <li><a th:href="@{/dbowlizer/listOntologies}">Outputs</a></li>
+  </ul>
+ </div>
+</nav>
+<br/>
+
+<div class="container minHeight">
+ <h5 class="center" style="margin-bottom: 25px;">Try the DBOWLizer demo</h5>
+ 
+ <p class="center">
+  To run the DBOWLizer demo click "add default paramaters" and run with those parameters.
+  This demo maps the Employees database into an OWL2 Ontology. Learn more about this demo database
+  and its corresponding output <a href="http://dbowlizer.cybershare.utep.edu/#blog">here</a>.
+ </p>
+ <br/>
+ 
+ <div class="row">
+  <form class="form-horizontal" id="serviceForm" th:object="${DbSettings}" onsubmit="runDbOwlizer(base_url); return false;">
+   <div class="col s12">
+    <h5 class="center">Run DBOWLizer with your own parameters</h5>
+    <p>
+     This process will take a few minutes to complete and the outputs will be saved to the following directory:
+     ~/Downloads/DbowlizerOutputs/.
+    </p>
+   </div>
+   <div class="progress" id="dbowlizerProgress">
+    <div class="indeterminate"></div>
+   </div>
+   <div class="row">
+    <div class="col s12">
+     <div class="row">
+      <div class="input-field col s6">
+       <input type="text" name="Host" id="Input_host"/>
+       <label for="Input_host" id="Lbl_host">Host</label>
+      </div>
+      <div class="input-field col s6">
+       <input type="text" name="Port" id="Input_port"/>
+       <label for="Input_port" id="Lbl_port">Port</label>
+      </div>
+     </div>
+     
+     <div class="row">
+      <div class="input-field col s6">
+       <input type="text" name="Input_userName" id="Input_userName"/>
+       <label for="Input_userName" id="Lbl_userName">Username</label>
+      </div>
+      <div class="input-field col s6">
+       <input type="password" name="Input_password" id="Input_password"/>
+       <label for="Input_password" id="Lbl_password">Password</label>
+      </div>
+     </div>
+     <div class="row">
+      <div class="input-field col s6 grey-text">
+       <select id="Input_driver">
+        <option value="" th:disabled="disabled" th:selected="selected">Choose Database Engine
+        </option>
+        <option value="mysql">MySql</option>
+        <option value="postgress">Postgress</option>
+       </select>
+       <label for="Input_driver"></label>
+      </div>
+      <div class="input-field col s6">
+       <input type="text" name="Input_dbName" id="Input_dbName"/>
+       <label for="Input_dbName" id="Lbl_dbName">Database Name</label>
+      </div>
+     </div>
+     <div class="row hide" id="schemaRow">
+      <div class="input-field col s6">
+       <input type="text" name="Input_schema" id="Input_schema"/>
+       <label for="Input_schema">Schema</label>
+      </div>
+     </div>
+     <!--<div class="row">-->
+     <!--<div class="input-field col s4 offset-s4" >-->
+     <!--<p>-->
+     <!--Save outputs to:-->
+     <!--</p>-->
+     <!--<p>-->
+     <!--<input name="group1" type="radio" id="desktop" checked="checked"/>-->
+     <!--<label for="desktop" class="black-text">Desktop</label>-->
+     <!--</p>-->
+     <!--<p>-->
+     <!--<input name="group1" type="radio" id="server" />-->
+     <!--<label for="server" class="black-text">Server</label>-->
+     <!--</p>-->
+     <!--</div>-->
+     <!---->
+     <!--</div>-->
+     <br/>
+    </div>
+    <div class="row">
+     <div class="col s12 center-align">
+      <button class="btn btn-primary blue-grey lighten-1" type="button" name="action" id="Btn_defaultValues"
+              onclick="fillWithDefaultValues(); return false;">Add default parameters
+      </button>
+      <button class="btn btn-primary blue darken-2" type="submit" name="action">Run DBOWLizer</button>
+     </div>
+    
+    </div>
+   </div>
+  </form>
+ 
+ </div>
+</div>
+
+<footer class="page-footer blue-grey darken-1" id="footer">
+ <div class="container">
+  <div class="row">
+   <div class="col s4">
+    <h5 class="grey-text text-lighten-3">Contact Us</h5>
+    <ul class="grey-text text-lighten-2">
+     <li><i class="small material-icons">perm_identity</i> Natalia Villanueva Rosales</li>
+     <li><i class="small material-icons">work</i> University of Texas at El Paso</li>
+     <li><i class="small material-icons">location_on</i> 3.0508 Chemistry and Computer Science Building</li>
+     <li><i class="small material-icons">phone</i> +1-915-747-8643</li>
+     <li><i class="small material-icons">email</i> nvillanuevarosales@utep.edu</li>
+    </ul>
+   </div>
+   <div class="col s4">
+    <h5 class="grey-text text-lighten-3">Useful Links</h5>
+    <ul class="grey-text text-lighten-2">
+     <li>
+      <a href="http://dbowlizer.cybershare.utep.edu/#" class="grey-text text-lighten-2">
+       <i class="small material-icons">done</i>Terms of Use
+      </a>
+     </li>
+    </ul>
+   </div>
+   <div class="col s4">
+    <h5 class="grey-text text-lighten-3">Acknowledgements</h5>
+    <p class="grey-text text-lighten-2">
+     This work used resources from Cyber-ShARE Center of Excellence supported by NSF grant HRD-1242122
+    </p>
+    <div class="row">
+     <div class="col s4">
+      <img th:src="@{/img/nsf-logo.png}" class="responsive-img"/>
+     </div>
+     <div class="col s4">
+      <img th:src="@{/img/ilink-logo.png}" class="responsive-img"/>
+     </div>
+     <div class="col s4">
+      <img th:src="@{/img/cybershare-logo.png}" class="responsive-img"/>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
+ <div class="footer-copyright blue-grey darken-2">
+  <div class="container" style="font-size: 12px;">
+   Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s)
+   and do not necessarily reflect the views of the National Science Foundation.
+  </div>
+ </div>
+</footer>
+
+<div id="progressModal" class="modal">
+ <div class="modal-content">
+  <h5>
+   DBOWLizer Process Started
+  </h5>
+  <p>Processing your request, this may take several minutes</p>
+  <div class="progress " id="progressBar">
+   <div class="indeterminate"></div>
+  </div>
+ </div>
+</div>
+
+<script type="text/javascript" th:src="@{/assets/jquery/jquery-2.2.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/noty-3.1.0/noty.js}"></script>
+<script type="text/javascript" th:src="@{/assets/materialize/js/materialize.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/clipboard/clipboard.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script th:inline="javascript">
+    var base_url = /*[[@{/}]]*/ 'null';
+</script>
+</body>
+</html>
