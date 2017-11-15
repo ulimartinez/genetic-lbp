@@ -4,13 +4,10 @@ import java.awt.EventQueue;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
-import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.BoxLayout;
 import javax.swing.JPanel;
-import javax.swing.JSplitPane;
 
 import java.awt.GridLayout;
 import java.awt.BorderLayout;
@@ -18,44 +15,30 @@ import java.awt.BorderLayout;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 
-import java.awt.Choice;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.event.WindowAdapter;
 
-import javax.swing.JTextField;
 import javax.swing.JLabel;
 
-import com.sun.glass.events.WindowEvent;
-
 import java.awt.GridBagLayout;
-import java.awt.GridBagConstraints;
 
 import javax.swing.JTable;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
-import java.awt.Insets;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.JMenu;
-import javax.swing.JScrollBar;
-
-import java.awt.Scrollbar;
-import java.awt.ScrollPane;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -106,7 +89,7 @@ public class test {
 		}
 		minWS = (sumTasks / cycle) + 1;
 	}
-	boolean contains(final int[] array, final int v) 
+	boolean contains(final int[] array, final int v)
 	//checks if a number is contained in an array of numbers
 	{
 		for (final int e : array)
@@ -181,14 +164,14 @@ public class test {
 		}
 		for (int i = 0; i < remaining; i++)
 		{
-			code problem = new code(tasks);
+			Code problem = new Code(tasks);
 			problem.setTasks(precedences,  times);
 			int[] initialPop = problem.initialPopulation();
 			problem.setChromosomes(initialPop);
 			Chromosome chromo = problem.getChromosome();
 			chromo.cycleTime = cycle;
 			chromo.solution();
-			newGeneration[i + (preserve.length + reproduction.length + mutated.length)] = chromo; 
+			newGeneration[i + (preserve.length + reproduction.length + mutated.length)] = chromo;
 		}
 		return newGeneration;
 	}
@@ -330,16 +313,16 @@ public class test {
 		JMenuItem mntmGenerations = new JMenuItem("Generations");
 		mntmGenerations.setEnabled(false);
 		menuBar.add(mntmGenerations);
-		
+
 		JMenuItem mntmNextGeneration = new JMenuItem("Next Generation");
 		mntmNextGeneration.setEnabled(false);
 		menuBar.add(mntmNextGeneration);
 		frame.getContentPane().setLayout(null);
-		
+
 				JPanel panel_2 = new JPanel();
 				panel_2.setBounds(0, 202, 319, 198);
 				frame.getContentPane().add(panel_2);
-				
+
 						table_2 = new JTable();
 						table_2.setModel(new DefaultTableModel(
 							new Object[][] {
@@ -350,7 +333,7 @@ public class test {
 						));
 						table_2.setVisible(false);
 						panel_2.setLayout(new GridLayout(0, 1, 0, 0));
-						
+
 						JScrollPane scroll3 = new JScrollPane(table_2);
 						scroll3.setViewportBorder(null);
 						scroll3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -387,7 +370,7 @@ public class test {
 		table.getColumnModel().getColumn(1).setPreferredWidth(47);
 		table.getColumnModel().getColumn(2).setPreferredWidth(97);
 		table.setVisible(false);
-		
+
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setViewportBorder(null);
 		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
@@ -397,11 +380,11 @@ public class test {
 		panel_1.setBounds(317, 0, 372, 400);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
-		
+
 		JPanel panel_5 = new JPanel();
 		panel_5.setBounds(0, 0, 380, 368);
 		panel_1.add(panel_5);
-		
+
 				table_1 = new JTable();
 				table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 				table_1.setToolTipText("");
@@ -427,13 +410,13 @@ public class test {
 				table_1.getColumnModel().getColumn(3).setPreferredWidth(38);
 				table_1.setVisible(false);
 				panel_5.setLayout(new GridLayout(0, 1, 0, 0));
-				
-				
+
+
 				JScrollPane scroll2 = new JScrollPane(table_1);
 				scroll2.setViewportBorder(null);
 				scroll2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 				panel_5.add(scroll2);
-				
+
 				JLabel lblMinimumWorkstations = new JLabel("Minimum Workstations:");
 				lblMinimumWorkstations.setBounds(32, 375, 209, 25);
 				lblMinimumWorkstations.setVisible(false);
@@ -612,7 +595,7 @@ public class test {
 						int[] initialPop = null;
 						if (l < 1)
 						{
-							code problem = new code(tasks);
+							Code problem = new Code(tasks);
 							problem.setTasks(precedences,  times);
 							initialPop = problem.initialPopulation();
 							problem.setChromosomes(initialPop);
@@ -768,7 +751,7 @@ public class test {
 				}
 			}
 		});
-		
+
 		mntmNextGeneration.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae)
 			{
