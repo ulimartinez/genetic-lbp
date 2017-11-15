@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://ontology.cybershare.utep.edu/resource/dbowl/relational-to-ontology-mapping-base.owl#"
+     xml:base="http://ontology.cybershare.utep.edu/resource/dbowl/relational-to-ontology-mapping-base.owl"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:dbowl="http://ontology.cybershare.utep.edu/resource/dbowl/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:prov="http://www.w3.org/ns/prov#">
+    <owl:Ontology rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/relational-to-ontology-mapping-base.owl"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/ns/prov#wasAssociatedWith -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/prov#wasAssociatedWith"/>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#wasDerivedFrom -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/prov#wasDerivedFrom"/>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#wasGeneratedBy -->
+
+    <owl:ObjectProperty rdf:about="http://www.w3.org/ns/prov#wasGeneratedBy"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.w3.org/ns/prov#endedAtTime -->
+
+    <owl:DatatypeProperty rdf:about="http://www.w3.org/ns/prov#endedAtTime"/>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#startedAtTime -->
+
+    <owl:DatatypeProperty rdf:about="http://www.w3.org/ns/prov#startedAtTime"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerActivity -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerActivity">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Activity"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An activity (as defined in the PROV-O) ontology that is executed using a component of the DBOWLizer framework.</rdfs:comment>
+        <rdfs:label xml:lang="en">dbowlizer activity</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerAgent -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerAgent">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#SoftwareAgent"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A software agent (as defined in the PROV-O ontology) that is part of the DBOWLizer framework and  allows the automated extraction of an ontology from a relational database.</rdfs:comment>
+        <rdfs:label xml:lang="en">dbowlizer software agent</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerExtractedClass -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerExtractedClass">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/ns/prov#Entity"/>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.w3.org/ns/prov#wasGeneratedBy"/>
+                <owl:someValuesFrom rdf:resource="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerActivity"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">An OWL class that is generated using the DBOWLizer framework.</rdfs:comment>
+        <rdfs:label xml:lang="en">dowlizer extracted class</rdfs:label>
+    </owl:Class>
+    
+
+    <!-- http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerNaryRelationship -->
+
+    <owl:Class rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerNaryRelationship">
+        <rdfs:label xml:lang="en">dbowlizer n-ary relationship</rdfs:label>
+        <rdfs:subClassOf rdf:resource="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerExtractedClass"/>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">A DBOWLizer relationship is a conceptual entity (as defined in PROV-O) that describes an n-ary relationship, n&gt;2 entities given that OWL only allows the representation of binary relationships.  </rdfs:comment>
+    </owl:Class>
+
+    <!-- http://www.w3.org/ns/prov#Activity -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/prov#Activity"/>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#Entity -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/prov#Entity"/>
+    
+
+
+    <!-- http://www.w3.org/ns/prov#SoftwareAgent -->
+
+    <owl:Class rdf:about="http://www.w3.org/ns/prov#SoftwareAgent"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/resource/dbowl/dbowlizer -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/dbowlizer">
+        <rdf:type rdf:resource="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerAgent"/>
+        <rdfs:label>DBOWLizer agent describes the current implementation of the DBOWLizer tool and provides a URL where it can be accessed.</rdfs:label>
+        <rdfs:label>dbowlizer agent</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/resource/dbowl/dbowlizer-mapped-by-dbowlizer-primitive.owl#extract_ontology_from_databasename -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/dbowlizer-mapped-by-dbowlizer-primitive.owl#extract_ontology_from_databasename">
+        <rdf:type rdf:resource="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerActivity"/>
+        <prov:wasAssociatedWith rdf:resource="http://ontology.cybershare.utep.edu/resource/dbowl/dbowlizer"/>
+        <prov:endedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-04-29T02:32:52</prov:endedAtTime>
+        <prov:startedAtTime rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-04-29T02:33:02</prov:startedAtTime>
+        <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Individual representing the activity of extracting an ontology from a database using the DBOWLizer framework.</rdfs:comment>
+        <rdfs:label xml:lang="en">extract_ontology_from_databasename</rdfs:label>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://ontology.cybershare.utep.edu/resource/dbowl/dbowlizer-mapped-by-dbowlizer-primitive.owl#parse_database_schema -->
+
+    <owl:NamedIndividual rdf:about="http://ontology.cybershare.utep.edu/resource/dbowl/dbowlizer-mapped-by-dbowlizer-primitive.owl#parse_database_schema">
+        <rdf:type rdf:resource="http://ontology.cybershare.utep.edu/resource/dbowl/DBOWLizerActivity"/>
+        <rdfs:label xml:lang="en">parse_database_schema</rdfs:label>
+    </owl:NamedIndividual>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.2.1.20160306-0033) https://github.com/owlcs/owlapi -->
+

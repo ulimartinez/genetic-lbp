@@ -1,0 +1,167 @@
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>DBOWLizer Endpoint Service</title>
+	
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1"/>
+	<meta name="description" content=""/>
+	<meta name="author" content=""/>
+	
+	<link rel="shortcut icon" th:href="@{/img/favicon.ico}" type="image/x-icon"/>
+	<link th:href="@{/assets/noty-3.1.0/noty.css}" rel="stylesheet"/>
+	<link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	<link type="text/css" rel="stylesheet" th:href="@{/assets/materialize/css/materialize.min.css}"
+	      media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" th:href="@{/assets/materialDatatable/materialDatatable.css}"
+	      media="screen,projection"/>
+	<link type="text/css" rel="stylesheet" th:href="@{/css/style.css}" media="screen,projection"/>
+	
+	<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+	<!--[if lt IE 9]>
+	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+	<![endif]-->
+
+</head>
+<body>
+<nav>
+	<div class="nav-wrapper orange">
+		<img th:src="@{/img/logo.png}" class="responsive-img" style="margin-top:10px"/>
+		<a th:href="@{/dbowlizer}" class="brand-logo center">DBOWLizer Endpoint</a>
+		<ul id="nav-mobile" class="right hide-on-med-and-down">
+			<li><a href="http://dbowlizer.cybershare.utep.edu/">Home</a></li>
+			<li><a th:href="@{/dbowlizer/}">Run Process</a></li>
+			<li><a th:href="@{/dbowlizer/listOntologies}">Outputs</a></li>
+		</ul>
+	</div>
+</nav>
+<br/>
+
+<div class="container minHeight">
+	<div class="row">
+		<div class="col s12">
+			<div class="card material-table">
+				<div class="table-header">
+					<span class="table-title">DBOWLizer Outputs Listing</span>
+					<div class="actions">
+						<a href="#" class="search-toggle waves-effect btn-flat nopadding"><i class="material-icons">search</i></a>
+					</div>
+				</div>
+				<table id="datatable">
+					<thead>
+					<tr>
+						<th>Database Name</th>
+						<th>Extracted Ontology</th>
+						<th>Mappings Ontology</th>
+						<th>R2RML Mappings</th>
+						<th>Creation Date</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr th:each="ontology : ${ontologies}">
+						<td th:text="${ontology.databaseName}"></td>
+						<td>
+							<a class="btn btn-flat waves-effect waves-light tooltipped" data-position="top" data-delay="50"
+							   data-tooltip="Copy ontology path to clipboard"
+							   th:attr="data-clipboard-text=${ontology.extractedOntology}">
+								<i class="small material-icons">content_copy</i>
+							</a>
+						</td>
+						<td>
+							<a class="btn btn-flat waves-effect waves-light tooltipped" data-position="top" data-delay="50"
+							   data-tooltip="Copy ontology path to clipboard"
+							   th:attr="data-clipboard-text=${ontology.mappingsOntology}">
+								<i class="small material-icons">content_copy</i>
+							</a>
+						</td>
+						<td>
+							<a class="btn btn-flat waves-effect waves-light tooltipped" data-position="top" data-delay="50"
+							   data-tooltip="Copy directory path to clipboard"
+							   th:attr="data-clipboard-text=${ontology.mappingsDirectory}">
+								<i class="small material-icons">folder</i>
+							</a>
+						</td>
+						<td th:text="${ontology.creationDateString}"></td>
+					</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<footer class="page-footer blue-grey darken-1" id="footer">
+	<div class="container">
+		<div class="row">
+			<div class="col s4">
+				<h5 class="grey-text text-lighten-3">Contact Us</h5>
+				<ul class="grey-text text-lighten-2">
+					<li><i class="small material-icons">perm_identity</i> Natalia Villanueva Rosales</li>
+					<li><i class="small material-icons">work</i> University of Texas at El Paso</li>
+					<li><i class="small material-icons">location_on</i> 3.0508 Chemistry and Computer Science Building</li>
+					<li><i class="small material-icons">phone</i> +1-915-747-8643</li>
+					<li><i class="small material-icons">email</i> nvillanuevarosales@utep.edu</li>
+				</ul>
+			</div>
+			<div class="col s4">
+				<h5 class="grey-text text-lighten-3">Useful Links</h5>
+				<ul class="grey-text text-lighten-2">
+					<li>
+						<a href="http://dbowlizer.cybershare.utep.edu/#" class="grey-text text-lighten-2">
+							<i class="small material-icons">done</i>Terms of Use
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div class="col s4">
+				<h5 class="grey-text text-lighten-3">Acknowledgements</h5>
+				<p class="grey-text text-lighten-2">
+					This work used resources from Cyber-ShARE Center of Excellence supported by NSF grant HRD-1242122
+				</p>
+				<div class="row">
+					<div class="col s4">
+						<img th:src="@{/img/nsf-logo.png}" class="responsive-img"/>
+					</div>
+					<div class="col s4">
+						<img th:src="@{/img/ilink-logo.png}" class="responsive-img"/>
+					</div>
+					<div class="col s4">
+						<img th:src="@{/img/cybershare-logo.png}" class="responsive-img"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer-copyright blue-grey darken-2">
+		<div class="container" style="font-size: 12px;">
+			Any opinions, findings, and conclusions or recommendations expressed in this material are those of the author(s)
+			and do not necessarily reflect the views of the National Science Foundation.
+		</div>
+	</div>
+</footer>
+
+<div id="progressModal" class="modal">
+	<div class="modal-content">
+		<h5>
+			DBOWLizer Process Started
+		</h5>
+		<p>Processing your request, this may take several minutes</p>
+		<div class="progress " id="progressBar">
+			<div class="indeterminate"></div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript" th:src="@{/assets/jquery/jquery-2.2.4.min.js}"></script>
+<script type="text/javascript" th:src="@{/assets/noty-3.1.0/noty.js}"></script>
+<script type="text/javascript" th:src="@{/assets/materialize/js/materialize.min.js}"></script>
+<script type="text/javascript" th:src="@{/js/main.js}"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+<script type="text/javascript" th:src="@{/assets/materialDatatable/materialDatatable.js}"></script>
+<script type="text/javascript" th:src="@{/assets/clipboard/clipboard.min.js}"></script>
+
+</body>
+</html>
+
