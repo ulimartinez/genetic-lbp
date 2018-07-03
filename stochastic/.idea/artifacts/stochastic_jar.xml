@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="stochastic:jar">
+    <output-path>$PROJECT_DIR$/bin/artifacts/stochastic_jar</output-path>
+    <root id="archive" name="stochastic.jar">
+      <element id="module-output" name="stochastic" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/apache/commons/commons-math/2.0/commons-math-2.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

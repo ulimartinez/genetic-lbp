@@ -8,11 +8,50 @@
     <artifactId>stochastic</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+
+
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math -->
         <dependency>
             <groupId>org.apache.commons</groupId>
-            <artifactId>commons-math3</artifactId>
+            <artifactId>commons-math</artifactId>
+            <version>2.0</version>
         </dependency>
     </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-assembly-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>single</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>Test.Main</mainClass>
+                        </manifest>
+                    </archive>
+                    <descriptorRefs>
+                        <descriptorRef>jar-with-dependencies</descriptorRef>
+                    </descriptorRefs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <compilerVersion>1.6</compilerVersion>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
 </project>

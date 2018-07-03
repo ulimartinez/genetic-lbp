@@ -27,7 +27,7 @@ public class LBPParameters {
 
     /* getters */
     public double getProbability() {
-        return probability;
+        return probability/100;
     }
 
     public int getCycleTime(){

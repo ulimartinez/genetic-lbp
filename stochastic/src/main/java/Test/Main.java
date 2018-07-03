@@ -662,7 +662,7 @@ public class Main {
 			}
 		});
 
-		JFileChooser save = new JFileChooser();
+		final JFileChooser save = new JFileChooser();
 
 		mntmInitialPopulation.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent ae) {
@@ -746,7 +746,6 @@ public class Main {
 		askTasks.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				System.out.println("working");
 				tasks = askTasks.getTasks();
 				DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 				dtm.removeRow(0);
@@ -779,8 +778,8 @@ public class Main {
 				precedences = new int[tasks][];
 				stdDev = new double[tasks];
 				for (int i = 0; i < tasks; i++) {
-					times[i] = Integer.parseInt((String) (table.getValueAt(i, 1)));
-					stdDev[i] = Double.parseDouble((String)(table.getValueAt(i, 2)));
+					times[i] = Integer.parseInt("" +  (table.getValueAt(i, 1)));
+					stdDev[i] = Double.parseDouble("" + (table.getValueAt(i, 2)));
 					if (i >= 0) {
                         String precStr = (String) table.getValueAt(i, 3);
                         if(precStr != null && precStr.length() > 0){
