@@ -435,6 +435,7 @@ public class Main {
 
                     HashMap<String, Task> tasksMap = new HashMap<String, Task>();
 
+                    //read the tasks and their time
                     NodeList nodeList = doc.getElementsByTagName("node");
                     for(int i = 0; i < nodeList.getLength(); i++){
                         Node node = nodeList.item(i);
@@ -442,6 +443,7 @@ public class Main {
                             Element element = (Element) node;
                             int tasknum = 0;
                             int tasktime = 0;
+                            double taskstd = 0;
 
                             NodeList data = element.getElementsByTagName("data");
                             for(int j = 0; j < data.getLength(); j++){
@@ -451,10 +453,12 @@ public class Main {
                                     //getting the ws time
                                     if (dataElement.getAttribute("key").equals("d2")) {
                                         CharacterData cd = (CharacterData) dataNode.getFirstChild();
-                                        tasktime = Integer.parseInt(cd.getData());
+                                        String[] csvData = cd.getData().split(",");
+                                        tasktime = Integer.parseInt(csvData[0]);
+                                        taskstd = Double.parseDouble(csvData[1]);
                                     }
                                     else if (dataElement.getAttribute("key").equals("d3")) {
-                                        //getting the label
+                                        //getting the label (task number)
                                         NodeList nList = dataElement.getElementsByTagName("y:NodeLabel");
                                         Node label = nList.item(0);
                                         if(label.getNodeType() == Node.ELEMENT_NODE){
@@ -469,10 +473,39 @@ public class Main {
                             }
                             Task tmp = new Task(tasknum);
                             tmp.setTime(tasktime);
+                            tmp.setStd(taskstd);
                             tasksMap.put(element.getAttribute("id"), tmp);
                         }
                     }
-                    System.exit(0);
+                    //read the precedences
+                    NodeList edges = doc.getElementsByTagName("edge");
+                    for(int i = 0; i < edges.getLength(); i++){
+                        if(edges.item(i).getNodeType() == Node.ELEMENT_NODE){
+                            Element edgeElem = (Element) edges.item(i);
+                            String target= edgeElem.getAttribute("target");
+                            String source = edgeElem.getAttribute("source");
+                            Task preTask = tasksMap.get(target);
+                            preTask.addPrecedence(tasksMap.get(source).getTaskNum());
+                        }
+                    }
+                    //save all times, std and precedences
+                    times = new int[tasksMap.size()];
+                    stdDev = new double[tasksMap.size()];
+                    precedences = new int[tasksMap.size()][];
+                    for(int i = 0; i < times.length; i++){
+                        Task curr = null;
+                        //TODO: save a map of task numbers to id's to make this step faster
+                        for(Task j : tasksMap.values()){
+                            if(j.getTaskNum()==i+1) {
+                                curr = j;
+                                break;
+                            }
+                        }
+                        assert curr != null;
+                        times[i] = curr.getTime();
+                        precedences[i] = curr.getPrecedences();
+                        stdDev[i] = curr.getStdDev();
+                    }
                 }
 
 			} catch (FileNotFoundException e) {

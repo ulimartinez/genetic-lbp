@@ -19,8 +19,7 @@ public class Code {
 	 {//return the chromosome
 		return (taskss);
 	}
-	void setTasks(int[][] precedences, int[] times, double[] stdDev)
-	 {//having the precedence of each Task and the time, we store them in an array of tasks
+	void setTasks(int[][] precedences, int[] times, double[] stdDev) {//having the precedence of each Task and the time, we store them in an array of tasks
 		
 		for (int i = 0; i < tasks.length; i++)	 {//for each Task
 			tasks[i] = new Task(precedences[i], times[i], stdDev[i]);	//Task equals new variable that contained precedence and time
@@ -39,39 +38,7 @@ public class Code {
 		taskss.tasks = tmp;
 	}
 
-	
-	void setPrecedence ()
-	 {//manually enter precedences
-		Scanner in = new Scanner(System.in);
-		System.out.println("Whats the time of Task 1?");
-		tasks[0] = new Task(null, in.nextInt(), 0);
-		for (int task = 1; task < tasks.length; task++) {
-			float StdDev = in.nextFloat();
-			System.out.println("Whats the time of Task " + (task + 1) + "?");
-			int time = in.nextInt();
-			System.out.println("How many precedences does Task " + (task + 1)  + " have?");
-			int precedences = in.nextInt();
-			if (precedences > 0) {
-				int[] precedence = new int[precedences];
-				for (int i = 0; i < precedences; i++) {
-					System.out.println("Enter precedence of Task " + (task + 1));
-					int enter = in.nextInt();
-					if (enter == 0) {
-						task++;
-						break;
-					}
-					else if (enter <= tasks.length) {
-						precedence[i] = enter;
-					}
-					else {
-						System.out.println("Please enter a number between 1 and " + tasks.length);
-					}
-				}
-				tasks[task] = new Task(precedence, time, StdDev);
-				taskss = new Chromosome(tasks);
-			}			
-		}
-	}
+
 	int[] initialPopulation(long STime) {//having the array of tasks, we can generate an initial population respecting the precedences
 		taskss.startTime = STime;
 		int[] initial = new int[tasks.length];		//Create an integer array size of tasks
