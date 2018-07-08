@@ -31,13 +31,25 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import javax.swing.ListSelectionModel;
 import javax.swing.JMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.math.MathException;
+import org.w3c.dom.CharacterData;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
 
 public class Main {
     LBPParameters params;
@@ -361,63 +373,117 @@ public class Main {
 	public void load() {
 		if (file != null) {
 			try {
-				int[] toTime = null;
-				String sCurrentLine;
-				BufferedReader br = new BufferedReader(new FileReader(file));
-				sCurrentLine = br.readLine();
-				sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-				sCurrentLine = sCurrentLine.replaceAll("\\s+","");
-				String[] textTime = sCurrentLine.split(",");
-				toTime = new int[textTime.length];
-				for (int i = 0; i < textTime.length; i++) {
-					toTime[i] = Integer.parseInt(textTime[i]);
-				}
-				
-				times = toTime;
-				for (int i = 0; i < times.length; i++) {
-					if (maxTime < times[i]) {
-						maxTime = times[i];
-					}
-				}
-				
-				double[] toStdev = null;
-				sCurrentLine = br.readLine();
-				sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-				sCurrentLine = sCurrentLine.replaceAll("\\s+","");
-				textTime = sCurrentLine.split(",");
-				toStdev = new double[textTime.length];
-				for (int i = 0; i < textTime.length; i++) {
-					toStdev[i] = Double.parseDouble(textTime[i]);
-				}
-				stdDev = toStdev;
-			
-				
-				tasks = toTime.length;
-				int[][] toPrecedences = new int[toTime.length][];
-				toPrecedences[0] = null;
-				int ind = 0;
-				while ((sCurrentLine = br.readLine()) != null) {
-					sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-					sCurrentLine = sCurrentLine.replaceAll("\\s+","");
-					String[] textPre = sCurrentLine.split(",");
-					int[] curr = new int[textPre.length];
-					for (int i = 0; i < textPre.length; i++) {
-						if (textPre[i].equals("")) {
-							curr[i] = 0;
-						}
-						else {
-							curr[i] = Integer.parseInt(textPre[i]);
-						}
-					}
-					toPrecedences[ind] = curr;
-					ind++;
-				}
-				precedences = toPrecedences;
+			    if(FilenameUtils.getExtension(file.getName()).equals("lbp")){
+                    int[] toTime = null;
+                    String sCurrentLine;
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    sCurrentLine = br.readLine();
+                    sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+                    sCurrentLine = sCurrentLine.replaceAll("\\s+","");
+                    String[] textTime = sCurrentLine.split(",");
+                    toTime = new int[textTime.length];
+                    for (int i = 0; i < textTime.length; i++) {
+                        toTime[i] = Integer.parseInt(textTime[i]);
+                    }
+
+                    times = toTime;
+                    for(int i = 0; i < times.length; i++) {
+                        if (maxTime < times[i]) {
+                            maxTime = times[i];
+                        }
+                    }
+
+                    double[] toStdev = null;
+                    sCurrentLine = br.readLine();
+                    sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+                    sCurrentLine = sCurrentLine.replaceAll("\\s+","");
+                    textTime = sCurrentLine.split(",");
+                    toStdev = new double[textTime.length];
+                    for (int i = 0; i < textTime.length; i++) {
+                        toStdev[i] = Double.parseDouble(textTime[i]);
+                    }
+                    stdDev = toStdev;
+
+
+                    tasks = toTime.length;
+                    int[][] toPrecedences = new int[toTime.length][];
+                    toPrecedences[0] = null;
+                    int ind = 0;
+                    while ((sCurrentLine = br.readLine()) != null) {
+                        sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+                        sCurrentLine = sCurrentLine.replaceAll("\\s+","");
+                        String[] textPre = sCurrentLine.split(",");
+                        int[] curr = new int[textPre.length];
+                        for (int i = 0; i < textPre.length; i++) {
+                            if (textPre[i].equals("")) {
+                                curr[i] = 0;
+                            }
+                            else {
+                                curr[i] = Integer.parseInt(textPre[i]);
+                            }
+                        }
+                        toPrecedences[ind] = curr;
+                        ind++;
+                    }
+                    precedences = toPrecedences;
+                }
+                else if(FilenameUtils.getExtension(file.getName()).equals("graphml")){
+			        //parse the graphml xml
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(file);
+
+                    HashMap<String, Task> tasksMap = new HashMap<String, Task>();
+
+                    NodeList nodeList = doc.getElementsByTagName("node");
+                    for(int i = 0; i < nodeList.getLength(); i++){
+                        Node node = nodeList.item(i);
+                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+                            Element element = (Element) node;
+                            int tasknum = 0;
+                            int tasktime = 0;
+
+                            NodeList data = element.getElementsByTagName("data");
+                            for(int j = 0; j < data.getLength(); j++){
+                                Node dataNode = data.item(j);
+                                if (dataNode.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element dataElement = (Element) dataNode;
+                                    //getting the ws time
+                                    if (dataElement.getAttribute("key").equals("d2")) {
+                                        CharacterData cd = (CharacterData) dataNode.getFirstChild();
+                                        tasktime = Integer.parseInt(cd.getData());
+                                    }
+                                    else if (dataElement.getAttribute("key").equals("d3")) {
+                                        //getting the label
+                                        NodeList nList = dataElement.getElementsByTagName("y:NodeLabel");
+                                        Node label = nList.item(0);
+                                        if(label.getNodeType() == Node.ELEMENT_NODE){
+                                            Element labelElement = (Element) label;
+                                            if(labelElement.getFirstChild() instanceof CharacterData){
+                                                CharacterData cd = (CharacterData) labelElement.getFirstChild();
+                                                tasknum = Integer.parseInt(cd.getData());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Task tmp = new Task(tasknum);
+                            tmp.setTime(tasktime);
+                            tasksMap.put(element.getAttribute("id"), tmp);
+                        }
+                    }
+                    System.exit(0);
+                }
+
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			} catch (ParserConfigurationException e){
+			    e.printStackTrace();
+            } catch (SAXException e){
+			    e.printStackTrace();
+            }
 
 			DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 			dtm.removeRow(0);
@@ -825,7 +891,7 @@ public class Main {
 					}
 				});
 				fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] {"lbp"});
+				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] {"lbp", "graphml"});
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int result = fc.showOpenDialog(frame);

@@ -11,10 +11,14 @@ public class Task {
 	private double StdDeviation;
 	NormalDistribution probabilityA;
 	private double Z;
+	private int taskNum;
 	
 	Task() {
 		
 	}
+	Task(int num){
+	    this.taskNum = num;
+    }
 	Task(int[] precedence, int time, double stdDev) {
 		this.precedence = precedence;
 		this.MeanTime = time;
