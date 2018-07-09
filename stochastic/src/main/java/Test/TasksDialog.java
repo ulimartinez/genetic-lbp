@@ -19,23 +19,24 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class TasksDialog extends JDialog {
+	private static final long serialVersionUID = -8331075013112593692L;
+
 	JTextField textField;
 	private int tasks;
 
 	/**
 	 * Launch the application.
 	 */
-
 	/**
 	 * Create the dialog.
 	 */
 	public TasksDialog() {
 		setBounds(100, 100, 150, 130);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
-		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 0.0, 1.0, Double.MIN_VALUE};
-		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_contentPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		this.getContentPane().setLayout(gbl_contentPanel);
 		{
 			JLabel label = new JLabel("Number of Tasks");
@@ -62,8 +63,8 @@ public class TasksDialog extends JDialog {
 			getContentPane().add(buttonPane);
 			{
 				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent act){
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent act) {
 						setTasks(Integer.parseInt(textField.getText()));
 						setVisible(false);
 					}
@@ -74,9 +75,8 @@ public class TasksDialog extends JDialog {
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
-				cancelButton.addActionListener(new ActionListener(){
-					public void actionPerformed(ActionEvent ae)
-					{
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent ae) {
 						dispose();
 					}
 				});

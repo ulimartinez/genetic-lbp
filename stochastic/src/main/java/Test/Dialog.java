@@ -1,4 +1,4 @@
-package Test;
+package main.java.Test;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -10,16 +10,17 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JPanel;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-public class SaveAs extends JDialog {
-	private static final long serialVersionUID = -7173590719353244838L;
+public abstract class Dialog extends JDialog {
+	private static final long serialVersionUID = 1218049109753003135L;
 
-	public final JDialog contentPanel = new JDialog();
-	private JTextField textField;
-	private String name;
+	protected JTextField textField;
+	protected JLabel lblValue;
+
+	public abstract boolean readValue();
 
 	/**
 	 * Launch the application.
@@ -28,24 +29,29 @@ public class SaveAs extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-
-	public SaveAs() {
-		setBounds(100, 100, 150, 130);
+	public Dialog(String label, String type) {
+		super();
+		this.setModal(true);
+		setBounds(100, 100, 150, 150);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
 		gbl_contentPanel.columnWidths = new int[] { 0, 0, 0, 0 };
-		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0 };
+		gbl_contentPanel.rowHeights = new int[] { 0, 0, 0, 0, 0, 0 };
 		gbl_contentPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
-		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		contentPanel.getContentPane().setLayout(gbl_contentPanel);
+		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
+		this.getContentPane().setLayout(gbl_contentPanel);
 		{
-			JLabel lblCycleTime = new JLabel("Save As:");
+			lblValue = new JLabel(label);
 			GridBagConstraints gbc_label = new GridBagConstraints();
 			gbc_label.insets = new Insets(0, 0, 0, 5);
 			gbc_label.anchor = GridBagConstraints.EAST;
 			gbc_label.gridx = 1;
 			gbc_label.gridy = 3;
 			getContentPane().setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-			getContentPane().add(lblCycleTime);
+			getContentPane().add(lblValue);
+		}
+		{
+			JLabel lblType = new JLabel(type);
+			getContentPane().add(lblType);
 		}
 		{
 			textField = new JTextField();
@@ -62,8 +68,11 @@ public class SaveAs extends JDialog {
 				buttonPane.add(okButton);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
-						setName(textField.getText());
-						setVisible(false);
+						
+						boolean exit = readValue();
+						if(exit) {
+							setVisible(false);
+						}
 					}
 				});
 				getRootPane().setDefaultButton(okButton);
@@ -76,13 +85,7 @@ public class SaveAs extends JDialog {
 		}
 	}
 
-	@Override
-	public String getName() {
-		return (name);
-	}
-	
-	@Override
-	public void setName(String numb) {
-		this.name = numb;
+	public void setLabel(String set) {
+		this.lblValue.setText(set);
 	}
 }

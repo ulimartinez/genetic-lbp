@@ -11,7 +11,7 @@ import java.util.Random;
 public class Chromosome {
 	int assigned;
 	int Varassigned;
-	String [] line;
+	String[] line;
 	Task[] tasks;
 	int[] taskIndex;
 	int cycleTime;
@@ -24,31 +24,40 @@ public class Chromosome {
 	boolean isPreserved;
 	long computationalTime;
 	long startTime;
-	int generation = 1;
-	double sum=0.0;
-	double devsum=0.0;
+	int generation;
+	double sum = 0.0;
+	double devsum = 0.0;
 	private static NormalDistribution d;
-	double res=0.0;
-	double res2=0.0;
-	double res3=0.0;
-	
-	Chromosome(){}
-	
-	Chromosome(Task[] tasks){
+	double res = 0.0;
+	double res2 = 0.0;
+	double res3 = 0.0;
+
+	Chromosome() {
+	}
+
+	Chromosome(Task[] tasks) {
 		this.tasks = tasks;
 		taskIndex = new int[tasks.length];
-		for (int i = 0; i < tasks.length; i++){
+		for (int i = 0; i < tasks.length; i++) {
 			taskIndex[i] = i + 1;
 		}
 	}
-	Chromosome SetInitialTime(Chromosome chromo, long Initial){
-		chromo.startTime= Initial;
+
+	Chromosome SetInitialTime(Chromosome chromo, long Initial) {
+		chromo.startTime = Initial;
 		return chromo;
 	}
-	Chromosome mutate(long STime, double probability) throws MathException {//Adding Start Time to take computational time
+	
+	void setGeneration(int gen) {
+		this.generation = gen;
+	}
+
+	Chromosome mutate(long STime, double probability, int gen) throws MathException {
+		// Adding Start Time to take computational time
 		Chromosome mutated = new Chromosome();
 		mutated.startTime = STime;
-		int position = (int)(Math.random() * (tasks.length - 2)) + 2;
+		//Make head of at least 2 genes
+		int position = (int) (Math.random() * (tasks.length - 2)) + 2;
 		List<Task> selected = new LinkedList<Task>();
 		List<Task> remaining = new LinkedList<Task>();
 		List<Integer> selectedIndex = new LinkedList<Integer>();
@@ -76,29 +85,35 @@ public class Chromosome {
 						}
 					}
 				}
+				//Revise, why the !contain check?
 				if (candidate && !contains(selectedIndex, remainingIndex.get(i))) {
 					candidates.add(remaining.get(i));
 					remaining.remove(i);
 					candidatesIndex.add(remainingIndex.get(i));
 					remainingIndex.remove(i);
 					to = remaining.size();
+					//Used to be i=-1, but that re-checked previous tasks
 					i = -1;
 				}
 			}
-			int rand = (int)(Math.random() * candidates.size());
+			//Randomly choose a candidate and pass it to select
+			int rand = (int) (Math.random() * candidates.size());
 			selected.add(candidates.get(rand));
 			selectedIndex.add(candidatesIndex.get(rand));
 			candidates.remove(rand);
 			candidatesIndex.remove(rand);
+			//Send the remaining candidates to remaining
 			for (int l = 0; l < candidates.size(); l++) {
 				remaining.add(candidates.get(l));
 				remainingIndex.add(candidatesIndex.get(l));
 			}
 		}
-	
+
 		mutated.cycleTime = this.cycleTime;
+		//Transfor List<> to Integer[]
 		Integer[] b = new Integer[tasks.length];
 		b = selectedIndex.toArray(b);
+		//Transform Integer[] to int[]
 		int[] ind = new int[b.length];
 		int track = 0;
 		for (int e : b) {
@@ -112,26 +127,31 @@ public class Chromosome {
 		mutated.isMutation = true;
 		mutated.isChild = false;
 		mutated.isPreserved = false;
-		mutated.generation = generation;
 		mutated.computationalTime = System.nanoTime() - mutated.startTime;
+		mutated.generation = gen;
 		return mutated;
 	}
+
 	String[] getSelected() {
-		return(toTable);
+		return (toTable);
 	}
+
 	double getSmoothness() {
 		return (smoothness);
 	}
-	float getCompTime(){
-		return (computationalTime/1000);
+
+	float getCompTime() {
+		return (computationalTime / 1000);
 	}
+
 	List<List<Integer>> getSolution() {
 		return (solved);
 	}
-	Chromosome crossOver (Chromosome parent, double probability,long STime) throws MathException {
-		
-		int first = (int)(Math.random() * parent.tasks.length/2 - 1) + 1;
-		int last = (int)(Math.random() * parent.tasks.length/2 - 1) + 1;
+
+	Chromosome crossOver(Chromosome parent, double probability, long STime, int gen) throws MathException {
+
+		int first = (int) (Math.random() * parent.tasks.length / 2 - 1) + 1;
+		int last = (int) (Math.random() * parent.tasks.length / 2 - 1) + 1;
 		Chromosome newChild = new Chromosome();
 		newChild.startTime = STime;
 		if (parent.tasks.length == this.tasks.length) {
@@ -147,7 +167,7 @@ public class Chromosome {
 				childBody[i] = tasks[i + first];
 			}
 			for (int i = 0; i < parent.taskIndex.length; i++) {
-				if(contains(body, parent.taskIndex[i])) {
+				if (contains(body, parent.taskIndex[i])) {
 					newBody[newInd] = parent.taskIndex[i];
 					newChildBody[newInd] = parent.tasks[i];
 					newInd++;
@@ -164,30 +184,33 @@ public class Chromosome {
 			newChild.isChild = true;
 			newChild.isMutation = false;
 			newChild.isPreserved = false;
+			newChild.generation = gen;
 
 		}
-		newChild.computationalTime = System.nanoTime()-newChild.startTime;
+		newChild.computationalTime = System.nanoTime() - newChild.startTime;
 		return (newChild);
 	}
-	boolean contains(final int[] array, final int v) { //checks if a number is contained in an array of numbers
-	    for (final int e : array)
-	        if (e == v)
-	            return true;
 
-	    return false;
-	}
-	boolean contains(final List<Integer> array, final int v)
-	 {//checks if a number is contained in an array of numbers
-	    for (final int e : array)
-	        if (e == v)
-	            return true;
+	boolean contains(final int[] array, final int v) { // checks if a number is contained in an array of numbers
+		for (final int e : array)
+			if (e == v)
+				return true;
 
-	    return false;
+		return false;
 	}
-	public void solution(double probability) throws MathException{
+
+	boolean contains(final List<Integer> array, final int v) {// checks if a number is contained in an array of numbers
+		for (final int e : array)
+			if (e == v)
+				return true;
+
+		return false;
+	}
+
+	public void solution(double probability) throws MathException {
 		WSTimes = new LinkedList<Integer>();
 		toTable = new String[tasks.length];
-		line= new String[tasks.length];
+		line = new String[tasks.length];
 		String currLine;
 		List<Integer> taskIn;
 		int index = 1;
@@ -195,53 +218,53 @@ public class Chromosome {
 		int availableTime = cycleTime;
 		int first = 0;
 		int last = tasks.length - 1;
-		int iterations=0;
+		int iterations = 0;
 		int x = 0;
-		float MeanTimeAssigned [] = new float[tasks.length] ;
-		double VarAssigned [] = new double[tasks.length] ;
-		int Ind [] = new int[tasks.length] ;
+		float MeanTimeAssigned[] = new float[tasks.length];
+		double VarAssigned[] = new double[tasks.length];
+		int Ind[] = new int[tasks.length];
 		List<List<Integer>> workstations = new LinkedList<List<Integer>>();
 		taskIn = new LinkedList<Integer>();
-		while (!(first > last)&(iterations < 1000)) {
-			sum = 0 ;
-			devsum = 0 ;
-			for( x=0;x<tasks.length;x++) {
-
-				if (Ind [x] == index) {
-					sum+= MeanTimeAssigned [x];
-					devsum += VarAssigned [x];
+		while (!(first > last) & (iterations < 1000)) {
+			sum = 0;
+			devsum = 0;
+			for (x = 0; x < tasks.length; x++) {
+				if (Ind[x] == index) {
+					sum += MeanTimeAssigned[x];
+					devsum += VarAssigned[x];
 				}
-				}
-			iterations +=1;
+			}
+			iterations += 1;
 			currLine = index + "&";
-			d= new NormalDistributionImpl((sum+tasks[first].getTime()),(Math.sqrt(devsum+tasks[first].getStdDev())));
-			res2=d.cumulativeProbability(cycleTime);
-			d= new NormalDistributionImpl((sum+tasks[last].getTime()),(Math.sqrt((devsum+tasks[last].getStdDev()))));
-			res3=d.cumulativeProbability(cycleTime);
-			if (res2 >= probability && res3 >= probability )  {//1st option //stochastic
+			d = new NormalDistributionImpl((sum + tasks[first].getTime()),
+					(Math.sqrt(devsum + tasks[first].getStdDev())));
+			res2 = d.cumulativeProbability(cycleTime);
+			d = new NormalDistributionImpl((sum + tasks[last].getTime()),
+					(Math.sqrt((devsum + tasks[last].getStdDev()))));
+			res3 = d.cumulativeProbability(cycleTime);
+			if (res2 >= probability && res3 >= probability) {
+				// 1st option //stochastic
 				currLine += taskIndex[first] + "," + taskIndex[last] + "&";
 				Random fromFirst = new Random();
 				if (fromFirst.nextBoolean()) {
-							currLine += taskIndex[first] + "&";
+					currLine += taskIndex[first] + "&";
 					availableTime -= tasks[first].getTime();
-					MeanTimeAssigned [tableIndex] =  tasks[first].getTime();
-					VarAssigned [tableIndex]=tasks[first].getStdDev();
-					Ind [tableIndex] = index;
+					MeanTimeAssigned[tableIndex] = tasks[first].getTime();
+					VarAssigned[tableIndex] = tasks[first].getStdDev();
+					Ind[tableIndex] = index;
 					currLine += availableTime;
 					taskIn.add(taskIndex[first]);
 
-						toTable[tableIndex] = currLine;
-
+					toTable[tableIndex] = currLine;
 
 					tableIndex++;
 					first++;
-				}
-				else {
+				} else {
 					currLine += taskIndex[last] + "&";
 					availableTime -= tasks[last].getTime();
-					MeanTimeAssigned [tableIndex] =  tasks[last].getTime();
-					VarAssigned [tableIndex]=tasks[last].getStdDev();
-					Ind [tableIndex] = index;
+					MeanTimeAssigned[tableIndex] = tasks[last].getTime();
+					VarAssigned[tableIndex] = tasks[last].getStdDev();
+					Ind[tableIndex] = index;
 					currLine += availableTime;
 					taskIn.add(taskIndex[last]);
 					toTable[tableIndex] = currLine;
@@ -250,30 +273,28 @@ public class Chromosome {
 				}
 			}
 
-			else if (res2 >= probability)  {//op 2
-				currLine += taskIndex[first]+ "&" + taskIndex[first] + "&";
+			else if (res2 >= probability) {// op 2
+				currLine += taskIndex[first] + "&" + taskIndex[first] + "&";
 				availableTime -= tasks[first].getTime();
-				MeanTimeAssigned [tableIndex] =  tasks[first].getTime();
-				VarAssigned [tableIndex]=tasks[first].getStdDev();
-				Ind [tableIndex] = index;
+				MeanTimeAssigned[tableIndex] = tasks[first].getTime();
+				VarAssigned[tableIndex] = tasks[first].getStdDev();
+				Ind[tableIndex] = index;
 				currLine += availableTime;
 				taskIn.add(taskIndex[first]);
 				toTable[tableIndex] = currLine;
 				tableIndex++;
 				first++;
-			}
-			else if (res3 >= probability)   {//op 3
+			} else if (res3 >= probability) {// op 3
 				availableTime -= tasks[last].getTime();
-				MeanTimeAssigned [tableIndex] =  tasks[last].getTime();
-				VarAssigned [tableIndex]=tasks[last].getStdDev();
-				Ind [tableIndex] = index;
-				currLine += taskIndex[last] +  "&" + taskIndex[last] + "&" + availableTime;
+				MeanTimeAssigned[tableIndex] = tasks[last].getTime();
+				VarAssigned[tableIndex] = tasks[last].getStdDev();
+				Ind[tableIndex] = index;
+				currLine += taskIndex[last] + "&" + taskIndex[last] + "&" + availableTime;
 				taskIn.add(taskIndex[last]);
 				toTable[tableIndex] = currLine;
 				tableIndex++;
 				last--;
-			}
-			else {
+			} else {
 				WSTimes.add(cycleTime - availableTime);
 				workstations.add(taskIn);
 				index++;
@@ -288,6 +309,7 @@ public class Chromosome {
 		solved = workstations;
 		setSmoothness();
 	}
+
 	public void setSmoothness() {
 		int maxTime = 0;
 		for (int i = 0; i < WSTimes.size(); i++) {
