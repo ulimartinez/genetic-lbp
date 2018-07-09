@@ -389,7 +389,6 @@ public class Main {
                     }
                     stdDev = toStdev;
 
-
                     tasks = toTime.length;
                     int[][] toPrecedences = new int[toTime.length][];
                     toPrecedences[0] = null;
@@ -813,7 +812,7 @@ public class Main {
 				// table.repaint();
 			}
 		});
-		
+
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				
@@ -879,7 +878,7 @@ public class Main {
 					}
 				});
 				fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] { "lbp" });
+				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] { "lbp", "graphml" });
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int result = fc.showOpenDialog(frame);
