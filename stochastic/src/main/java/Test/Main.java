@@ -346,75 +346,161 @@ public class Main {
 	public void load() {
 		if (file != null) {
 			try {
-				int[] toTime = null;
-				String sCurrentLine;
-				BufferedReader br = new BufferedReader(new FileReader(file));
-				sCurrentLine = br.readLine();
-				sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-				sCurrentLine = sCurrentLine.replaceAll("\\s+", "");
-				String[] textTime = sCurrentLine.split(",");
-				toTime = new int[textTime.length];
-				for (int i = 0; i < textTime.length; i++) {
-					toTime[i] = Integer.parseInt(textTime[i]);
-				}
-				times = toTime;
-				tasks = toTime.length;
-				
-				for (int i = 0; i < times.length; i++) {
-					if (maxTime < times[i]) {
-						maxTime = times[i];
-					}
-				}
+			    if(FilenameUtils.getExtension(file.getName()).equals("lbp")){
+                    int[] toTime = null;
+                    String sCurrentLine;
+                    BufferedReader br = new BufferedReader(new FileReader(file));
+                    sCurrentLine = br.readLine();
+                    sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+                    sCurrentLine = sCurrentLine.replaceAll("\\s+","");
+                    String[] textTime = sCurrentLine.split(",");
+                    toTime = new int[textTime.length];
+                    for (int i = 0; i < textTime.length; i++) {
+                        toTime[i] = Integer.parseInt(textTime[i]);
+                    }
 
-				double[] toStdev = null;
-				sCurrentLine = br.readLine();
-				sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-				sCurrentLine = sCurrentLine.replaceAll("\\s+", "");
-				textTime = sCurrentLine.split(",");
-				toStdev = new double[textTime.length];
-				for (int i = 0; i < textTime.length; i++) {
-					toStdev[i] = Double.parseDouble(textTime[i]);
-				}
-				stdDev = toStdev;
+                    times = toTime;
+                    for(int i = 0; i < times.length; i++) {
+                        if (maxTime < times[i]) {
+                            maxTime = times[i];
+                        }
+                    }
 
-				int[][] toPrecedences = new int[tasks][];
-				toPrecedences[0] = null;
-				int ind = 0;
-				while ((sCurrentLine = br.readLine()) != null) {
-					sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-					sCurrentLine = sCurrentLine.replaceAll("\\s+", "");
-					String[] textPre = sCurrentLine.split(",");
-					int[] curr = new int[textPre.length];
-					for (int i = 0; i < textPre.length; i++) {
-						if (textPre[i].equals("")) {
-							curr[i] = 0;
-						} else {
-							curr[i] = Integer.parseInt(textPre[i]);
-						}
-					}
-					toPrecedences[ind] = curr;
-					ind++;
-				}
-				precedences = toPrecedences;
-				
-				br.close();
-				
+                    double[] toStdev = null;
+                    sCurrentLine = br.readLine();
+                    sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+                    sCurrentLine = sCurrentLine.replaceAll("\\s+","");
+                    textTime = sCurrentLine.split(",");
+                    toStdev = new double[textTime.length];
+                    for (int i = 0; i < textTime.length; i++) {
+                        toStdev[i] = Double.parseDouble(textTime[i]);
+                    }
+                    stdDev = toStdev;
+
+
+                    tasks = toTime.length;
+                    int[][] toPrecedences = new int[toTime.length][];
+                    toPrecedences[0] = null;
+                    int ind = 0;
+                    while ((sCurrentLine = br.readLine()) != null) {
+                        sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+                        sCurrentLine = sCurrentLine.replaceAll("\\s+","");
+                        String[] textPre = sCurrentLine.split(",");
+                        int[] curr = new int[textPre.length];
+                        for (int i = 0; i < textPre.length; i++) {
+                            if (textPre[i].equals("")) {
+                                curr[i] = 0;
+                            }
+                            else {
+                                curr[i] = Integer.parseInt(textPre[i]);
+                            }
+                        }
+                        toPrecedences[ind] = curr;
+                        ind++;
+                    }
+                    precedences = toPrecedences;
+                }
+                else if(FilenameUtils.getExtension(file.getName()).equals("graphml")){
+			        //parse the graphml xml
+                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+                    Document doc = dBuilder.parse(file);
+
+                    HashMap<String, Task> tasksMap = new HashMap<String, Task>();
+
+                    //read the tasks and their time
+                    NodeList nodeList = doc.getElementsByTagName("node");
+                    for(int i = 0; i < nodeList.getLength(); i++){
+                        Node node = nodeList.item(i);
+                        if (node.getNodeType() == Node.ELEMENT_NODE) {
+                            Element element = (Element) node;
+                            int tasknum = 0;
+                            int tasktime = 0;
+                            double taskstd = 0;
+
+                            NodeList data = element.getElementsByTagName("data");
+                            for(int j = 0; j < data.getLength(); j++){
+                                Node dataNode = data.item(j);
+                                if (dataNode.getNodeType() == Node.ELEMENT_NODE) {
+                                    Element dataElement = (Element) dataNode;
+                                    //getting the ws time
+                                    if (dataElement.getAttribute("key").equals("d2")) {
+                                        CharacterData cd = (CharacterData) dataNode.getFirstChild();
+                                        String[] csvData = cd.getData().split(",");
+                                        tasktime = Integer.parseInt(csvData[0]);
+                                        taskstd = Double.parseDouble(csvData[1]);
+                                    }
+                                    else if (dataElement.getAttribute("key").equals("d3")) {
+                                        //getting the label (task number)
+                                        NodeList nList = dataElement.getElementsByTagName("y:NodeLabel");
+                                        Node label = nList.item(0);
+                                        if(label.getNodeType() == Node.ELEMENT_NODE){
+                                            Element labelElement = (Element) label;
+                                            if(labelElement.getFirstChild() instanceof CharacterData){
+                                                CharacterData cd = (CharacterData) labelElement.getFirstChild();
+                                                tasknum = Integer.parseInt(cd.getData());
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            Task tmp = new Task(tasknum);
+                            tmp.setTime(tasktime);
+                            tmp.setStd(taskstd);
+                            tasksMap.put(element.getAttribute("id"), tmp);
+                        }
+                    }
+                    //read the precedences
+                    NodeList edges = doc.getElementsByTagName("edge");
+                    for(int i = 0; i < edges.getLength(); i++){
+                        if(edges.item(i).getNodeType() == Node.ELEMENT_NODE){
+                            Element edgeElem = (Element) edges.item(i);
+                            String target= edgeElem.getAttribute("target");
+                            String source = edgeElem.getAttribute("source");
+                            Task preTask = tasksMap.get(target);
+                            preTask.addPrecedence(tasksMap.get(source).getTaskNum());
+                        }
+                    }
+                    //save all times, std and precedences
+                    times = new int[tasksMap.size()];
+                    stdDev = new double[tasksMap.size()];
+                    precedences = new int[tasksMap.size()][];
+                    for(int i = 0; i < times.length; i++){
+                        Task curr = null;
+                        //TODO: save a map of task numbers to id's to make this step faster
+                        for(Task j : tasksMap.values()){
+                            if(j.getTaskNum()==i+1) {
+                                curr = j;
+                                break;
+                            }
+                        }
+                        assert curr != null;
+                        times[i] = curr.getTime();
+                        precedences[i] = curr.getPrecedences();
+                        stdDev[i] = curr.getStdDev();
+                    }
+                }
+
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			} catch (ParserConfigurationException e){
+			    e.printStackTrace();
+            } catch (SAXException e){
+			    e.printStackTrace();
+            }
 
 			DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 			dtm.removeRow(0);
-			for (int i = 0; i < tasks; i++) {
-				dtm.addRow((Object[]) null);
-				dtm.setValueAt((i + 1), (i), 0);
+			for (int i = 0; i < times.length; i++) {
+				dtm.addRow((Object[])null);
+				dtm.setValueAt((i+1), (i), 0);
 				dtm.setValueAt(times[i], (i), 1);
 				dtm.setValueAt(stdDev[i], (i), 2);
 				String set = Arrays.toString(precedences[i]);
 				set = set.substring(1, set.length() - 1);
-				set = set.replaceAll("\\s+", "");
+				set = set.replaceAll("\\s+","");
 				dtm.setValueAt(set, (i), 3);
 
 			}
@@ -422,7 +508,7 @@ public class Main {
 			table.repaint();
 		}
 	}
-
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -742,8 +828,8 @@ public class Main {
 				precedences = new int[tasks][];
 				stdDev = new double[tasks];
 				for (int i = 0; i < tasks; i++) {
-					times[i] = Integer.parseInt((String) (table.getValueAt(i, 1)));
-					stdDev[i] = Double.parseDouble((String) (table.getValueAt(i, 2)));
+					times[i] = Integer.parseInt("" + (table.getValueAt(i, 1)));
+					stdDev[i] = Double.parseDouble("" + (table.getValueAt(i, 2)));
 					if (i >= 0) {
 						String precStr = (String) table.getValueAt(i, 3);
 						if (precStr != null && precStr.length() > 0) {
