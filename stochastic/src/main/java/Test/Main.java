@@ -599,7 +599,7 @@ public class Main {
 
 		JScrollPane scroll3 = new JScrollPane(table_2);
 		scroll3.setViewportBorder(null);
-		//scroll3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panel_2.add(scroll3, BorderLayout.CENTER);
 
 		JPanel panel = new JPanel();
@@ -667,7 +667,7 @@ public class Main {
 
 		JScrollPane scroll2 = new JScrollPane(table_1);
 		scroll2.setViewportBorder(null);
-		scroll2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
 		panel_5.add(scroll2);
 
 		final JLabel lblMinimumWorkstations = new JLabel("Minimum Workstations:");

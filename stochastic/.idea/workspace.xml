@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="81cb75bc-3106-4dec-8cf6-f8ce1b81144e" name="Default" comment="deleted class files and unused initialpopulation">
+    <list default="true" id="81cb75bc-3106-4dec-8cf6-f8ce1b81144e" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Test/Code.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/Code.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/Test/ChildrenDialog.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/Main.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,12 +15,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Test/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="583">
-              <caret line="897" column="1" lean-forward="true" selection-start-line="897" selection-start-column="1" selection-end-line="897" selection-end-column="1" />
+            <state relative-caret-position="383">
+              <caret line="669" column="92" selection-start-line="669" selection-start-column="92" selection-end-line="669" selection-end-column="92" />
               <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5853#6513#0" expanded="true" />
+                <element signature="e#6512#6513#0" expanded="true" />
+                <element signature="e#30857#31777#0" expanded="true" />
+                <element signature="e#31776#31777#0" expanded="true" />
+                <element signature="e#31886#32046#0" expanded="true" />
+                <element signature="e#32045#32046#0" expanded="true" />
                 <element signature="e#31406#31508#0" expanded="true" />
                 <element signature="e#31507#31508#0" expanded="true" />
               </folding>
@@ -29,19 +35,28 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Code.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/Test/Code.java">
+      <file leaf-file-name="ChildrenDialog.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChildrenDialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+            <state>
+              <caret column="13" selection-start-column="13" selection-end-column="13" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Code.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Test/Code.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="582">
+              <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="526">
+            <state relative-caret-position="1174">
               <caret line="143" column="14" selection-start-line="143" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
             </state>
           </provider>
@@ -59,8 +74,21 @@
       <file leaf-file-name="Dialog.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Test/Dialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
+            <state relative-caret-position="271">
+              <caret line="68" column="43" lean-forward="true" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+              <folding>
+                <element signature="e#2037#2215#0" expanded="true" />
+                <element signature="e#2214#2215#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChromosomeDialog.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1125">
+              <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -72,8 +100,14 @@
       <find>filltr</find>
       <find>graphml</find>
       <find>class</find>
-      <find>fillta</find>
       <find>target</find>
+      <find>fillta</find>
+      <find>chil</find>
+      <find>childrendialog</find>
+      <find>initia</find>
+      <find>initiali</find>
+      <find>exit</find>
+      <find>scroll</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -83,6 +117,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Test/ChildrenDialog.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Test/Main.java" />
       </list>
     </option>
   </component>
@@ -106,7 +143,22 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="stochastic" type="58d84e3e:PackageViewProjectNode" />
+              <item name="stochastic" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="stochastic" type="58d84e3e:PackageViewProjectNode" />
+              <item name="stochastic" type="616d4139:PackageViewModuleNode" />
+              <item name="Test" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
       <pane id="Scope" />
       <pane id="AndroidView" />
       <pane id="ProjectPane">
@@ -119,19 +171,27 @@
             <path>
               <item name="stochastic" type="b2602c69:ProjectViewProjectNode" />
               <item name="stochastic" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="stochastic" type="b2602c69:ProjectViewProjectNode" />
               <item name="stochastic" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="stochastic" type="b2602c69:ProjectViewProjectNode" />
               <item name="stochastic" type="462c0819:PsiDirectoryNode" />
-              <item name="target" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="stochastic" type="b2602c69:ProjectViewProjectNode" />
+              <item name="stochastic" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="Test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -227,7 +287,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531161586819</updated>
-      <workItem from="1531161593907" duration="1120000" />
+      <workItem from="1531161593907" duration="3390000" />
     </task>
     <task id="LOCAL-00001" summary="removed ignored dirs">
       <created>1531162098108</created>
@@ -243,11 +303,25 @@
       <option name="project" value="LOCAL" />
       <updated>1531162470204</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="deleted class files and unused initialpopulation">
+      <created>1531162773124</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1531162773124</updated>
+    </task>
+    <task id="LOCAL-00004" summary="added exit button">
+      <created>1531164282917</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1531164282917</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1120000" />
+    <option name="totallyTimeSpent" value="3390000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="-28" width="3200" height="1768" extended-state="0" />
@@ -259,16 +333,16 @@
       <window_info anchor="right" id="Palette&#9;" />
       <window_info id="Image Layers" />
       <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="bottom" id="Event Log" sideWeight="0.500322" side_tool="true" visible="true" weight="0.42270058" />
+      <window_info anchor="bottom" id="Event Log" sideWeight="0.500322" side_tool="true" weight="0.42270058" />
       <window_info anchor="right" id="Maven Projects" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" sideWeight="0.49967805" weight="0.32941943" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49967805" weight="0.32941943" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49967805" visible="true" weight="0.32941943" />
       <window_info anchor="bottom" id="Terminal" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24983902" />
-      <window_info anchor="bottom" id="Inspection Results" sideWeight="0.49967805" visible="true" weight="0.42270058" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983902" />
+      <window_info anchor="bottom" id="Inspection Results" sideWeight="0.49967805" weight="0.42270058" />
       <window_info anchor="right" id="Database" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -322,7 +396,20 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="removed ignored dirs" />
     <MESSAGE value="deleted class files and unused initialpopulation" />
-    <option name="LAST_COMMIT_MESSAGE" value="deleted class files and unused initialpopulation" />
+    <MESSAGE value="added exit button" />
+    <option name="LAST_COMMIT_MESSAGE" value="added exit button" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Test/Code.java</url>
+          <line>32</line>
+          <properties />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="1" />
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/Test/TasksDialog.java">
@@ -332,35 +419,69 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Dialog.java">
+    <entry file="file://$PROJECT_DIR$/target/classes/Test/Main.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="16" column="22" selection-start-line="16" selection-start-column="22" selection-end-line="16" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="583">
-          <caret line="897" column="1" lean-forward="true" selection-start-line="897" selection-start-column="1" selection-end-line="897" selection-end-column="1" />
+        <state>
           <folding>
-            <element signature="e#31406#31508#0" expanded="true" />
-            <element signature="e#31507#31508#0" expanded="true" />
+            <element signature="e#0#36864#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Code.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="526">
+        <state relative-caret-position="1174">
           <caret line="143" column="14" selection-start-line="143" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1125">
+          <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Dialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="271">
+          <caret line="68" column="43" lean-forward="true" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+          <folding>
+            <element signature="e#2037#2215#0" expanded="true" />
+            <element signature="e#2214#2215#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChildrenDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Code.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="582">
+          <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="383">
+          <caret line="669" column="92" selection-start-line="669" selection-start-column="92" selection-end-line="669" selection-end-column="92" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5853#6513#0" expanded="true" />
+            <element signature="e#6512#6513#0" expanded="true" />
+            <element signature="e#30857#31777#0" expanded="true" />
+            <element signature="e#31776#31777#0" expanded="true" />
+            <element signature="e#31886#32046#0" expanded="true" />
+            <element signature="e#32045#32046#0" expanded="true" />
+            <element signature="e#31406#31508#0" expanded="true" />
+            <element signature="e#31507#31508#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
