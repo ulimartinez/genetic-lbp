@@ -2,8 +2,8 @@ package Test;
 
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Scanner;
 import java.util.Arrays;
+
 public class Code {
 	private Chromosome taskss;
 	//chromosome containing tasks with precedence
@@ -19,7 +19,7 @@ public class Code {
 	 {//return the chromosome
 		return (taskss);
 	}
-	void setTasks(int[][] precedences, int[] times, double[] stdDev) {//having the precedence of each Task and the time, we store them in an array of tasks
+	void setTasks(int[][] precedences, double[] times, double[] stdDev) {//having the precedence of each Task and the time, we store them in an array of tasks
 		
 		for (int i = 0; i < tasks.length; i++)	 {//for each Task
 			tasks[i] = new Task(precedences[i], times[i], stdDev[i]);	//Task equals new variable that contained precedence and time

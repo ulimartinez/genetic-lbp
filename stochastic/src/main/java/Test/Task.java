@@ -9,10 +9,9 @@ import java.util.ArrayList;
 
 public class Task {
 	private ArrayList<Integer> precedence;
-	private int MeanTime;
+	private double MeanTime;
 	private double StdDeviation;
 	NormalDistribution probabilityA;
-	private double Z;
 	private int taskNum;
 	
 	Task() {
@@ -22,12 +21,12 @@ public class Task {
 	    this.taskNum = num;
 	    this.precedence = new ArrayList<Integer>();
     }
-	Task(ArrayList<Integer> precedence, int time, double stdDev) {
+	Task(ArrayList<Integer> precedence, double time, double stdDev) {
 		this.precedence = precedence;
 		this.MeanTime = time;
 		this.StdDeviation = stdDev;
 	}
-    Task(int[] precedence, int time, double stdDev) {
+    Task(int[] precedence, double time, double stdDev) {
         this.precedence = new ArrayList<Integer>(precedence.length);
         for (int aPrecedence : precedence) this.precedence.add(aPrecedence);
         this.MeanTime = time;
@@ -41,7 +40,7 @@ public class Task {
 		}
 		return ret;
 	}
-	public int getTime() {
+	public double getTime() {
 		return(MeanTime);
 	}
 	public double getStdDev() {
