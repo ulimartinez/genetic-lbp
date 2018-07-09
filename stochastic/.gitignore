@@ -142,3 +142,4 @@ fabric.properties
 .idea/httpRequests
 
 target/classes
+/target/

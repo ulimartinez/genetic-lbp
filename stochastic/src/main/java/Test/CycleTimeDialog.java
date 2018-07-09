@@ -5,7 +5,7 @@ import Test.Dialog;
 public class CycleTimeDialog extends Dialog {
 	private static final long serialVersionUID = -5365070432517905136L;
 
-	public int value;
+	public double value;
 
 	public CycleTimeDialog() {
 		super("Cycle Time", "(Enter integers)");
@@ -14,7 +14,11 @@ public class CycleTimeDialog extends Dialog {
 	@Override
 	public boolean readValue() {
 		try {
-			this.value = Integer.parseInt(textField.getText());
+			Double v = Double.parseDouble( textField.getText() );
+			if(v <= 0) {
+				v = (double) (1/0);
+			}
+			this.value = v;
 			return true;
 		} 
 		catch (Exception e) {
@@ -24,7 +28,7 @@ public class CycleTimeDialog extends Dialog {
 		}
 	}
 
-	public int showDialog() {
+	public double showDialog() {
 		this.setVisible(true);
 		return this.value;
 	}

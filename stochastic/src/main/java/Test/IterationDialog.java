@@ -14,7 +14,11 @@ public class IterationDialog extends Dialog {
 	@Override
 	public boolean readValue() {
 		try {
-			this.value = Integer.parseInt(textField.getText());
+			int v = Integer.parseInt(textField.getText());
+			if(v < 1) {
+				v = (int) (1/0);
+			}
+			this.value = v;
 			return true;
 		} 
 		catch (Exception e) {
