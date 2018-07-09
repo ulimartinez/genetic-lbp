@@ -569,7 +569,10 @@ public class Main {
 		mnFile.add(mntmSave);
 
 		final JMenuItem mntmOpen = new JMenuItem("Open");
-		mnFile.add(mntmOpen);	
+		mnFile.add(mntmOpen);
+
+		final JMenuItem mntmExit = new JMenuItem("Exit");
+		mnFile.add(mntmExit);
 
 		final JMenuItem mntmInitialPopulation = new JMenuItem("Initial Population");
 		mntmInitialPopulation.setEnabled(false);
@@ -596,7 +599,7 @@ public class Main {
 
 		JScrollPane scroll3 = new JScrollPane(table_2);
 		scroll3.setViewportBorder(null);
-		scroll3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		//scroll3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panel_2.add(scroll3, BorderLayout.CENTER);
 
 		JPanel panel = new JPanel();
@@ -888,6 +891,13 @@ public class Main {
 				}
 			}
 		});
+
+		mntmExit.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                frame.dispose();
+            }
+        });
 
 		mntmNextGeneration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
