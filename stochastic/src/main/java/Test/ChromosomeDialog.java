@@ -1,6 +1,6 @@
 package Test;
 
-import main.java.Test.Dialog;
+import Test.Dialog;
 
 public class ChromosomeDialog extends Dialog {
 	private static final long serialVersionUID = 1858023231054325068L;
