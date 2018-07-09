@@ -1,6 +1,6 @@
 package Test;
 
-import main.java.Test.Dialog;
+import Test.Dialog;
 
 public class ProbabilityDialog extends Dialog {
 	private static final long serialVersionUID = 1615004142184543418L;

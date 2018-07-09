@@ -1,6 +1,6 @@
 package Test;
 
-import main.java.Test.Dialog;
+import Test.Dialog;
 
 public class MutationsDialog extends Dialog {
 	private static final long serialVersionUID = -1118703616687831179L;

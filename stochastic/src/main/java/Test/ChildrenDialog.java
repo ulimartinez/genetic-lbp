@@ -1,6 +1,6 @@
 package Test;
 
-import main.java.Test.Dialog;
+import Test.Dialog;
 
 public class ChildrenDialog extends Dialog {
 	private static final long serialVersionUID = -957483271281472126L;

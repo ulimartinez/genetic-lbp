@@ -1,6 +1,6 @@
 package Test;
 
-import main.java.Test.Dialog;
+import Test.Dialog;
 
 public class IterationDialog extends Dialog {
 	private static final long serialVersionUID = 8575975346611410122L;

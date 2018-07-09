@@ -24,6 +24,9 @@ import javax.swing.JTable;
 import javax.swing.filechooser.FileFilter;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -32,12 +35,21 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.HashMap;
+
 import javax.swing.ListSelectionModel;
 import javax.swing.JMenu;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.math.MathException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+import org.w3c.dom.CharacterData;
 
 public class Main {
 	LBPParameters params;
@@ -376,7 +388,6 @@ public class Main {
                         toStdev[i] = Double.parseDouble(textTime[i]);
                     }
                     stdDev = toStdev;
-
 
                     tasks = toTime.length;
                     int[][] toPrecedences = new int[toTime.length][];
@@ -802,12 +813,13 @@ public class Main {
 			}
 		});
 
-		JFileChooser save = new JFileChooser();
-		save.setDialogTitle("Guardar");
-		save.setApproveButtonText("Guardar");
-		
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
+				
+				JFileChooser save = new JFileChooser();
+				save.setDialogTitle("Guardar");
+				save.setApproveButtonText("Guardar");
+
 				int returnVal = save.showOpenDialog(null);
 				PrintWriter write = null;
 
@@ -866,7 +878,7 @@ public class Main {
 					}
 				});
 				fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] { "lbp" });
+				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] { "lbp", "graphml" });
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int result = fc.showOpenDialog(frame);

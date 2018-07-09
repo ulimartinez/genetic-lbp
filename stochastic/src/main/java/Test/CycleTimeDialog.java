@@ -1,6 +1,6 @@
 package Test;
 
-import main.java.Test.Dialog;
+import Test.Dialog;
 
 public class CycleTimeDialog extends Dialog {
 	private static final long serialVersionUID = -5365070432517905136L;
