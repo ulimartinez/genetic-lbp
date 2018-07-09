@@ -80,40 +80,8 @@ public class Code {
 		taskss.computationalTime = System.nanoTime()-taskss.startTime;
 		return initial;
 	}
-	void initialPopulation(int a) {
-		for (int l = 0; l < a; l++) {
-			int[] initial = new int[tasks.length];
-			initial[0] = 1;
-			for (int k = 1; k < initial.length; k++) {
-				int[] candidates = new int[initial.length];
-				int indexOfCandidates = 0;
-				for (int i = 1; i < tasks.length; i++) {
-					int[] precedences = tasks[i].getPrecedences();
-					boolean candidate = true;
-					for (int j = 0; j < precedences.length; j++) {
-						if (!(contains(initial, precedences[j]))) {
-							candidate = false;
-							break;
-						}
-					}
-					if (candidate && !contains(initial, i+1)) {
-						candidates[indexOfCandidates] = i + 1;
-						indexOfCandidates++;
-					}
-				}
-				int totalCandidates = 0;
-				for (int i = 0; i < candidates.length; i++) {
-					if (candidates[i] == 0) {
-						totalCandidates = i;
-						break;
-					}
-				}
-				initial[k] = candidates[(int)(Math.random() * totalCandidates)];
-			}
-			System.out.println(Arrays.toString(initial));
-		}
-	}
-	boolean contains(final int[] array, final int v)  {//checks if a number is contained in an array of numbers
+
+    boolean contains(final int[] array, final int v)  {//checks if a number is contained in an array of numbers
 	    for (final int e : array)
 	        if (e == v)
 	            return true;
