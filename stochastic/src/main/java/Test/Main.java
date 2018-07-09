@@ -182,7 +182,7 @@ public class Main {
 	
 	public Chromosome getNewChromosome() {
 		double probabilityP = params.getProbability();
-		int cycle = params.getCycleTime();
+		double cycle = params.getCycleTime();
 		
 		// declare a variable type Code called problem
 		Code problem = new Code(tasks); 
@@ -265,12 +265,12 @@ public class Main {
 
 	void setMinNumOfWS() {
 		int sumTasks = 0;
-		int cycle = params.getCycleTime();
+		double cycle = params.getCycleTime();
 		for (int i = 0; i < chromos[0].tasks.length; i++) {
 			sumTasks += chromos[0].tasks[i].getTime();
 		}
 		if(sumTasks %cycle == 0) {
-			minWS = (sumTasks / cycle);
+			minWS = (int) (sumTasks / cycle);
 		} else {
 			minWS = ((int)(sumTasks / cycle) )+ 1;
 		}
@@ -315,7 +315,7 @@ public class Main {
 		double mutationPercent = params.getMutationsPercent();
 		double preservedPercent = params.getPreservedPercent();
 		double probabilityP = params.getProbability();
-		int cycle = params.getCycleTime();
+		double cycle = params.getCycleTime();
 
 		Chromosome[] newGeneration = new Chromosome[chromos.length];
 		int mutatedAmount = (int) (mutationPercent * chromos.length);

@@ -14,7 +14,11 @@ public class MutationsDialog extends Dialog {
 	@Override
 	public boolean readValue() {
 		try {
-			this.value = Double.parseDouble(textField.getText()) / 100;
+			Double v = Double.parseDouble( textField.getText() );
+			if(v > 100 || v < 0) {
+				v = (double) (1/0);
+			}
+			this.value = v / 100;
 			return true;
 		} 
 		catch (Exception e) {

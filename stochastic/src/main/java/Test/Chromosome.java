@@ -14,10 +14,10 @@ public class Chromosome {
 	String[] line;
 	Task[] tasks;
 	int[] taskIndex;
-	int cycleTime;
+	double cycleTime;
 	List<List<Integer>> solved;
 	String[] toTable;
-	List<Integer> WSTimes;
+	List<Double> WSTimes;
 	double smoothness;
 	boolean isChild;
 	boolean isMutation;
@@ -208,14 +208,14 @@ public class Chromosome {
 	}
 
 	public void solution(double probability) throws MathException {
-		WSTimes = new LinkedList<Integer>();
+		WSTimes = new LinkedList<Double>();
 		toTable = new String[tasks.length];
 		line = new String[tasks.length];
 		String currLine;
 		List<Integer> taskIn;
 		int index = 1;
 		int tableIndex = 0;
-		int availableTime = cycleTime;
+		double availableTime = cycleTime;
 		int first = 0;
 		int last = tasks.length - 1;
 		int iterations = 0;
@@ -311,7 +311,7 @@ public class Chromosome {
 	}
 
 	public void setSmoothness() {
-		int maxTime = 0;
+		double maxTime = 0;
 		for (int i = 0; i < WSTimes.size(); i++) {
 			if (WSTimes.get(i) > maxTime) {
 				maxTime = WSTimes.get(i);

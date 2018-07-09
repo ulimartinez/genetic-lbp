@@ -3,7 +3,7 @@ package Test;
 public class LBPParameters {
 	/* these are used for calculating solutions */
 	private double probability;
-	private int cycleTime;
+	private double cycleTime;
 	private int numChromosomes;
 
 	/* these are used for generating iterations */
@@ -30,7 +30,7 @@ public class LBPParameters {
 		return probability;
 	}
 
-	public int getCycleTime() {
+	public double getCycleTime() {
 		return cycleTime;
 	}
 
@@ -55,7 +55,7 @@ public class LBPParameters {
 	}
 
 	/* setters */
-	public void setCycleTime(int cycleTime) {
+	public void setCycleTime(double cycleTime) {
 		this.cycleTime = cycleTime;
 	}
 
