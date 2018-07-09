@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/stochastic.iml" filepath="$PROJECT_DIR$/.idea/stochastic.iml" />
+      <module fileurl="file://$PROJECT_DIR$/stochastic.iml" filepath="$PROJECT_DIR$/stochastic.iml" />
     </modules>
   </component>
 </project>
