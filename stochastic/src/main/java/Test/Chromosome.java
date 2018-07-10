@@ -220,7 +220,7 @@ public class Chromosome {
 		int last = tasks.length - 1;
 		int iterations = 0;
 		int x = 0;
-		float MeanTimeAssigned[] = new float[tasks.length];
+		double MeanTimeAssigned[] = new double[tasks.length];
 		double VarAssigned[] = new double[tasks.length];
 		int Ind[] = new int[tasks.length];
 		List<List<Integer>> workstations = new LinkedList<List<Integer>>();

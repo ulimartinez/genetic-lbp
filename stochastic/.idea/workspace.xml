@@ -2,8 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="81cb75bc-3106-4dec-8cf6-f8ce1b81144e" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Test/Chromosome.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/Chromosome.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Test/Code.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/Code.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Test/CycleTimeDialog.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/CycleTimeDialog.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Test/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Test/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Test/Task.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -14,22 +17,47 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="600">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Test/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="669" column="92" selection-start-line="669" selection-start-column="92" selection-end-line="669" selection-end-column="92" />
+            <state relative-caret-position="563">
+              <caret line="478" selection-start-line="478" selection-end-line="478" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#5853#6513#0" expanded="true" />
-                <element signature="e#6512#6513#0" expanded="true" />
-                <element signature="e#30857#31777#0" expanded="true" />
-                <element signature="e#31776#31777#0" expanded="true" />
-                <element signature="e#31886#32046#0" expanded="true" />
-                <element signature="e#32045#32046#0" expanded="true" />
-                <element signature="e#31406#31508#0" expanded="true" />
-                <element signature="e#31507#31508#0" expanded="true" />
+                <element signature="e#2018#2203#0" expanded="true" />
+                <element signature="e#2202#2203#0" expanded="true" />
+                <element signature="e#5859#6519#0" expanded="true" />
+                <element signature="e#6518#6519#0" expanded="true" />
+                <element signature="e#13958#13972#0" expanded="true" />
+                <element signature="e#25416#25578#0" expanded="true" />
+                <element signature="e#25577#25578#0" expanded="true" />
+                <element signature="e#25616#25771#0" expanded="true" />
+                <element signature="e#25770#25771#0" expanded="true" />
+                <element signature="e#25813#25972#0" expanded="true" />
+                <element signature="e#25971#25972#0" expanded="true" />
+                <element signature="e#26014#26174#0" expanded="true" />
+                <element signature="e#26173#26174#0" expanded="true" />
+                <element signature="e#26217#26374#0" expanded="true" />
+                <element signature="e#26373#26374#0" expanded="true" />
+                <element signature="e#26418#26564#0" expanded="true" />
+                <element signature="e#26563#26564#0" expanded="true" />
+                <element signature="e#26611#26801#0" expanded="true" />
+                <element signature="e#26800#26801#0" expanded="true" />
+                <element signature="e#26837#28055#0" expanded="true" />
+                <element signature="e#28054#28055#0" expanded="true" />
+                <element signature="e#28091#28250#0" expanded="true" />
+                <element signature="e#28249#28250#0" expanded="true" />
+                <element signature="e#28294#28860#0" expanded="true" />
+                <element signature="e#28859#28860#0" expanded="true" />
+                <element signature="e#28895#29316#0" expanded="true" />
+                <element signature="e#29315#29316#0" expanded="true" />
+                <element signature="e#29349#30887#0" expanded="true" />
+                <element signature="e#30886#30887#0" expanded="true" />
+                <element signature="e#30919#31839#0" expanded="true" />
+                <element signature="e#31838#31839#0" expanded="true" />
+                <element signature="e#31882#31984#0" expanded="true" />
+                <element signature="e#31983#31984#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -44,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Code.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Code.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Test/Code.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="582">
-              <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+            <state relative-caret-position="411">
+              <caret line="49" column="9" lean-forward="true" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -56,7 +84,7 @@
       <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1174">
+            <state relative-caret-position="6435">
               <caret line="143" column="14" selection-start-line="143" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
             </state>
           </provider>
@@ -74,12 +102,8 @@
       <file leaf-file-name="Dialog.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/Test/Dialog.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="271">
-              <caret line="68" column="43" lean-forward="true" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
-              <folding>
-                <element signature="e#2037#2215#0" expanded="true" />
-                <element signature="e#2214#2215#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="2520">
+              <caret line="68" column="43" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
             </state>
           </provider>
         </entry>
@@ -88,7 +112,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1125">
-              <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+              <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
             </state>
           </provider>
         </entry>
@@ -108,6 +132,10 @@
       <find>initiali</find>
       <find>exit</find>
       <find>scroll</find>
+      <find>load</find>
+      <find>Code</find>
+      <find>getNew</find>
+      <find>tasks</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -120,6 +148,7 @@
         <option value="$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java" />
         <option value="$PROJECT_DIR$/src/main/java/Test/ChildrenDialog.java" />
         <option value="$PROJECT_DIR$/src/main/java/Test/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/Test/Code.java" />
       </list>
     </option>
   </component>
@@ -129,10 +158,27 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="stochastic" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="stochastic" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds">
+    <option name="x" value="3200" />
     <option name="y" value="-28" />
     <option name="width" value="3200" />
     <option name="height" value="1768" />
@@ -143,24 +189,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="stochastic" type="58d84e3e:PackageViewProjectNode" />
-              <item name="stochastic" type="616d4139:PackageViewModuleNode" />
-            </path>
-            <path>
-              <item name="stochastic" type="58d84e3e:PackageViewProjectNode" />
-              <item name="stochastic" type="616d4139:PackageViewModuleNode" />
-              <item name="Test" type="1f31426a:PackageElementNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-      <pane id="AndroidView" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -198,6 +226,24 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="stochastic" type="58d84e3e:PackageViewProjectNode" />
+              <item name="stochastic" type="616d4139:PackageViewModuleNode" />
+            </path>
+            <path>
+              <item name="stochastic" type="58d84e3e:PackageViewProjectNode" />
+              <item name="stochastic" type="616d4139:PackageViewModuleNode" />
+              <item name="Test" type="1f31426a:PackageElementNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -288,6 +334,7 @@
       <option name="presentableId" value="Default" />
       <updated>1531161586819</updated>
       <workItem from="1531161593907" duration="3390000" />
+      <workItem from="1531238498426" duration="2185000" />
     </task>
     <task id="LOCAL-00001" summary="removed ignored dirs">
       <created>1531162098108</created>
@@ -321,56 +368,55 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="3390000" />
+    <option name="totallyTimeSpent" value="5575000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="-28" width="3200" height="1768" extended-state="0" />
-    <editor active="true" />
+    <frame x="3200" y="-28" width="3200" height="1768" extended-state="0" />
     <layout>
-      <window_info anchor="right" id="Palette" />
+      <window_info anchor="right" id="Palette" order="3" />
       <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Messages" />
-      <window_info anchor="right" id="Palette&#9;" />
-      <window_info id="Image Layers" />
-      <window_info anchor="right" id="Capture Analysis" />
-      <window_info anchor="bottom" id="Event Log" sideWeight="0.500322" side_tool="true" weight="0.42270058" />
-      <window_info anchor="right" id="Maven Projects" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Version Control" sideWeight="0.49967805" weight="0.32941943" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.49967805" visible="true" weight="0.32941943" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info id="Capture Tool" />
-      <window_info id="Designer" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24983902" />
-      <window_info anchor="bottom" id="Inspection Results" sideWeight="0.49967805" weight="0.42270058" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="bottom" id="Find" order="1" />
+      <window_info anchor="bottom" id="Messages" order="7" />
+      <window_info anchor="right" id="Palette&#9;" order="3" />
+      <window_info id="Image Layers" order="2" />
+      <window_info anchor="right" id="Capture Analysis" order="3" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.500322" side_tool="true" weight="0.42270058" />
+      <window_info active="true" anchor="right" id="Maven Projects" order="3" visible="true" weight="0.3296845" />
+      <window_info anchor="bottom" id="Database Changes" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" sideWeight="0.49967805" weight="0.32941943" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49967805" visible="true" weight="0.33007175" />
+      <window_info anchor="bottom" id="Terminal" order="7" />
+      <window_info id="Capture Tool" order="2" />
+      <window_info id="Designer" order="2" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25305858" />
+      <window_info anchor="right" id="Database" order="3" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info id="UI Designer" />
-      <window_info anchor="right" id="Theme Preview" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
-      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info id="UI Designer" order="2" />
+      <window_info anchor="right" id="Theme Preview" order="3" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.3988289" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Inspection Results" order="7" sideWeight="0.49967805" weight="0.42270058" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" />
     </layout>
     <layout-to-restore>
       <window_info anchor="right" id="Palette" order="0" />
+      <window_info anchor="bottom" id="Find" order="5" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="8" weight="0.25" />
       <window_info anchor="right" id="Capture Analysis" order="1" />
-      <window_info anchor="bottom" id="Version Control" order="0" />
-      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="4" />
+      <window_info anchor="bottom" id="Run" order="6" />
+      <window_info anchor="right" id="Theme Preview" order="2" />
+      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
       <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24983902" />
       <window_info id="Structure" order="6" side_tool="true" weight="0.25" />
-      <window_info anchor="right" id="Theme Preview" order="2" />
-      <window_info anchor="bottom" id="TODO" order="10" />
-      <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="6" type="SLIDING" weight="0.4" />
-      <window_info anchor="bottom" id="Run" order="6" />
+      <window_info anchor="right" id="Ant Build" order="7" weight="0.25" />
+      <window_info anchor="bottom" id="Database Changes" order="1" show_stripe_button="false" />
+      <window_info anchor="bottom" id="TODO" order="10" />
       <window_info id="Image Layers" order="0" />
       <window_info id="Designer" order="1" />
       <window_info id="UI Designer" order="2" />
@@ -380,9 +426,9 @@
       <window_info anchor="bottom" id="Terminal" order="2" />
       <window_info anchor="bottom" id="Event Log" order="3" side_tool="true" weight="0.33007175" />
       <window_info anchor="bottom" id="Inspection" order="9" weight="0.4" />
-      <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
+      <window_info anchor="bottom" id="Version Control" order="0" />
       <window_info id="Capture Tool" order="3" />
-      <window_info anchor="bottom" id="Find" order="5" />
+      <window_info anchor="bottom" id="Message" order="4" />
       <window_info anchor="right" id="Maven Projects" order="5" />
       <window_info id="Favorites" order="4" side_tool="true" />
     </layout-to-restore>
@@ -403,52 +449,61 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/Test/Code.java</url>
-          <line>32</line>
+          <url>file://$PROJECT_DIR$/src/main/java/Test/Main.java</url>
+          <line>478</line>
           <properties />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Test/Code.java</url>
+          <line>46</line>
+          <properties />
+          <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="1" />
+      <option name="time" value="3" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test/TasksDialog.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/target/classes/Test/Main.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="30105">
+          <caret line="669" column="82" lean-forward="true" selection-start-line="669" selection-start-column="82" selection-end-line="669" selection-end-column="82" />
           <folding>
-            <element signature="e#0#36864#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1174">
-          <caret line="143" column="14" selection-start-line="143" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1125">
-          <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Dialog.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="271">
-          <caret line="68" column="43" lean-forward="true" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
-          <folding>
-            <element signature="e#2037#2215#0" expanded="true" />
-            <element signature="e#2214#2215#0" expanded="true" />
+            <element signature="imports" expanded="true" />
+            <element signature="e#2018#2203#0" expanded="true" />
+            <element signature="e#2202#2203#0" expanded="true" />
+            <element signature="e#5859#6519#0" expanded="true" />
+            <element signature="e#6518#6519#0" expanded="true" />
+            <element signature="e#13958#13972#0" expanded="true" />
+            <element signature="e#25416#25578#0" expanded="true" />
+            <element signature="e#25577#25578#0" expanded="true" />
+            <element signature="e#25616#25771#0" expanded="true" />
+            <element signature="e#25770#25771#0" expanded="true" />
+            <element signature="e#25813#25972#0" expanded="true" />
+            <element signature="e#25971#25972#0" expanded="true" />
+            <element signature="e#26014#26174#0" expanded="true" />
+            <element signature="e#26173#26174#0" expanded="true" />
+            <element signature="e#26217#26374#0" expanded="true" />
+            <element signature="e#26373#26374#0" expanded="true" />
+            <element signature="e#26418#26564#0" expanded="true" />
+            <element signature="e#26563#26564#0" expanded="true" />
+            <element signature="e#26611#26801#0" expanded="true" />
+            <element signature="e#26800#26801#0" expanded="true" />
+            <element signature="e#26837#28055#0" expanded="true" />
+            <element signature="e#28054#28055#0" expanded="true" />
+            <element signature="e#28091#28250#0" expanded="true" />
+            <element signature="e#28249#28250#0" expanded="true" />
+            <element signature="e#28294#28860#0" expanded="true" />
+            <element signature="e#28859#28860#0" expanded="true" />
+            <element signature="e#28895#29316#0" expanded="true" />
+            <element signature="e#29315#29316#0" expanded="true" />
+            <element signature="e#29349#30887#0" expanded="true" />
+            <element signature="e#30886#30887#0" expanded="true" />
+            <element signature="e#30919#31839#0" expanded="true" />
+            <element signature="e#31838#31839#0" expanded="true" />
+            <element signature="e#31882#31984#0" expanded="true" />
+            <element signature="e#31983#31984#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -462,26 +517,124 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Test/Code.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="582">
+        <state relative-caret-position="2025">
           <caret line="45" column="24" selection-start-line="45" selection-start-column="24" selection-end-line="45" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6435">
+          <caret line="143" column="14" selection-start-line="143" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/TasksDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Dialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2520">
+          <caret line="68" column="43" lean-forward="true" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1125">
+          <caret line="27" column="30" lean-forward="true" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/TasksDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="20" column="13" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/Test/Main.class">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="6435">
+          <caret line="143" column="14" selection-start-line="143" selection-start-column="14" selection-end-line="143" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChromosomeDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1125">
+          <caret line="27" column="30" selection-start-line="27" selection-start-column="30" selection-end-line="27" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Dialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2520">
+          <caret line="68" column="43" selection-start-line="68" selection-start-column="43" selection-end-line="68" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/ChildrenDialog.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" selection-start-column="13" selection-end-column="13" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Test/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="669" column="92" selection-start-line="669" selection-start-column="92" selection-end-line="669" selection-end-column="92" />
+        <state relative-caret-position="563">
+          <caret line="478" selection-start-line="478" selection-end-line="478" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#5853#6513#0" expanded="true" />
-            <element signature="e#6512#6513#0" expanded="true" />
-            <element signature="e#30857#31777#0" expanded="true" />
-            <element signature="e#31776#31777#0" expanded="true" />
-            <element signature="e#31886#32046#0" expanded="true" />
-            <element signature="e#32045#32046#0" expanded="true" />
-            <element signature="e#31406#31508#0" expanded="true" />
-            <element signature="e#31507#31508#0" expanded="true" />
+            <element signature="e#2018#2203#0" expanded="true" />
+            <element signature="e#2202#2203#0" expanded="true" />
+            <element signature="e#5859#6519#0" expanded="true" />
+            <element signature="e#6518#6519#0" expanded="true" />
+            <element signature="e#13958#13972#0" expanded="true" />
+            <element signature="e#25416#25578#0" expanded="true" />
+            <element signature="e#25577#25578#0" expanded="true" />
+            <element signature="e#25616#25771#0" expanded="true" />
+            <element signature="e#25770#25771#0" expanded="true" />
+            <element signature="e#25813#25972#0" expanded="true" />
+            <element signature="e#25971#25972#0" expanded="true" />
+            <element signature="e#26014#26174#0" expanded="true" />
+            <element signature="e#26173#26174#0" expanded="true" />
+            <element signature="e#26217#26374#0" expanded="true" />
+            <element signature="e#26373#26374#0" expanded="true" />
+            <element signature="e#26418#26564#0" expanded="true" />
+            <element signature="e#26563#26564#0" expanded="true" />
+            <element signature="e#26611#26801#0" expanded="true" />
+            <element signature="e#26800#26801#0" expanded="true" />
+            <element signature="e#26837#28055#0" expanded="true" />
+            <element signature="e#28054#28055#0" expanded="true" />
+            <element signature="e#28091#28250#0" expanded="true" />
+            <element signature="e#28249#28250#0" expanded="true" />
+            <element signature="e#28294#28860#0" expanded="true" />
+            <element signature="e#28859#28860#0" expanded="true" />
+            <element signature="e#28895#29316#0" expanded="true" />
+            <element signature="e#29315#29316#0" expanded="true" />
+            <element signature="e#29349#30887#0" expanded="true" />
+            <element signature="e#30886#30887#0" expanded="true" />
+            <element signature="e#30919#31839#0" expanded="true" />
+            <element signature="e#31838#31839#0" expanded="true" />
+            <element signature="e#31882#31984#0" expanded="true" />
+            <element signature="e#31983#31984#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Test/Code.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="49" column="9" lean-forward="true" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
         </state>
       </provider>
     </entry>

@@ -8,7 +8,7 @@ public class CycleTimeDialog extends Dialog {
 	public double value;
 
 	public CycleTimeDialog() {
-		super("Cycle Time", "(Enter integers)");
+		super("Cycle Time", "(Enter doubles)");
 	}
 	
 	@Override

@@ -58,7 +58,7 @@ public class Main {
 	private ChildrenDialog childrenWindow;
 	private int tasks;
 	private JTable table;
-	int[] times;
+	double[] times;
 	int[][] precedences;
 	double[] stdDev;
 	private JTable table_1;
@@ -115,7 +115,7 @@ public class Main {
 			//If no file has been opened
 			if (file == null) {
 				 // array to store time of each Task
-				times = new int[tasks];
+				times = new double[tasks];
 				// array to store precedence of each Task
 				precedences = new int[tasks][]; 
 				// array to store variance of each Task
@@ -359,14 +359,14 @@ public class Main {
 		if (file != null) {
 			try {
 			    if(FilenameUtils.getExtension(file.getName()).equals("lbp")){
-                    int[] toTime = null;
+                    double[] toTime = null;
                     String sCurrentLine;
                     BufferedReader br = new BufferedReader(new FileReader(file));
                     sCurrentLine = br.readLine();
                     sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
                     sCurrentLine = sCurrentLine.replaceAll("\\s+","");
                     String[] textTime = sCurrentLine.split(",");
-                    toTime = new int[textTime.length];
+                    toTime = new double[textTime.length];
                     for (int i = 0; i < textTime.length; i++) {
                         toTime[i] = Integer.parseInt(textTime[i]);
                     }
@@ -473,7 +473,7 @@ public class Main {
                         }
                     }
                     //save all times, std and precedences
-                    times = new int[tasksMap.size()];
+                    times = new double[tasksMap.size()];
                     stdDev = new double[tasksMap.size()];
                     precedences = new int[tasksMap.size()][];
                     for(int i = 0; i < times.length; i++){
@@ -569,10 +569,7 @@ public class Main {
 		mnFile.add(mntmSave);
 
 		final JMenuItem mntmOpen = new JMenuItem("Open");
-		mnFile.add(mntmOpen);
-
-		final JMenuItem mntmExit = new JMenuItem("Exit");
-		mnFile.add(mntmExit);
+		mnFile.add(mntmOpen);	
 
 		final JMenuItem mntmInitialPopulation = new JMenuItem("Initial Population");
 		mntmInitialPopulation.setEnabled(false);
@@ -667,7 +664,7 @@ public class Main {
 
 		JScrollPane scroll2 = new JScrollPane(table_1);
 		scroll2.setViewportBorder(null);
-		scroll2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+		scroll2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 		panel_5.add(scroll2);
 
 		final JLabel lblMinimumWorkstations = new JLabel("Minimum Workstations:");
@@ -839,7 +836,7 @@ public class Main {
 						e.printStackTrace();
 					}
 				}
-				times = new int[tasks];
+				times = new double[tasks];
 				precedences = new int[tasks][];
 				stdDev = new double[tasks];
 				for (int i = 0; i < tasks; i++) {
@@ -891,13 +888,6 @@ public class Main {
 				}
 			}
 		});
-
-		mntmExit.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
-                frame.dispose();
-            }
-        });
 
 		mntmNextGeneration.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
