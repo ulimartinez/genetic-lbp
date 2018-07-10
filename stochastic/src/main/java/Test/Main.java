@@ -53,7 +53,10 @@ import org.w3c.dom.CharacterData;
 
 public class Main {
 	LBPParameters params;
-
+	////////////////////
+	//private long bestTime[] = new long[1000];
+	//int n = 0;
+	////////////////////
 	private JFrame frame;
 	private ChildrenDialog childrenWindow;
 	private int tasks;
@@ -156,8 +159,11 @@ public class Main {
 			
 			// if generation L is the first then initialize chromosomes
 			if (l == 0) {
+				/////////////////////
+				//n = 0;
+				////////////////////
 				STime = System.nanoTime();
-				generationCounter = 0;			
+				generationCounter = 1;			
 				for (int j = 0; j < numberOfChromosomes; j++) {
 					// if generation L is the first then
 					chromos[j] = getNewChromosome();
@@ -231,6 +237,17 @@ public class Main {
 			type = "Mutation  (" + chromos[j].generation + ")";
 		} else if (chromos[j].isPreserved) {
 			type = "Old (" + chromos[j].generation + ")";
+			
+			/*
+			////////////////////////////////////////////
+			if(bestTime[(chromos[j].generation*2)-1] != 0) {
+				chromos[j].computationalTime = bestTime[(chromos[j].generation*2)-2];
+			} else {
+				chromos[j].computationalTime = bestTime[(chromos[j].generation*2)-1];
+			}
+			////////////////////////////////////////////
+			*/
+			
 		}
 		DefaultTableModel tbl = (DefaultTableModel) table_1.getModel();
 		
@@ -328,6 +345,11 @@ public class Main {
 			preserve[i].isChild = false;
 			preserve[i].isMutation = false;
 			newGeneration[i] = preserve[i];
+			
+			///////////////////////////
+			//bestTime[n] = preserve[i].computationalTime;
+			//n++;
+			///////////////////////////
 		}
 		Chromosome[] mutated = bestChromosomes(mutatedAmount);
 		for (int i = 0; i < mutated.length; i++) {
