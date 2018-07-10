@@ -101,16 +101,7 @@ public class Main {
 		int generations = params.getIterations();
 		for (int l = 0; l < generations; l++) {
 			// For Cycle to run all generations L
-			table_1.setModel(new DefaultTableModel(new Object[][] {},
-					new String[] { "Type", "Chromosome", "SI", "WS", "CPT", "View" }) {
-				Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class,
-						long.class };
-
-				@Override
-				public Class getColumnClass(int columnIndex) {
-					return columnTypes[columnIndex];
-				}
-			});
+			configureTables(1);
 			
 			//If no file has been opened
 			if (file == null) {
@@ -157,9 +148,8 @@ public class Main {
 			// if generation L is the first then initialize chromosomes
 			if (l == 0) {
 				STime = System.nanoTime();
-				generationCounter = 0;			
+				generationCounter = 1;			
 				for (int j = 0; j < numberOfChromosomes; j++) {
-					// if generation L is the first then
 					chromos[j] = getNewChromosome();
 				}
 			}
@@ -209,8 +199,7 @@ public class Main {
 	void fillTableRow(int j) {
 		Action solution = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
-				table_2.setModel(new DefaultTableModel(new Object[][] {},
-						new String[] { "Station", "Options", "Assigned", "Time Left" }));
+				configureTables(2);
 				String[] toSet = chromos[Integer.valueOf(e.getActionCommand())].getSelected();
 				DefaultTableModel dtm = (DefaultTableModel) table_2.getModel();
 				for (int i = 0; i < toSet.length; i++) {
@@ -520,12 +509,70 @@ public class Main {
 		}
 	}
 	
+	public void configureTables(int chosen) {
+		
+		if(chosen == 0) {
+			table.setModel(new DefaultTableModel(new Object[][] { { "Task", " Time", "Variance", "Precedences" }, },
+					new String[] { "Task", "Time", "Variance", "Precedence" }) {
+				Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class };
+
+				@Override
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			});
+			table.getColumnModel().getColumn(0).setPreferredWidth(60);
+			table.getColumnModel().getColumn(0).setMinWidth(40);
+			table.getColumnModel().getColumn(1).setPreferredWidth(60);
+			table.getColumnModel().getColumn(1).setMinWidth(40);
+			table.getColumnModel().getColumn(2).setPreferredWidth(80);
+			table.getColumnModel().getColumn(2).setMinWidth(60);
+			table.getColumnModel().getColumn(3).setPreferredWidth(95);
+			table.getColumnModel().getColumn(3).setMinWidth(70);
+		}
+		
+		if(chosen==1) {
+			table_1.setModel(new DefaultTableModel(new Object[][] {},
+					new String[] { "Type", "Chromosome", "SI", "WS", "PCT", "View" }) {
+				Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class, long.class,
+						Object.class };
+
+				@Override
+				public Class getColumnClass(int columnIndex) {
+					return columnTypes[columnIndex];
+				}
+			});
+			table_1.getColumnModel().getColumn(0).setPreferredWidth(80);
+			table_1.getColumnModel().getColumn(0).setMinWidth(40);
+			table_1.getColumnModel().getColumn(1).setPreferredWidth(220);
+			table_1.getColumnModel().getColumn(1).setMinWidth(85);
+			table_1.getColumnModel().getColumn(2).setPreferredWidth(70);
+			table_1.getColumnModel().getColumn(2).setMinWidth(35);
+			table_1.getColumnModel().getColumn(3).setPreferredWidth(40);
+			table_1.getColumnModel().getColumn(3).setMinWidth(35);
+			table_1.getColumnModel().getColumn(4).setPreferredWidth(85);
+			table_1.getColumnModel().getColumn(4).setMinWidth(70);
+			table_1.getColumnModel().getColumn(5).setPreferredWidth(50);
+			table_1.getColumnModel().getColumn(5).setMinWidth(35);
+		}
+		
+		if(chosen==2) {
+			table_2.setModel(new DefaultTableModel(new Object[][] {},
+					new String[] { "Station", "Options", "Assigned", "Time Left" }));
+
+			table_2.getColumnModel().getColumn(0).setMinWidth(50);
+			table_2.getColumnModel().getColumn(1).setMinWidth(50);
+			table_2.getColumnModel().getColumn(2).setMinWidth(60);
+			table_2.getColumnModel().getColumn(3).setMinWidth(60);
+		}
+	}
+	
 	/**
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
 		frame = new JFrame();
-		frame.setBounds(100, 100, 701, 463);
+		frame.setBounds(100, 100, 867, 563);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//Initialize Dialogs
@@ -585,12 +632,12 @@ public class Main {
 		frame.getContentPane().setLayout(null);
 
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(0, 202, 319, 198);
+		panel_2.setBounds(0, 250, 300, 250);
 		frame.getContentPane().add(panel_2);
 
 		table_2 = new JTable();
-		table_2.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Station", "Options", "Assigned", "Time Left" }));
+		configureTables(2);
+		
 		table_2.setVisible(false);
 		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -600,71 +647,46 @@ public class Main {
 		panel_2.add(scroll3, BorderLayout.CENTER);
 
 		JPanel panel = new JPanel();
-		panel.setBounds(0, 0, 248, 204);
+		panel.setBounds(0, 0, 300, 250);
 		frame.getContentPane().add(panel);
 		panel.setLayout(null);
 
 		JPanel panel_4 = new JPanel();
-		panel_4.setBounds(0, 0, 248, 204);
+		panel_4.setBounds(0, 0, 300, 250);
 		panel.add(panel_4);
 		panel_4.setLayout(new GridLayout(0, 1, 0, 0));
 
 		table = new JTable(tasks, 4);
 		table.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-		table.setModel(new DefaultTableModel(new Object[][] { { "Task", "Mean Time", "Variance", "Precedences" }, },
-				new String[] { "Task", "Mean Time", "Variance", "Precedence" }) {
-			Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class };
-
-			@Override
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		table.getColumnModel().getColumn(0).setPreferredWidth(21);
-		table.getColumnModel().getColumn(1).setPreferredWidth(27);
-		table.getColumnModel().getColumn(2).setPreferredWidth(97);
-		table.getColumnModel().getColumn(3).setPreferredWidth(97);
+		configureTables(0);
 		table.setVisible(false);
 
 		JScrollPane scroll = new JScrollPane(table);
 		scroll.setViewportBorder(null);
-		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_4.add(scroll, BorderLayout.CENTER);
 
 		JPanel panel_1 = new JPanel();
-		panel_1.setBounds(317, 0, 372, 400);
+		panel_1.setBounds(300, 0, 550, 500);
 		frame.getContentPane().add(panel_1);
 		panel_1.setLayout(null);
 
 		JPanel panel_5 = new JPanel();
-		panel_5.setBounds(0, 0, 380, 368);
+		panel_5.setBounds(0, 0, 550, 500);
 		panel_1.add(panel_5);
 
 		table_1 = new JTable();
 		table_1.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table_1.setToolTipText("");
-		table_1.setModel(new DefaultTableModel(new Object[][] {},
-				new String[] { "Type", "Chromosome", "SI", "WS", "PCT", "View" }) {
-			Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class, long.class,
-					Object.class };
-
-			@Override
-			public Class getColumnClass(int columnIndex) {
-				return columnTypes[columnIndex];
-			}
-		});
-		table_1.getColumnModel().getColumn(0).setPreferredWidth(50);
-		table_1.getColumnModel().getColumn(0).setMinWidth(50);
-		table_1.getColumnModel().getColumn(1).setPreferredWidth(180);
-		table_1.getColumnModel().getColumn(1).setMinWidth(37);
-		table_1.getColumnModel().getColumn(2).setPreferredWidth(47);
-		table_1.getColumnModel().getColumn(3).setPreferredWidth(38);
+		configureTables(1);
+		
 		table_1.setVisible(false);
 		panel_5.setLayout(new GridLayout(0, 1, 0, 0));
 
 		JScrollPane scroll2 = new JScrollPane(table_1);
 		scroll2.setViewportBorder(null);
-		scroll2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+		scroll2.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		panel_5.add(scroll2);
 
 		final JLabel lblMinimumWorkstations = new JLabel("Minimum Workstations:");
@@ -745,29 +767,9 @@ public class Main {
 				// panel_4.add(table);
 				table_1.setVisible(false);
 				table_2.setVisible(false);
-				table_1.setModel(
-						new DefaultTableModel(new Object[][] {}, new String[] { "Type", "Chromosome", "SI", "View" }) {
-							Class[] columnTypes = new Class[] { String.class, Object.class, Object.class,
-									Object.class };
-
-							@Override
-							public Class getColumnClass(int columnIndex) {
-								return columnTypes[columnIndex];
-							}
-						});
-				table_2.setModel(new DefaultTableModel(new Object[][] {},
-						new String[] { "Station", "Options", "Assigned", "Time Left" }));
-				table.setModel(
-						new DefaultTableModel(new Object[][] { { "Task", "Mean Time", "Variance", "Precedences" }, },
-								new String[] { "Task", "Mean Time", "Variance", "Precedence" }) {
-							Class[] columnTypes = new Class[] { String.class, Object.class, Object.class,
-									Object.class };
-
-							@Override
-							public Class getColumnClass(int columnIndex) {
-								return columnTypes[columnIndex];
-							}
-						});
+				configureTables(0);
+				configureTables(1);
+				configureTables(2);
 				askTasks.setVisible(true);
 				mntmGenerations.setEnabled(true);
 				mntmInitialPopulation.setEnabled(true);
@@ -868,15 +870,7 @@ public class Main {
 			public void actionPerformed(ActionEvent ae) {
 				mntmInitialPopulation.setEnabled(true);
 				mntmGenerations.setEnabled(true);
-				table.setModel(new DefaultTableModel(new Object[][] { { "Task", "Time", "Variance", "Precedences" }, },
-						new String[] { "Task", "Time", "Variance", "Precedence" }) {
-					Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class };
-
-					@Override
-					public Class getColumnClass(int columnIndex) {
-						return columnTypes[columnIndex];
-					}
-				});
+				configureTables(0);
 				fc = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] { "lbp", "graphml" });
 				fc.addChoosableFileFilter(filter);
