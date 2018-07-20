@@ -1,6 +1,8 @@
 package Test;
 
 import java.awt.EventQueue;
+
+import javax.imageio.ImageIO;
 import javax.swing.AbstractAction;
 import javax.swing.Action;
 import javax.swing.JDialog;
@@ -8,6 +10,10 @@ import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
+import java.awt.Rectangle;
+import java.awt.Robot;
+import java.awt.Toolkit;
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 
 import javax.swing.JMenuBar;
@@ -17,6 +23,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.image.BufferedImage;
+
 import javax.swing.JLabel;
 
 import java.awt.GridBagLayout;
@@ -55,7 +63,7 @@ public class Main {
 	LBPParameters params;
 
 	private JFrame frame;
-	private ChildrenDialog childrenWindow;
+	private PercentageDialog childrenWindow;
 	private int tasks;
 	private JTable table;
 	double[] times;
@@ -90,10 +98,13 @@ public class Main {
 
 	/**
 	 * Create the application.
+	 * @throws InterruptedException 
 	 */
-	public Main() {
+	public Main() throws InterruptedException {
 		params = new LBPParameters();
 		initialize();
+
+		jumpstart(33); // up to 33, skipping 11
 	}
 
 	void generateSolution() {
@@ -114,7 +125,7 @@ public class Main {
 				// for Cycle for each Task
 				for (int i = 0; i < tasks; i++) {
 					// fill array with time of each Task
-					times[i] = Integer.parseInt((String) table.getValueAt(i, 1)); 
+					times[i] = Double.parseDouble((String) table.getValueAt(i, 1)); 
 					
 					// if maximum time registered is less than Time of Task scanned
 					if (maxTime < times[i]) {
@@ -154,18 +165,20 @@ public class Main {
 				}
 			}
 
-			// Fill Table with chromosome data
-			for (int j = 0; j < numberOfChromosomes; j++) {
-				fillTableRow(j);
-			}
 			
 			// if generation L is NOT  the first
 			if (l != 0) {
 				try {
 					chromos = setNextGeneration();
+					
 				} catch (MathException e) {
 					e.printStackTrace();
 				}
+			}
+
+			// Fill Table with chromosome data
+			for (int j = 0; j < numberOfChromosomes; j++) {
+				fillTableRow(j);
 			}
 		}
 	}
@@ -357,7 +370,7 @@ public class Main {
                     String[] textTime = sCurrentLine.split(",");
                     toTime = new double[textTime.length];
                     for (int i = 0; i < textTime.length; i++) {
-                        toTime[i] = Integer.parseInt(textTime[i]);
+                        toTime[i] = Double.parseDouble(textTime[i]);
                     }
 
                     times = toTime;
@@ -415,7 +428,7 @@ public class Main {
                         if (node.getNodeType() == Node.ELEMENT_NODE) {
                             Element element = (Element) node;
                             int tasknum = 0;
-                            int tasktime = 0;
+                            double tasktime = 0;
                             double taskstd = 0;
 
                             NodeList data = element.getElementsByTagName("data");
@@ -427,7 +440,7 @@ public class Main {
                                     if (dataElement.getAttribute("key").equals("d2")) {
                                         CharacterData cd = (CharacterData) dataNode.getFirstChild();
                                         String[] csvData = cd.getData().split(",");
-                                        tasktime = Integer.parseInt(csvData[0]);
+                                        tasktime = Double.parseDouble(csvData[0]);
                                         taskstd = Double.parseDouble(csvData[1]);
                                     }
                                     else if (dataElement.getAttribute("key").equals("d3")) {
@@ -583,22 +596,22 @@ public class Main {
 		final CycleTimeDialog askCycle = new CycleTimeDialog();
 		askCycle.setVisible(false);
 
-		final ChromosomeDialog amountChromosomes = new ChromosomeDialog();
+		final IntegerDialog amountChromosomes = new IntegerDialog("Number of Chromosomes");
 		amountChromosomes.setVisible(false);
 		
-		final IterationDialog iterations = new IterationDialog();
+		final IntegerDialog iterations = new IntegerDialog("Number of Iterations");
 		iterations.setVisible(false);
 
-		final ProbabilityDialog probabilityWindow = new ProbabilityDialog();
+		final PercentageDialog probabilityWindow = new PercentageDialog("Probability %");
 		probabilityWindow.setVisible(false);
 
-		childrenWindow = new ChildrenDialog();
+		childrenWindow = new PercentageDialog("Children %");
 		childrenWindow.setVisible(false);
 
-		final MutationsDialog mutationWindow = new MutationsDialog();
+		final PercentageDialog mutationWindow = new PercentageDialog("Mutations %");
 		mutationWindow.setVisible(false);
 
-		final PreservedDialog preservedWindow = new PreservedDialog();
+		final PercentageDialog preservedWindow = new PercentageDialog("Preserved %");
 		preservedWindow.setVisible(false);
 
 		//Create Menu
@@ -711,6 +724,8 @@ public class Main {
 		gbl_contentPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.getContentPane().setLayout(gbl_contentPanel);
+		
+		//Set Listeners
 
 		mntmGenerations.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -746,13 +761,13 @@ public class Main {
 				params.setProbability(probabilityWindow.showDialog());
 			}
 		});
+		
 		probabilityWindow.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent ce) {
 				params.setCycleTime(askCycle.showDialog());
 			}
 		});
-
 
 		mntmInitialPopulation.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
@@ -782,6 +797,7 @@ public class Main {
 				params.setNumChromosomes(amountChromosomes.showDialog());
 			}
 		});
+		
 		amountChromosomes.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent ce) {
@@ -799,6 +815,7 @@ public class Main {
 				lblComputationalTime.setVisible(true);
 			}
 		});
+		
 		askTasks.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent e) {
@@ -866,6 +883,7 @@ public class Main {
 				write.close();
 			}
 		});
+		
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				mntmInitialPopulation.setEnabled(true);
@@ -888,5 +906,76 @@ public class Main {
 				nextGeneration();
 			}
 		});
+		
 	}
+
+	public void  jumpstart(int i) throws InterruptedException {
+
+		String filepath = "C:\\Users\\ivanm\\Documents\\zzzzzzz\\";
+		
+		double child[] = {	0.30, 0.20, 0.10, 0.30, 0.20, 0.10, 0.10, 0.20, 0.10, 0.20, 0.30, 0.20, 0.20, 0.20, 0.10, 0.30, 0.10, 0.20, 0.20, 0.30, 0.30, 0.20, 0.30, 0.30, 0.20, 0.10, 0.20, 0.10, 0.30, 0.10, 0.20 };
+		double mut[] = { 0.15, 0.10, 0.15, 0.15, 0.10, 0.15, 0.05, 0.10, 0.05, 0.10, 0.05, 0.10, 0.10, 0.10, 0.05, 0.05, 0.15, 0.10, 0.05, 0.10, 0.05, 0.10, 0.15, 0.05, 0.15, 0.10, 0.10, 0.15, 0.15, 0.05, 0.10 };
+		double pres[] = { 0.20, 0.15, 0.20, 0.20, 0.15, 0.20, 0.20, 0.15, 0.10, 0.15, 0.20, 0.10, 0.15, 0.15, 0.20, 0.20, 0.10, 0.15, 0.15, 0.15, 0.10, 0.15, 0.10, 0.10, 0.15, 0.15, 0.15, 0.10, 0.10, 0.10, 0.20 };
+		int chrm[] = { 20, 40, 20, 60, 40, 60, 60, 20, 20, 40, 20, 40, 60, 40, 20, 60, 60, 40, 40, 40, 60, 40, 20, 20, 40, 40, 40, 20, 60, 60, 40 };
+		
+		int times[] = { 10, 10, 10, 50, 10, 25, 25, 25, 25, 10, 50, 25, 50, 25, 25, 25, 100, 50, 25, 25, 25, 25, 50, 100, 50, 50, 25, 25, 50, 25, 50, 50, 10, 100	};
+		
+		params.setIterations(50);
+		params.setProbability(0.95);
+		
+		PrintWriter write = null;
+		try {
+			write = new PrintWriter(filepath+ "\\Stefanya\\" + (i+1) + ".txt");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		
+		file = new File( filepath+(i+1)+ ".lbp" );
+		load();
+
+		write.println("Problema: " +( i+1) );
+
+		params.setCycleTime(times[i]);
+		for(int j = 0; j<31; j++) {
+			
+			try {
+
+			params.setChildPercent(child[j]);
+			params.setMutationsPercent(mut[j]);
+			params.setPreservedPercent(pres[j]);
+			params.setNumChromosomes(chrm[j]);
+			
+			chromos = new Chromosome[params.getNumChromosomes()]; 
+			generateSolution();
+			table_1.repaint();
+			table_1.setVisible(true);
+			
+			frame.repaint();
+			frame.setVisible(true);
+			
+			write.println(chromos[0].getCompTime());	
+			
+			makeScreenshot(frame, filepath, i+1, j+1);
+			} catch(Exception e) {
+				write.println("error" );
+			}
+		}
+		write.println();
+		write.close();
+	}
+	
+	public static final void makeScreenshot(JFrame argFrame, String filepath, int i, int j) {
+		
+		try {
+			
+			Rectangle rec = argFrame.getBounds();
+		    BufferedImage bufferedImage = new BufferedImage(rec.width, rec.height, BufferedImage.TYPE_INT_ARGB);
+		    argFrame.paint(bufferedImage.getGraphics());
+			
+			ImageIO.write(bufferedImage, "png", new File( filepath+"\\Stefanya\\shots\\" + i + "_" + j + ".png" ));
+		} catch (IOException ioe) {
+	        ioe.printStackTrace();
+	    }
+	}
+	
 }

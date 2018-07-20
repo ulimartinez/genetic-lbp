@@ -2,9 +2,13 @@ package Test;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.Arrays;
 
 public class Code {
+	
+	private Random generator = new Random(System.currentTimeMillis());
+	
 	private Chromosome taskss;
 	//chromosome containing tasks with precedence
 	private Task[] tasks;
@@ -48,7 +52,7 @@ public class Code {
 				noPrecedence.add(i + 1);	//adds to list Task with no precedence recognized by index array
 			}
 		}
-		int first = (int)(Math.random() * noPrecedence.size());	//choose random any Task with no precedence
+		int first = generator.nextInt(noPrecedence.size());	//choose random any Task with no precedence
 		initial[0] = noPrecedence.get(first);	//
 		noPrecedence.remove(first);		// Reinitialize list "no precedence"
 		for (int k = 1; k < initial.length; k++) {// verify every gen (Task)
@@ -75,7 +79,7 @@ public class Code {
 					break;
 				}
 			}
-			initial[k] = candidates[(int)(Math.random() * totalCandidates)]; //choose any random candidate if exist more than 1
+			initial[k] = candidates[generator.nextInt(totalCandidates)]; //choose any random candidate if exist more than 1
 		}
 		taskss.computationalTime = System.nanoTime()-taskss.startTime;
 		return initial;
@@ -108,7 +112,7 @@ public class Code {
 						break;
 					}
 				}
-				initial[k] = candidates[(int)(Math.random() * totalCandidates)];
+				initial[k] = candidates[generator.nextInt(totalCandidates)];
 			}
 			System.out.println(Arrays.toString(initial));
 		}

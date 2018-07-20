@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class converter {
 	public static void main(String[] args) throws IOException {
 		
-		File file = new File("C:\\data.xml");
+		File file = new File("C:\\\\Users\\\\ivanm\\\\Documents\\\\school\\\\TEC\\\\Delfin\\data.xml");
 		String curr = "";
 		String out = "";
 		String times = "[";
@@ -43,15 +43,11 @@ public class converter {
 		times = times.substring(0, times.length() - 2) + "]\n";
 		variance = variance.substring(0, variance.length() - 2) + "]\n";
 
-		file = new File("C:\\formated.lbp");
+		file = new File("C:\\Users\\ivanm\\Documents\\school\\TEC\\Delfin\\3\\A37.lbp");
 		BufferedWriter  bw = new BufferedWriter(new FileWriter(file));
 		bw.write(times);
 		bw.write(variance);
 		bw.write(out);
 		bw.close();
-		
-		System.out.println(times);
-		System.out.println(variance);
-		System.out.println(out);
 	}
 }

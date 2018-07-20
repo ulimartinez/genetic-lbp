@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Chromosome {
+	
+	private Random generator = new Random(System.currentTimeMillis());
+	
 	int assigned;
 	int Varassigned;
 	String[] line;
@@ -57,7 +60,7 @@ public class Chromosome {
 		Chromosome mutated = new Chromosome();
 		mutated.startTime = STime;
 		//Make head of at least 2 genes
-		int position = (int) (Math.random() * (tasks.length - 2)) + 2;
+		int position = generator.nextInt(tasks.length - 2) + 2;
 		List<Task> selected = new LinkedList<Task>();
 		List<Task> remaining = new LinkedList<Task>();
 		List<Integer> selectedIndex = new LinkedList<Integer>();
@@ -97,7 +100,7 @@ public class Chromosome {
 				}
 			}
 			//Randomly choose a candidate and pass it to select
-			int rand = (int) (Math.random() * candidates.size());
+			int rand =generator.nextInt(candidates.size());
 			selected.add(candidates.get(rand));
 			selectedIndex.add(candidatesIndex.get(rand));
 			candidates.remove(rand);
@@ -140,8 +143,8 @@ public class Chromosome {
 		return (smoothness);
 	}
 
-	float getCompTime() {
-		return (computationalTime / 1000);
+	long  getCompTime() {
+		return computationalTime;
 	}
 
 	List<List<Integer>> getSolution() {
@@ -150,8 +153,8 @@ public class Chromosome {
 
 	Chromosome crossOver(Chromosome parent, double probability, long STime, int gen) throws MathException {
 
-		int first = (int) (Math.random() * parent.tasks.length / 2 - 1) + 1;
-		int last = (int) (Math.random() * parent.tasks.length / 2 - 1) + 1;
+		int first =generator.nextInt(parent.tasks.length / 2 - 1) + 1;
+		int last =generator.nextInt( parent.tasks.length / 2 - 1) + 1;
 		Chromosome newChild = new Chromosome();
 		newChild.startTime = STime;
 		if (parent.tasks.length == this.tasks.length) {
@@ -245,8 +248,7 @@ public class Chromosome {
 			if (res2 >= probability && res3 >= probability) {
 				// 1st option //stochastic
 				currLine += taskIndex[first] + "," + taskIndex[last] + "&";
-				Random fromFirst = new Random();
-				if (fromFirst.nextBoolean()) {
+				if (generator.nextBoolean()) {
 					currLine += taskIndex[first] + "&";
 					availableTime -= tasks[first].getTime();
 					MeanTimeAssigned[tableIndex] = tasks[first].getTime();

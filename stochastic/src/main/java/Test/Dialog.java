@@ -1,5 +1,6 @@
 package Test;
 
+//Import statements
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -14,20 +15,36 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * This is an abstract class for a dialog that asks and retrieves a value 
+ * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
+ *
+ */
 public abstract class Dialog extends JDialog {
 	private static final long serialVersionUID = 1218049109753003135L;
 
+	/**
+	 * TextField for the user to input their answer
+	 */
 	protected JTextField textField;
+	
+	/**
+	 * Label to indicate to the user the value type to input
+	 */
 	protected JLabel lblValue;
 
+	/**
+	 * Abstract method to read the value in the text field 
+	 * that must be implemented by the class' children
+	 * @return - true if the value was successfully read, false otherwise.
+	 */
 	public abstract boolean readValue();
 
+	
 	/**
-	 * Launch the application.
-	 */
-
-	/**
-	 * Create the dialog.
+	 * Dialog constructor
+	 * @param label - Identifies which data to input
+	 * @param type - Specifies the variable type to input
 	 */
 	public Dialog(String label, String type) {
 		super();
@@ -83,9 +100,5 @@ public abstract class Dialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
-	}
-
-	public void setLabel(String set) {
-		this.lblValue.setText(set);
 	}
 }

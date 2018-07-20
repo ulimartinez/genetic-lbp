@@ -51,7 +51,7 @@ public class Task {
 		return(probabilityA);
 	}
 	public int getTaskNum(){ return taskNum; }
-	void setTime(int time) {
+	void setTime(double time) {
 		this.MeanTime = time;
 	}
 	void setPrecedences(int[] precedences) {
