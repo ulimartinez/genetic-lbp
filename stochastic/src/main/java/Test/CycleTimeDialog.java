@@ -17,7 +17,7 @@ public class CycleTimeDialog extends Dialog {
 	public double value;
 
 	/**
-	 * Constructor of the class
+	 * Class Constructor
 	 */
 	public CycleTimeDialog() {
 		super("Cycle Time", "(Enter doubles)");

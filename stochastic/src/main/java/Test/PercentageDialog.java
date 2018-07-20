@@ -15,7 +15,7 @@ public class PercentageDialog extends Dialog {
 	public double value;
 	
 	/**
-	 * Constructor of the class
+	 * Class constructor
 	 * @param title -  Identifies which data to input
 	 */
 	public PercentageDialog(String title) {

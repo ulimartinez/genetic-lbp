@@ -17,7 +17,7 @@ public class IntegerDialog extends Dialog {
 	public int value;
 
 	/**
-	 * Constructor of the class
+	 * Class constructor
 	 * @param title -  Identifies which data to input
 	 */
 	public IntegerDialog(String title) {

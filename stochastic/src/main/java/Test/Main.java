@@ -104,7 +104,7 @@ public class Main {
 		params = new LBPParameters();
 		initialize();
 
-		jumpstart(33); // up to 33, skipping 11
+		//jumpstart(33); // up to 33, skipping 11
 	}
 
 	void generateSolution() {
