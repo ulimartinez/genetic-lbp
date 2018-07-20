@@ -125,6 +125,6 @@ public abstract class Dialog extends JDialog {
 	 * @param newLabel
 	 */
 	public void changeTypeLabel(String newLabel) {
-		lblValue.setText(newLabel);
+		lblType.setText(newLabel);
 	}
 }

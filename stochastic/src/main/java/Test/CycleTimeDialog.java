@@ -17,9 +17,9 @@ public class CycleTimeDialog extends Dialog {
 	protected double value;
 	
 	/**
-	 * A double variable to store the smallest time acceptable
+	 * A Double variable to store the smallest time acceptable
 	 */
-	protected double minimum;
+	protected Double minimum;
 
 	/**
 	 * Class Constructor
@@ -57,7 +57,7 @@ public class CycleTimeDialog extends Dialog {
 	 */
 	public double showDialog(double highest) {
 		this.minimum = highest;
-		this.changeTypeLabel("(Enter doubles over )" + this.minimum);
+		this.changeTypeLabel("(Over " + this.minimum.floatValue() + ")");
 		this.setVisible(true);
 		return this.value;
 	}
