@@ -52,6 +52,7 @@ import javax.swing.ScrollPaneConstants;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.math.MathException;
+import org.apache.commons.math.distribution.NormalDistributionImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -765,7 +766,23 @@ public class Main {
 		probabilityWindow.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent ce) {
-				params.setCycleTime(askCycle.showDialog());
+				
+				double high = 0;
+				NormalDistributionImpl d;
+				double res;
+				
+				for(int i = 0; i < tasks; i++) {
+					d = new NormalDistributionImpl(times[i], Math.sqrt(stdDev[i]));
+					try {
+						res = d.inverseCumulativeProbability(params.getProbability());
+						if(res>high) {
+							high = res;
+						}
+					} catch (MathException e) {
+						e.printStackTrace();
+					}
+				}
+				params.setCycleTime(askCycle.showDialog(high));
 			}
 		});
 

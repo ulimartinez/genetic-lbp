@@ -27,18 +27,23 @@ public abstract class Dialog extends JDialog {
 	 * TextField for the user to input their answer
 	 */
 	protected JTextField textField;
-	
+
+	/**
+	 * Label to indicate to the user which data to input
+	 */
+	protected JLabel lblValue;
+
 	/**
 	 * Label to indicate to the user the value type to input
 	 */
-	protected JLabel lblValue;
+	protected JLabel lblType;
 
 	/**
 	 * Abstract method to read the value in the text field 
 	 * that must be implemented by the class' children
 	 * @return - true if the value was successfully read, false otherwise.
 	 */
-	public abstract boolean readValue();
+	protected abstract boolean readValue();
 
 	
 	/**
@@ -67,7 +72,7 @@ public abstract class Dialog extends JDialog {
 			getContentPane().add(lblValue);
 		}
 		{
-			JLabel lblType = new JLabel(type);
+			 lblType = new JLabel(type);
 			getContentPane().add(lblType);
 		}
 		{
@@ -105,5 +110,21 @@ public abstract class Dialog extends JDialog {
 				buttonPane.add(cancelButton);
 			}
 		}
+	}
+
+	/**
+	 * A function to change the label of {@link #lblValue}
+	 * @param newLabel
+	 */
+	public void changeValueLabel(String newLabel) {
+		lblValue.setText(newLabel);
+	}
+
+	/**
+	 * A function to change the label of {@link #lblType}
+	 * @param newLabel
+	 */
+	public void changeTypeLabel(String newLabel) {
+		lblValue.setText(newLabel);
 	}
 }

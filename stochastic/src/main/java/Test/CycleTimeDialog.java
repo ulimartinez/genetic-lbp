@@ -14,7 +14,12 @@ public class CycleTimeDialog extends Dialog {
 	/**
 	 * A double variable to store the input
 	 */
-	public double value;
+	protected double value;
+	
+	/**
+	 * A double variable to store the smallest time acceptable
+	 */
+	protected double minimum;
 
 	/**
 	 * Class Constructor
@@ -25,14 +30,14 @@ public class CycleTimeDialog extends Dialog {
 	
 	/* (non-Javadoc)
 	 * @see Test.Dialog#readValue()
-	 * Make sure the input is a positive double number, store it and return true
+	 * Make sure the input is a double number over/equal to the minimum, store it and return true
 	 * Otherwise, clear the textField and return false
 	 */
 	@Override
-	public boolean readValue() {
+	protected boolean readValue() {
 		try {
 			Double v = Double.parseDouble( textField.getText() );
-			if(v <= 0) {
+			if(v < minimum) {
 				v = (double) (1/0);
 			}
 			this.value = v;
@@ -47,9 +52,12 @@ public class CycleTimeDialog extends Dialog {
 
 	/**
 	 * Shows the dialog to the user
+	 * @param highest - the highest task time that the problem has
 	 * @return - Returns the double value of variable {@link #value }
 	 */
-	public double showDialog() {
+	public double showDialog(double highest) {
+		this.minimum = highest;
+		this.changeTypeLabel("(Enter doubles over )" + this.minimum);
 		this.setVisible(true);
 		return this.value;
 	}
