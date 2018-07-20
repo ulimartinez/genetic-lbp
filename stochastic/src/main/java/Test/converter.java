@@ -3,15 +3,27 @@ package Test;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * A class containing a function to convert an *.xml file into a *.lbp file
+ * @author Ulises Martinez
+ *@deprecated Not used in the main class.
+ */
 public class converter {
-	public static void main(String[] args) throws IOException {
+	
+	/**
+	 * A function to convert an *.xml file into a *.lbp file
+	 * @param args - args[0] is the filename (with filepath) of the *.xml file to convert; args[1] is the  filename (with filepath) of the *.lbp file to create
+	 * @throws IOException - Throws exception in case the file does not exist or there is some writing error 
+	 */
+	public static void main(String[] args) throws IOException  {
 		
-		File file = new File("C:\\\\Users\\\\ivanm\\\\Documents\\\\school\\\\TEC\\\\Delfin\\data.xml");
+		File file = new File(args[0]);
 		String curr = "";
 		String out = "";
 		String times = "[";

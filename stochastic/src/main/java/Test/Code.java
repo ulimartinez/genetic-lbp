@@ -5,46 +5,89 @@ import java.util.List;
 import java.util.Random;
 import java.util.Arrays;
 
+/**
+ * A class with methods used to initialize a new Chromosome
+ * @author Ulises Martinez
+ *
+ */
 public class Code {
 	
+	/**
+	 * A Random variable used to get random numbers
+	 */
 	private Random generator = new Random(System.currentTimeMillis());
 	
-	private Chromosome taskss;
-	//chromosome containing tasks with precedence
+	/**
+	 * A Chromosome variable containing tasks with precedence
+	 * @see Chromosome
+	 */
+	private Chromosome chromosome;
+	
+	/**
+	 * A Task array containing {@link #chromosome}'s tasks
+	 * @see Task
+	 */
 	private Task[] tasks;
-	//array of tasks
+	
+	/**
+	 * An empty class constructor
+	 */
 	Code() {
 	}
+	
+	/**
+	 * A class constructor that initializes {@link #tasks} with a size of numTasks
+	 * @param numTasks - The new size of {@link #tasks}
+	 */
 	Code(int numTasks) {//create an array of the number of tasks specified
 		tasks = new Task[numTasks];
-		taskss = new Chromosome();
+		chromosome = new Chromosome();
 	}
+	
+	/**
+	 * Getter function for the variable {@link #chromosome}
+	 * @return - {@link #chromosome}
+	 */
 	Chromosome getChromosome ()
 	 {//return the chromosome
-		return (taskss);
+		return (chromosome);
 	}
+
+	/**
+	 * Setter  function for {@link #tasks} that initializes the array using the values of the given parameters
+	 * @param precedences - A matrix containing all task precedences 
+	 * @param times					- An array containing the tasks' times
+	 * @param stdDev				- An array containing the tasks' standard deviations
+	 */
 	void setTasks(int[][] precedences, double[] times, double[] stdDev) {//having the precedence of each Task and the time, we store them in an array of tasks
-		
 		for (int i = 0; i < tasks.length; i++)	 {//for each Task
 			tasks[i] = new Task(precedences[i], times[i], stdDev[i]);	//Task equals new variable that contained precedence and time
-			
 		}
-		
 	}
+	
+	/**
+	 * Setter  function for {@link #chromosome} that initializes its tasks using the values of {@link #tasks} 
+	 * in the order given by the values of the population parameter
+	 * @param population - An array containing the order in which the chromosome's task should be assigned
+	 */
 	void setChromosomes(int[] population)
 	 {//this rearranges the array of tasks according to some initial population
 		Task[] tmp = new Task[population.length];
-		taskss.taskIndex = population;
+		chromosome.taskIndex = population;
 		for (int i = 0; i < population.length; i++) {
 			tmp[i] = tasks[population[i] - 1];
-			
 		}
-		taskss.tasks = tmp;
+		chromosome.tasks = tmp;
 	}
 
 
+	/**
+	 * A function to initialize a chromosome respecting its task precedences
+	 * @param STime - The starting time from which to calculate the task's computational time
+	 * @return - Return the chromosome's population
+	 */
 	int[] initialPopulation(long STime) {//having the array of tasks, we can generate an initial population respecting the precedences
-		taskss.startTime = STime;
+		chromosome.startTime = STime;
 		int[] initial = new int[tasks.length];		//Create an integer array size of tasks
 		List<Integer> noPrecedence = new LinkedList<Integer>();//Create an array that will store Task with no precedence
 		for (int i = 0; i < tasks.length; i++)	 {//For each Task
@@ -81,9 +124,15 @@ public class Code {
 			}
 			initial[k] = candidates[generator.nextInt(totalCandidates)]; //choose any random candidate if exist more than 1
 		}
-		taskss.computationalTime = System.nanoTime()-taskss.startTime;
+		chromosome.computationalTime = System.nanoTime()-chromosome.startTime;
 		return initial;
 	}
+	
+	/**
+	 * A function to initializeand print a chromosome respecting its task precedences
+	 * @param a - Number of time the precedences are initialized before having a final set
+	 * @deprecated - replaced by {@link #initialPopulation(long)} 
+	 */
 	void initialPopulation(int a) {
 		for (int l = 0; l < a; l++) {
 			int[] initial = new int[tasks.length];
@@ -117,6 +166,13 @@ public class Code {
 			System.out.println(Arrays.toString(initial));
 		}
 	}
+	
+	/**
+	 * Checks wheter a given value exists within an array
+	 * @param array - The array in hich to look the value up
+	 * @param v         - The value looked for
+	 * @return			   - Returns true if the value is found; false otherwise.
+	 */
 	boolean contains(final int[] array, final int v)  {//checks if a number is contained in an array of numbers
 	    for (final int e : array)
 	        if (e == v)
