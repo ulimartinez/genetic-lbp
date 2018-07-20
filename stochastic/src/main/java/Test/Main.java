@@ -590,7 +590,7 @@ public class Main {
 
 		//Initialize Dialogs
 
-		final TasksDialog askTasks = new TasksDialog();
+		final IntegerDialog askTasks = new IntegerDialog("Number of Tasks");
 		askTasks.setVisible(false);
 
 		final CycleTimeDialog askCycle = new CycleTimeDialog();
@@ -622,8 +622,8 @@ public class Main {
 		final JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
-		final JMenuItem mntmOptions = new JMenuItem("New Problem");
-		mnFile.add(mntmOptions);
+		final JMenuItem mntmNew = new JMenuItem("New Problem");
+		mnFile.add(mntmNew);
 
 		final JMenuItem mntmSave = new JMenuItem("Save");
 		mnFile.add(mntmSave);
@@ -777,7 +777,7 @@ public class Main {
 			}
 		});
 
-		mntmOptions.addActionListener(new ActionListener() {
+		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				// panel_4.add(table);
 				table_1.setVisible(false);
@@ -785,7 +785,7 @@ public class Main {
 				configureTables(0);
 				configureTables(1);
 				configureTables(2);
-				askTasks.setVisible(true);
+				tasks = askTasks.showDialog();
 				mntmGenerations.setEnabled(true);
 				mntmInitialPopulation.setEnabled(true);
 			}
@@ -820,7 +820,6 @@ public class Main {
 			@Override
 			public void componentHidden(ComponentEvent e) {
 				System.out.println("working");
-				tasks = askTasks.getTasks();
 				DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 				dtm.removeRow(0);
 				for (int i = 0; i < tasks; i++) {
