@@ -12,7 +12,7 @@ import java.util.Arrays;
 /**
  * A class containing a function to convert an *.xml file into a *.lbp file
  * @author Ulises Martinez
- *@deprecated Not used in the main class.
+ * @deprecated Not used in the main class.
  */
 public class converter {
 	

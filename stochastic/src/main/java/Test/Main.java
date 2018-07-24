@@ -47,6 +47,7 @@ import java.util.HashMap;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.JMenu;
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
@@ -78,7 +79,7 @@ public class Main {
 	private double maxTime = 0;
 	private int minWS;
 	private long STime;
-	
+
 	int generationCounter;
 
 	/**
@@ -99,13 +100,14 @@ public class Main {
 
 	/**
 	 * Create the application.
-	 * @throws InterruptedException 
+	 * 
+	 * @throws InterruptedException
 	 */
 	public Main() throws InterruptedException {
 		params = new LBPParameters();
 		initialize();
 
-		//jumpstart(33); // up to 33, skipping 11
+		// jumpstart(33); // up to 33, skipping 11
 	}
 
 	void generateSolution() {
@@ -114,64 +116,63 @@ public class Main {
 		for (int l = 0; l < generations; l++) {
 			// For Cycle to run all generations L
 			configureTables(1);
-			
-			//If no file has been opened
+
+			// If no file has been opened
 			if (file == null) {
-				 // array to store time of each Task
+				// array to store time of each Task
 				times = new double[tasks];
 				// array to store precedence of each Task
-				precedences = new int[tasks][]; 
+				precedences = new int[tasks][];
 				// array to store variance of each Task
 				stdDev = new double[tasks];
 				// for Cycle for each Task
 				for (int i = 0; i < tasks; i++) {
 					// fill array with time of each Task
-					times[i] = Double.parseDouble((String) table.getValueAt(i, 1)); 
-					
+					times[i] = Double.parseDouble((String) table.getValueAt(i, 1));
+
 					// if maximum time registered is less than Time of Task scanned
 					if (maxTime < times[i]) {
-						 // it will be new value until store Maximum Time
+						// it will be new value until store Maximum Time
 						maxTime = times[i];
 					}
-					
+
 					stdDev[i] = Double.parseDouble((String) (table.getValueAt(i, 2)));
 					// if Task has precedence
 					if (table.getValueAt(i, 3) != null && table.getValueAt(i, 3) != "") {
 						// then create string array with precedence
-						String[] a = ((String) table.getValueAt(i, 3)).split(","); 
+						String[] a = ((String) table.getValueAt(i, 3)).split(",");
 						// create integer array to storage each precedence
-						int[] vals = new int[a.length]; 
-						
+						int[] vals = new int[a.length];
+
 						// For cycle to storage
 						for (int k = 0; k < a.length; k++) {
 							// storage in vals each precedence
-							vals[k] = Integer.parseInt(a[k]); 
+							vals[k] = Integer.parseInt(a[k]);
 						}
-						 // fill precedence array with vals for each Task
+						// fill precedence array with vals for each Task
 						precedences[i] = vals;
 					} else {
 						// if it was not filled by user assign 0 to precedence
-						int[] vals = { 0 }; 
+						int[] vals = { 0 };
 						precedences[i] = vals;
 					}
-				} 
+				}
 			}
-			
+
 			// if generation L is the first then initialize chromosomes
 			if (l == 0) {
 				STime = System.nanoTime();
-				generationCounter = 1;			
+				generationCounter = 1;
 				for (int j = 0; j < numberOfChromosomes; j++) {
 					chromos[j] = getNewChromosome();
 				}
 			}
 
-			
-			// if generation L is NOT  the first
+			// if generation L is NOT the first
 			if (l != 0) {
 				try {
 					chromos = setNextGeneration();
-					
+
 				} catch (MathException e) {
 					e.printStackTrace();
 				}
@@ -183,21 +184,21 @@ public class Main {
 			}
 		}
 	}
-	
+
 	public Chromosome getNewChromosome() {
 		double probabilityP = params.getProbability();
 		double cycle = params.getCycleTime();
-		
+
 		// declare a variable type Code called problem
-		Code problem = new Code(tasks); 
+		Code problem = new Code(tasks);
 		// assign info (precedence and time) in var problem
-		problem.setTasks(precedences, times, stdDev); 
-		 // call to subroutine contained in Code class
+		problem.setTasks(precedences, times, stdDev);
+		// call to subroutine contained in Code class
 		int[] initialPop = problem.initialPopulation(STime);
 		// sets chromosomes of initial solution
-		problem.setChromosomes(initialPop); 
+		problem.setChromosomes(initialPop);
 		// gets chromosomes of initial solution
-		Chromosome chromo = problem.getChromosome(); 
+		Chromosome chromo = problem.getChromosome();
 		// set chromosomes cycle time
 		chromo.cycleTime = cycle;
 		// sets chromosomes creation generation
@@ -209,7 +210,7 @@ public class Main {
 		}
 		return chromo;
 	}
-	
+
 	void fillTableRow(int j) {
 		Action solution = new AbstractAction() {
 			public void actionPerformed(ActionEvent e) {
@@ -236,10 +237,10 @@ public class Main {
 			type = "Old (" + chromos[j].generation + ")";
 		}
 		DefaultTableModel tbl = (DefaultTableModel) table_1.getModel();
-		
+
 		int rowCount = tbl.getRowCount();
-		if(rowCount < j+1) {
-			 tbl.addRow((Object[])null);
+		if (rowCount < j + 1) {
+			tbl.addRow((Object[]) null);
 		}
 		tbl.setValueAt(type, (j), 0);
 		tbl.setValueAt(Arrays.toString(chromos[j].taskIndex), (j), 1);
@@ -272,10 +273,10 @@ public class Main {
 		for (int i = 0; i < chromos[0].tasks.length; i++) {
 			sumTasks += chromos[0].tasks[i].getTime();
 		}
-		if(sumTasks %cycle == 0) {
+		if (sumTasks % cycle == 0) {
 			minWS = (int) (sumTasks / cycle);
 		} else {
-			minWS = ((int)(sumTasks / cycle) )+ 1;
+			minWS = ((int) (sumTasks / cycle)) + 1;
 		}
 	}
 
@@ -295,7 +296,7 @@ public class Main {
 			int wasBest = 0;
 			for (int j = 0; j < chromos.length; j++) {
 				if (contains(selected, j)) {
-						//If it's already selected, do nothing
+					// If it's already selected, do nothing
 				} else if (bestSoFar.WSTimes == null || chromos[j].WSTimes.size() < bestSoFar.WSTimes.size()) {
 					bestSoFar = chromos[j];
 					wasBest = j;
@@ -339,7 +340,7 @@ public class Main {
 		Chromosome[] reproduction = bestChromosomes(childAmount);
 		int ind = preserve.length + mutated.length;
 		for (int i = 0; i < reproduction.length; i += 2) {
-			newGeneration[ind] = reproduction[i].crossOver(reproduction[i + 1], probabilityP, STime,generationCounter);
+			newGeneration[ind] = reproduction[i].crossOver(reproduction[i + 1], probabilityP, STime, generationCounter);
 			ind++;
 			newGeneration[ind] = reproduction[i + 1].crossOver(reproduction[i], probabilityP, STime, generationCounter);
 			ind++;
@@ -361,160 +362,157 @@ public class Main {
 	public void load() {
 		if (file != null) {
 			try {
-			    if(FilenameUtils.getExtension(file.getName()).equals("lbp")){
-                    double[] toTime = null;
-                    String sCurrentLine;
-                    BufferedReader br = new BufferedReader(new FileReader(file));
-                    sCurrentLine = br.readLine();
-                    sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-                    sCurrentLine = sCurrentLine.replaceAll("\\s+","");
-                    String[] textTime = sCurrentLine.split(",");
-                    toTime = new double[textTime.length];
-                    for (int i = 0; i < textTime.length; i++) {
-                        toTime[i] = Double.parseDouble(textTime[i]);
-                    }
+				if (FilenameUtils.getExtension(file.getName()).equals("lbp")) {
+					double[] toTime = null;
+					String sCurrentLine;
+					BufferedReader br = new BufferedReader(new FileReader(file));
+					sCurrentLine = br.readLine();
+					sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+					sCurrentLine = sCurrentLine.replaceAll("\\s+", "");
+					String[] textTime = sCurrentLine.split(",");
+					toTime = new double[textTime.length];
+					for (int i = 0; i < textTime.length; i++) {
+						toTime[i] = Double.parseDouble(textTime[i]);
+					}
 
-                    times = toTime;
-                    for(int i = 0; i < times.length; i++) {
-                        if (maxTime < times[i]) {
-                            maxTime = times[i];
-                        }
-                    }
+					times = toTime;
+					for (int i = 0; i < times.length; i++) {
+						if (maxTime < times[i]) {
+							maxTime = times[i];
+						}
+					}
 
-                    double[] toStdev = null;
-                    sCurrentLine = br.readLine();
-                    sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-                    sCurrentLine = sCurrentLine.replaceAll("\\s+","");
-                    textTime = sCurrentLine.split(",");
-                    toStdev = new double[textTime.length];
-                    for (int i = 0; i < textTime.length; i++) {
-                        toStdev[i] = Double.parseDouble(textTime[i]);
-                    }
-                    stdDev = toStdev;
+					double[] toStdev = null;
+					sCurrentLine = br.readLine();
+					sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+					sCurrentLine = sCurrentLine.replaceAll("\\s+", "");
+					textTime = sCurrentLine.split(",");
+					toStdev = new double[textTime.length];
+					for (int i = 0; i < textTime.length; i++) {
+						toStdev[i] = Double.parseDouble(textTime[i]);
+					}
+					stdDev = toStdev;
 
-                    tasks = toTime.length;
-                    int[][] toPrecedences = new int[toTime.length][];
-                    toPrecedences[0] = null;
-                    int ind = 0;
-                    while ((sCurrentLine = br.readLine()) != null) {
-                        sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
-                        sCurrentLine = sCurrentLine.replaceAll("\\s+","");
-                        String[] textPre = sCurrentLine.split(",");
-                        int[] curr = new int[textPre.length];
-                        for (int i = 0; i < textPre.length; i++) {
-                            if (textPre[i].equals("")) {
-                                curr[i] = 0;
-                            }
-                            else {
-                                curr[i] = Integer.parseInt(textPre[i]);
-                            }
-                        }
-                        toPrecedences[ind] = curr;
-                        ind++;
-                    }
-                    precedences = toPrecedences;
-                }
-                else if(FilenameUtils.getExtension(file.getName()).equals("graphml")){
-			        //parse the graphml xml
-                    DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
-                    DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-                    Document doc = dBuilder.parse(file);
+					tasks = toTime.length;
+					int[][] toPrecedences = new int[toTime.length][];
+					toPrecedences[0] = null;
+					int ind = 0;
+					while ((sCurrentLine = br.readLine()) != null) {
+						sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
+						sCurrentLine = sCurrentLine.replaceAll("\\s+", "");
+						String[] textPre = sCurrentLine.split(",");
+						int[] curr = new int[textPre.length];
+						for (int i = 0; i < textPre.length; i++) {
+							if (textPre[i].equals("")) {
+								curr[i] = 0;
+							} else {
+								curr[i] = Integer.parseInt(textPre[i]);
+							}
+						}
+						toPrecedences[ind] = curr;
+						ind++;
+					}
+					precedences = toPrecedences;
+				} else if (FilenameUtils.getExtension(file.getName()).equals("graphml")) {
+					// parse the graphml xml
+					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
+					DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
+					Document doc = dBuilder.parse(file);
 
-                    HashMap<String, Task> tasksMap = new HashMap<String, Task>();
+					HashMap<String, Task> tasksMap = new HashMap<String, Task>();
 
-                    //read the tasks and their time
-                    NodeList nodeList = doc.getElementsByTagName("node");
-                    for(int i = 0; i < nodeList.getLength(); i++){
-                        Node node = nodeList.item(i);
-                        if (node.getNodeType() == Node.ELEMENT_NODE) {
-                            Element element = (Element) node;
-                            int tasknum = 0;
-                            double tasktime = 0;
-                            double taskstd = 0;
+					// read the tasks and their time
+					NodeList nodeList = doc.getElementsByTagName("node");
+					for (int i = 0; i < nodeList.getLength(); i++) {
+						Node node = nodeList.item(i);
+						if (node.getNodeType() == Node.ELEMENT_NODE) {
+							Element element = (Element) node;
+							int tasknum = 0;
+							double tasktime = 0;
+							double taskstd = 0;
 
-                            NodeList data = element.getElementsByTagName("data");
-                            for(int j = 0; j < data.getLength(); j++){
-                                Node dataNode = data.item(j);
-                                if (dataNode.getNodeType() == Node.ELEMENT_NODE) {
-                                    Element dataElement = (Element) dataNode;
-                                    //getting the ws time
-                                    if (dataElement.getAttribute("key").equals("d2")) {
-                                        CharacterData cd = (CharacterData) dataNode.getFirstChild();
-                                        String[] csvData = cd.getData().split(",");
-                                        tasktime = Double.parseDouble(csvData[0]);
-                                        taskstd = Double.parseDouble(csvData[1]);
-                                    }
-                                    else if (dataElement.getAttribute("key").equals("d3")) {
-                                        //getting the label (task number)
-                                        NodeList nList = dataElement.getElementsByTagName("y:NodeLabel");
-                                        Node label = nList.item(0);
-                                        if(label.getNodeType() == Node.ELEMENT_NODE){
-                                            Element labelElement = (Element) label;
-                                            if(labelElement.getFirstChild() instanceof CharacterData){
-                                                CharacterData cd = (CharacterData) labelElement.getFirstChild();
-                                                tasknum = Integer.parseInt(cd.getData());
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                            Task tmp = new Task(tasknum);
-                            tmp.setTime(tasktime);
-                            tmp.setStd(taskstd);
-                            tasksMap.put(element.getAttribute("id"), tmp);
-                        }
-                    }
-                    //read the precedences
-                    NodeList edges = doc.getElementsByTagName("edge");
-                    for(int i = 0; i < edges.getLength(); i++){
-                        if(edges.item(i).getNodeType() == Node.ELEMENT_NODE){
-                            Element edgeElem = (Element) edges.item(i);
-                            String target= edgeElem.getAttribute("target");
-                            String source = edgeElem.getAttribute("source");
-                            Task preTask = tasksMap.get(target);
-                            preTask.addPrecedence(tasksMap.get(source).getTaskNum());
-                        }
-                    }
-                    //save all times, std and precedences
-                    times = new double[tasksMap.size()];
-                    stdDev = new double[tasksMap.size()];
-                    precedences = new int[tasksMap.size()][];
-                    for(int i = 0; i < times.length; i++){
-                        Task curr = null;
-                        //TODO: save a map of task numbers to id's to make this step faster
-                        for(Task j : tasksMap.values()){
-                            if(j.getTaskNum()==i+1) {
-                                curr = j;
-                                break;
-                            }
-                        }
-                        assert curr != null;
-                        times[i] = curr.getTime();
-                        precedences[i] = curr.getPrecedences();
-                        stdDev[i] = curr.getStdDev();
-                    }
-                }
+							NodeList data = element.getElementsByTagName("data");
+							for (int j = 0; j < data.getLength(); j++) {
+								Node dataNode = data.item(j);
+								if (dataNode.getNodeType() == Node.ELEMENT_NODE) {
+									Element dataElement = (Element) dataNode;
+									// getting the ws time
+									if (dataElement.getAttribute("key").equals("d2")) {
+										CharacterData cd = (CharacterData) dataNode.getFirstChild();
+										String[] csvData = cd.getData().split(",");
+										tasktime = Double.parseDouble(csvData[0]);
+										taskstd = Double.parseDouble(csvData[1]);
+									} else if (dataElement.getAttribute("key").equals("d3")) {
+										// getting the label (task number)
+										NodeList nList = dataElement.getElementsByTagName("y:NodeLabel");
+										Node label = nList.item(0);
+										if (label.getNodeType() == Node.ELEMENT_NODE) {
+											Element labelElement = (Element) label;
+											if (labelElement.getFirstChild() instanceof CharacterData) {
+												CharacterData cd = (CharacterData) labelElement.getFirstChild();
+												tasknum = Integer.parseInt(cd.getData());
+											}
+										}
+									}
+								}
+							}
+							Task tmp = new Task(tasknum);
+							tmp.setTime(tasktime);
+							tmp.setStd(taskstd);
+							tasksMap.put(element.getAttribute("id"), tmp);
+						}
+					}
+					// read the precedences
+					NodeList edges = doc.getElementsByTagName("edge");
+					for (int i = 0; i < edges.getLength(); i++) {
+						if (edges.item(i).getNodeType() == Node.ELEMENT_NODE) {
+							Element edgeElem = (Element) edges.item(i);
+							String target = edgeElem.getAttribute("target");
+							String source = edgeElem.getAttribute("source");
+							Task preTask = tasksMap.get(target);
+							preTask.addPrecedence(tasksMap.get(source).getTaskNum());
+						}
+					}
+					// save all times, std and precedences
+					times = new double[tasksMap.size()];
+					stdDev = new double[tasksMap.size()];
+					precedences = new int[tasksMap.size()][];
+					for (int i = 0; i < times.length; i++) {
+						Task curr = null;
+						// TODO: save a map of task numbers to id's to make this step faster
+						for (Task j : tasksMap.values()) {
+							if (j.getTaskNum() == i + 1) {
+								curr = j;
+								break;
+							}
+						}
+						assert curr != null;
+						times[i] = curr.getTime();
+						precedences[i] = curr.getPrecedences();
+						stdDev[i] = curr.getStdDev();
+					}
+				}
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			} catch (ParserConfigurationException e){
-			    e.printStackTrace();
-            } catch (SAXException e){
-			    e.printStackTrace();
-            }
+			} catch (ParserConfigurationException e) {
+				e.printStackTrace();
+			} catch (SAXException e) {
+				e.printStackTrace();
+			}
 
 			DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 			dtm.removeRow(0);
 			for (int i = 0; i < times.length; i++) {
-				dtm.addRow((Object[])null);
-				dtm.setValueAt((i+1), (i), 0);
+				dtm.addRow((Object[]) null);
+				dtm.setValueAt((i + 1), (i), 0);
 				dtm.setValueAt(times[i], (i), 1);
 				dtm.setValueAt(stdDev[i], (i), 2);
 				String set = Arrays.toString(precedences[i]);
 				set = set.substring(1, set.length() - 1);
-				set = set.replaceAll("\\s+","");
+				set = set.replaceAll("\\s+", "");
 				dtm.setValueAt(set, (i), 3);
 
 			}
@@ -522,10 +520,10 @@ public class Main {
 			table.repaint();
 		}
 	}
-	
+
 	public void configureTables(int chosen) {
-		
-		if(chosen == 0) {
+
+		if (chosen == 0) {
 			table.setModel(new DefaultTableModel(new Object[][] { { "Task", " Time", "Variance", "Precedences" }, },
 					new String[] { "Task", "Time", "Variance", "Precedence" }) {
 				Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class };
@@ -544,8 +542,8 @@ public class Main {
 			table.getColumnModel().getColumn(3).setPreferredWidth(95);
 			table.getColumnModel().getColumn(3).setMinWidth(70);
 		}
-		
-		if(chosen==1) {
+
+		if (chosen == 1) {
 			table_1.setModel(new DefaultTableModel(new Object[][] {},
 					new String[] { "Type", "Chromosome", "SI", "WS", "PCT", "View" }) {
 				Class[] columnTypes = new Class[] { String.class, Object.class, Object.class, Object.class, long.class,
@@ -569,8 +567,8 @@ public class Main {
 			table_1.getColumnModel().getColumn(5).setPreferredWidth(50);
 			table_1.getColumnModel().getColumn(5).setMinWidth(35);
 		}
-		
-		if(chosen==2) {
+
+		if (chosen == 2) {
 			table_2.setModel(new DefaultTableModel(new Object[][] {},
 					new String[] { "Station", "Options", "Assigned", "Time Left" }));
 
@@ -580,7 +578,7 @@ public class Main {
 			table_2.getColumnModel().getColumn(3).setMinWidth(60);
 		}
 	}
-	
+
 	/**
 	 * Initialize the contents of the frame.
 	 */
@@ -589,7 +587,7 @@ public class Main {
 		frame.setBounds(100, 100, 867, 563);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-		//Initialize Dialogs
+		// Initialize Dialogs
 
 		final IntegerDialog askTasks = new IntegerDialog("Number of Tasks");
 		askTasks.setVisible(false);
@@ -597,29 +595,11 @@ public class Main {
 		final CycleTimeDialog askCycle = new CycleTimeDialog();
 		askCycle.setVisible(false);
 
-		final IntegerDialog amountChromosomes = new IntegerDialog("Number of Chromosomes");
-		amountChromosomes.setVisible(false);
-		
-		final IntegerDialog iterations = new IntegerDialog("Number of Iterations");
-		iterations.setVisible(false);
-
-		final PercentageDialog probabilityWindow = new PercentageDialog("Probability %");
-		probabilityWindow.setVisible(false);
-
-		childrenWindow = new PercentageDialog("Children %");
-		childrenWindow.setVisible(false);
-
-		final PercentageDialog mutationWindow = new PercentageDialog("Mutations %");
-		mutationWindow.setVisible(false);
-
-		final PercentageDialog preservedWindow = new PercentageDialog("Preserved %");
-		preservedWindow.setVisible(false);
-
-		//Create Menu
+		// Create Menu
 
 		JMenuBar menuBar = new JMenuBar();
 		frame.setJMenuBar(menuBar);
-		
+
 		final JMenu mnFile = new JMenu("File");
 		menuBar.add(mnFile);
 
@@ -630,19 +610,12 @@ public class Main {
 		mnFile.add(mntmSave);
 
 		final JMenuItem mntmOpen = new JMenuItem("Open");
-		mnFile.add(mntmOpen);	
+		mnFile.add(mntmOpen);
 
-		final JMenuItem mntmInitialPopulation = new JMenuItem("Initial Population");
-		mntmInitialPopulation.setEnabled(false);
-		menuBar.add(mntmInitialPopulation);
+		final JMenuItem mntmSolution = new JMenuItem("Generate Solution");
+		mntmSolution.setEnabled(false);
+		menuBar.add(mntmSolution);
 
-		final JMenuItem mntmGenerations = new JMenuItem("Generations");
-		mntmGenerations.setEnabled(false);
-		menuBar.add(mntmGenerations);
-
-		final JMenuItem mntmNextGeneration = new JMenuItem("Next Generation");
-		mntmNextGeneration.setEnabled(false);
-		menuBar.add(mntmNextGeneration);
 		frame.getContentPane().setLayout(null);
 
 		JPanel panel_2 = new JPanel();
@@ -651,7 +624,7 @@ public class Main {
 
 		table_2 = new JTable();
 		configureTables(2);
-		
+
 		table_2.setVisible(false);
 		panel_2.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -694,7 +667,7 @@ public class Main {
 		table_1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
 		table_1.setToolTipText("");
 		configureTables(1);
-		
+
 		table_1.setVisible(false);
 		panel_5.setLayout(new GridLayout(0, 1, 0, 0));
 
@@ -707,10 +680,12 @@ public class Main {
 		lblMinimumWorkstations.setBounds(32, 375, 209, 25);
 		lblMinimumWorkstations.setVisible(false);
 		panel_1.add(lblMinimumWorkstations);
+
 		final JLabel lblComputationalTime = new JLabel("Computational Time:");
 		lblComputationalTime.setBounds(32, 575, 209, 25);
 		lblComputationalTime.setVisible(false);
 		panel_1.add(lblComputationalTime);
+
 		GridBagLayout gridBagLayout = new GridBagLayout();
 		gridBagLayout.columnWidths = new int[] { 0, 0, 0 };
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0 };
@@ -725,57 +700,22 @@ public class Main {
 		gbl_contentPanel.columnWeights = new double[] { 0.0, 0.0, 1.0, Double.MIN_VALUE };
 		gbl_contentPanel.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
 		contentPanel.getContentPane().setLayout(gbl_contentPanel);
-		
-		//Set Listeners
 
-		mntmGenerations.addActionListener(new ActionListener() {
+		// Set Listeners
+
+		mntmSolution.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				table_1.setVisible(false);
-				params.setIterations(iterations.showDialog());
-			}
-		});
-
-		iterations.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentHidden(ComponentEvent ce) {
-				params.setChildPercent(childrenWindow.showDialog());
-			}
-		});
-
-		childrenWindow.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentHidden(ComponentEvent ce) {
-				params.setMutationsPercent(mutationWindow.showDialog());
-			}
-		});
-
-		mutationWindow.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentHidden(ComponentEvent ce) {
-				params.setPreservedPercent(preservedWindow.showDialog());
-			}
-		});
-
-		preservedWindow.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentHidden(ComponentEvent ce) {
-				params.setProbability(probabilityWindow.showDialog());
-			}
-		});
-		
-		probabilityWindow.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentHidden(ComponentEvent ce) {
-				
+				params.setIterations(50);
+				params.setProbability(0.95);
 				double high = 0;
 				NormalDistributionImpl d;
 				double res;
-				
-				for(int i = 0; i < tasks; i++) {
+				for (int i = 0; i < tasks; i++) {
 					d = new NormalDistributionImpl(times[i], Math.sqrt(stdDev[i]));
 					try {
 						res = d.inverseCumulativeProbability(params.getProbability());
-						if(res>high) {
+						if (res > high) {
 							high = res;
 						}
 					} catch (MathException e) {
@@ -783,56 +723,29 @@ public class Main {
 					}
 				}
 				params.setCycleTime(askCycle.showDialog(high));
-			}
-		});
+				setParams(tasks);
+				chromos = new Chromosome[params.getNumChromosomes()];
+				generateSolution();
+				table_1.repaint();
+				table_1.setVisible(true);
 
-		mntmInitialPopulation.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				chromos = null;
-				table_1.setVisible(false);
-				params.setProbability(probabilityWindow.showDialog());
+				frame.repaint();
+				frame.setVisible(true);
 			}
 		});
 
 		mntmNew.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				// panel_4.add(table);
 				table_1.setVisible(false);
 				table_2.setVisible(false);
 				configureTables(0);
 				configureTables(1);
 				configureTables(2);
 				tasks = askTasks.showDialog();
-				mntmGenerations.setEnabled(true);
-				mntmInitialPopulation.setEnabled(true);
+				mntmSolution.setEnabled(true);
 			}
 		});
 
-		askCycle.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentHidden(ComponentEvent e) {
-				params.setNumChromosomes(amountChromosomes.showDialog());
-			}
-		});
-		
-		amountChromosomes.addComponentListener(new ComponentAdapter() {
-			@Override
-			public void componentHidden(ComponentEvent ce) {
-
-				// generate array Chromos size # chromosomes required for user
-				chromos = new Chromosome[params.getNumChromosomes()]; 
-				generateSolution();
-				table_1.repaint();
-				table_1.setVisible(true);
-				mntmNextGeneration.setEnabled(true);
-				setMinNumOfWS();
-				lblMinimumWorkstations.setText("Minimum Workstations: " + minWS);
-				lblMinimumWorkstations.setVisible(true);
-				lblComputationalTime.setText("xxxxxx");
-				lblComputationalTime.setVisible(true);
-			}
-		});
-		
 		askTasks.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent e) {
@@ -850,7 +763,7 @@ public class Main {
 
 		mntmSave.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				
+
 				JFileChooser save = new JFileChooser();
 				save.setDialogTitle("Guardar");
 				save.setApproveButtonText("Guardar");
@@ -862,7 +775,7 @@ public class Main {
 					File file = save.getSelectedFile();
 					String filepath = file.toString();
 					String[] sep = filepath.split(".lbp");
-					if(sep.length!=1) {
+					if (sep.length != 1) {
 						filepath += ".lbp";
 					}
 					try {
@@ -899,14 +812,14 @@ public class Main {
 				write.close();
 			}
 		});
-		
+
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				mntmInitialPopulation.setEnabled(true);
-				mntmGenerations.setEnabled(true);
+				mntmSolution.setEnabled(true);
 				configureTables(0);
 				fc = new JFileChooser();
-				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file", new String[] { "lbp", "graphml" });
+				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file",
+						new String[] { "lbp", "graphml" });
 				fc.addChoosableFileFilter(filter);
 				fc.setFileFilter(filter);
 				int result = fc.showOpenDialog(frame);
@@ -917,81 +830,134 @@ public class Main {
 			}
 		});
 
-		mntmNextGeneration.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				nextGeneration();
-			}
-		});
-		
 	}
 
-	public void  jumpstart(int i) throws InterruptedException {
+	public void jumpstart(int i) throws InterruptedException {
 
-		String filepath = "C:\\Users\\ivanm\\Documents\\zzzzzzz\\";
-		
-		double child[] = {	0.30, 0.20, 0.10, 0.30, 0.20, 0.10, 0.10, 0.20, 0.10, 0.20, 0.30, 0.20, 0.20, 0.20, 0.10, 0.30, 0.10, 0.20, 0.20, 0.30, 0.30, 0.20, 0.30, 0.30, 0.20, 0.10, 0.20, 0.10, 0.30, 0.10, 0.20 };
-		double mut[] = { 0.15, 0.10, 0.15, 0.15, 0.10, 0.15, 0.05, 0.10, 0.05, 0.10, 0.05, 0.10, 0.10, 0.10, 0.05, 0.05, 0.15, 0.10, 0.05, 0.10, 0.05, 0.10, 0.15, 0.05, 0.15, 0.10, 0.10, 0.15, 0.15, 0.05, 0.10 };
-		double pres[] = { 0.20, 0.15, 0.20, 0.20, 0.15, 0.20, 0.20, 0.15, 0.10, 0.15, 0.20, 0.10, 0.15, 0.15, 0.20, 0.20, 0.10, 0.15, 0.15, 0.15, 0.10, 0.15, 0.10, 0.10, 0.15, 0.15, 0.15, 0.10, 0.10, 0.10, 0.20 };
-		int chrm[] = { 20, 40, 20, 60, 40, 60, 60, 20, 20, 40, 20, 40, 60, 40, 20, 60, 60, 40, 40, 40, 60, 40, 20, 20, 40, 40, 40, 20, 60, 60, 40 };
-		
-		int times[] = { 10, 10, 10, 50, 10, 25, 25, 25, 25, 10, 50, 25, 50, 25, 25, 25, 100, 50, 25, 25, 25, 25, 50, 100, 50, 50, 25, 25, 50, 25, 50, 50, 10, 100	};
-		
+		String filepath = "C:\\";
+
+		double child[] = { 0.30, 0.20, 0.10, 0.30, 0.20, 0.10, 0.10, 0.20, 0.10, 0.20, 0.30, 0.20, 0.20, 0.20, 0.10,
+				0.30, 0.10, 0.20, 0.20, 0.30, 0.30, 0.20, 0.30, 0.30, 0.20, 0.10, 0.20, 0.10, 0.30, 0.10, 0.20 };
+		double mut[] = { 0.15, 0.10, 0.15, 0.15, 0.10, 0.15, 0.05, 0.10, 0.05, 0.10, 0.05, 0.10, 0.10, 0.10, 0.05, 0.05,
+				0.15, 0.10, 0.05, 0.10, 0.05, 0.10, 0.15, 0.05, 0.15, 0.10, 0.10, 0.15, 0.15, 0.05, 0.10 };
+		double pres[] = { 0.20, 0.15, 0.20, 0.20, 0.15, 0.20, 0.20, 0.15, 0.10, 0.15, 0.20, 0.10, 0.15, 0.15, 0.20,
+				0.20, 0.10, 0.15, 0.15, 0.15, 0.10, 0.15, 0.10, 0.10, 0.15, 0.15, 0.15, 0.10, 0.10, 0.10, 0.20 };
+		int chrm[] = { 20, 40, 20, 60, 40, 60, 60, 20, 20, 40, 20, 40, 60, 40, 20, 60, 60, 40, 40, 40, 60, 40, 20, 20,
+				40, 40, 40, 20, 60, 60, 40 };
+
+		int times[] = { 10, 10, 10, 50, 10, 25, 25, 25, 25, 10, 50, 25, 50, 25, 25, 25, 100, 50, 25, 25, 25, 25, 50,
+				100, 50, 50, 25, 25, 50, 25, 50, 50, 10, 100 };
+
 		params.setIterations(50);
 		params.setProbability(0.95);
-		
+
 		PrintWriter write = null;
 		try {
-			write = new PrintWriter(filepath+ "\\Stefanya\\" + (i+1) + ".txt");
+			write = new PrintWriter(filepath + "\\s\\" + (i + 1) + ".txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
-		
-		file = new File( filepath+(i+1)+ ".lbp" );
+
+		file = new File(filepath + (i + 1) + ".lbp");
 		load();
 
-		write.println("Problema: " +( i+1) );
+		write.println("Problema: " + (i + 1));
 
 		params.setCycleTime(times[i]);
-		for(int j = 0; j<31; j++) {
-			
+		for (int j = 0; j < 31; j++) {
+
 			try {
 
-			params.setChildPercent(child[j]);
-			params.setMutationsPercent(mut[j]);
-			params.setPreservedPercent(pres[j]);
-			params.setNumChromosomes(chrm[j]);
-			
-			chromos = new Chromosome[params.getNumChromosomes()]; 
-			generateSolution();
-			table_1.repaint();
-			table_1.setVisible(true);
-			
-			frame.repaint();
-			frame.setVisible(true);
-			
-			write.println(chromos[0].getCompTime());	
-			
-			makeScreenshot(frame, filepath, i+1, j+1);
-			} catch(Exception e) {
-				write.println("error" );
+				params.setChildPercent(child[j]);
+				params.setMutationsPercent(mut[j]);
+				params.setPreservedPercent(pres[j]);
+				params.setNumChromosomes(chrm[j]);
+
+				chromos = new Chromosome[params.getNumChromosomes()];
+				generateSolution();
+				table_1.repaint();
+				table_1.setVisible(true);
+
+				frame.repaint();
+				frame.setVisible(true);
+
+				write.println(chromos[0].getCompTime());
+
+				makeScreenshot(frame, filepath, i + 1, j + 1);
+			} catch (Exception e) {
+				write.println("error");
 			}
 		}
 		write.println();
 		write.close();
 	}
-	
-	public static final void makeScreenshot(JFrame argFrame, String filepath, int i, int j) {
-		
-		try {
-			
-			Rectangle rec = argFrame.getBounds();
-		    BufferedImage bufferedImage = new BufferedImage(rec.width, rec.height, BufferedImage.TYPE_INT_ARGB);
-		    argFrame.paint(bufferedImage.getGraphics());
-			
-			ImageIO.write(bufferedImage, "png", new File( filepath+"\\Stefanya\\shots\\" + i + "_" + j + ".png" ));
-		} catch (IOException ioe) {
-	        ioe.printStackTrace();
-	    }
+
+	public void setParams(int task) {
+		int chromos = 1;
+		double child = 1;
+		double mut = 1;
+		double pres = 1;
+		double Zopt = Double.MAX_VALUE;
+		double z;
+		for (int c = 20; c <= 60; c++) {
+			for (int h = 10; h <= 30; h++) {
+				if ((h * (c / 100)) % 2 == 0) {
+					for (int m = 5; m <= 15; m++) {
+						if ((m * (c / 100)) % 1 == 0) {
+							for (int p = 10; p <= 20; p++) {
+								if ((p * (c / 100)) % 1 == 0) {
+									z = -0.11450 + 0.005293 * c + 0.000738 * (h * (c / 100)) + 0.06750 * (m * (c / 100))
+											+ 0.006830 * (p * (c / 100)) + 0.001332 * task - 0.000059 * c * c
+											+ 0.001738 * (h * (c / 100)) * (h * (c / 100))
+											- 0.004576 * (m * (c / 100)) * (m * (c / 100))
+											- 0.002326 * (p * (c / 100)) * (p * (c / 100)) - 0.000034 * task * task
+											- 0.000839 * c * (h * (c / 100))
+											+ 0.000645 * (h * (c / 100)) * (m * (c / 100))
+											+ 0.000254 * (h * (c / 100)) * (p * (c / 100))
+											+ 0.003251 * (m * (c / 100)) * (p * (c / 100))
+											- 0.000015 * (p * (c / 100)) * task
+											- 0.000073 * (h * (c / 100)) * (h * (c / 100)) * (h * (c / 100))
+											+ 0.000351 * (m * (c / 100)) * (m * (c / 100)) * (m * (c / 100))
+											+ 0.000141 * (p * (c / 100)) * (p * (c / 100)) * (p * (c / 100))
+											+ 0.000000 * task * task * task + 0.000011 * c * c * (h * (c / 100))
+											- 0.000012 * c * (h * (c / 100)) * (m * (c / 100))
+											+ 0.000010 * c * (m * (c / 100)) * (m * (c / 100))
+											- 0.000055 * c * (m * (c / 100)) * (p * (c / 100))
+											+ 0.000007 * (h * (c / 100)) * (m * (c / 100)) * (p * (c / 100))
+											- 0.000016 * (h * (c / 100)) * (p * (c / 100)) * (p * (c / 100));
+									if (z < Zopt) {
+										chromos = c;
+										child = h;
+										mut = m;
+										pres = p;
+										Zopt = z;
+									}
+
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		params.setChildPercent(child / 100);
+		params.setMutationsPercent(mut / 100);
+		params.setPreservedPercent(pres / 100);
+		params.setNumChromosomes(chromos);
 	}
-	
+
+	public static final void makeScreenshot(JFrame argFrame, String filepath, int i, int j) {
+
+		try {
+
+			Rectangle rec = argFrame.getBounds();
+			BufferedImage bufferedImage = new BufferedImage(rec.width, rec.height, BufferedImage.TYPE_INT_ARGB);
+			argFrame.paint(bufferedImage.getGraphics());
+
+			ImageIO.write(bufferedImage, "png", new File(filepath + "\\s\\shots\\" + i + "_" + j + ".png"));
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+	}
+
 }
