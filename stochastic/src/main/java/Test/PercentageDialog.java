@@ -1,7 +1,7 @@
 package Test;
 
 /**
- * This is an class that extends Dialog and asks a percentage value
+ * A class that extends Dialog and asks a percentage value
  * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
  *
  * @see Dialog

@@ -3,7 +3,7 @@ package Test;
 import Test.Dialog;
 
 /**
- * This is an class that extends Dialog and asks an for the Cycle Time of the problem
+ * A class that extends Dialog and asks an for the Cycle Time of the problem
  * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
  *
  * @see Dialog

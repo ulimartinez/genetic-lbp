@@ -45,7 +45,7 @@ public class Code {
 	}
 	
 	/**
-	 * Getter function for the variable {@link #chromosome}
+	 * Getter method for the variable {@link #chromosome}
 	 * @return - {@link #chromosome}
 	 */
 	Chromosome getChromosome ()
@@ -54,19 +54,19 @@ public class Code {
 	}
 
 	/**
-	 * Setter  function for {@link #tasks} that initializes the array using the values of the given parameters
+	 * Setter  method for {@link #tasks} that initializes the array using the values of the given parameters
 	 * @param precedences - A matrix containing all task precedences 
 	 * @param times					- An array containing the tasks' times
 	 * @param stdDev				- An array containing the tasks' standard deviations
 	 */
 	void setTasks(int[][] precedences, double[] times, double[] stdDev) {//having the precedence of each Task and the time, we store them in an array of tasks
 		for (int i = 0; i < tasks.length; i++)	 {//for each Task
-			tasks[i] = new Task(precedences[i], times[i], stdDev[i]);	//Task equals new variable that contained precedence and time
+			tasks[i] = new Task((i+1),precedences[i], times[i], stdDev[i]);	//Task equals new variable that contained precedence and time
 		}
 	}
 	
 	/**
-	 * Setter  function for {@link #chromosome} that initializes its tasks using the values of {@link #tasks} 
+	 * Setter  method for {@link #chromosome} that initializes its tasks using the values of {@link #tasks} 
 	 * in the order given by the values of the population parameter
 	 * @param population - An array containing the order in which the chromosome's task should be assigned
 	 */
@@ -82,7 +82,7 @@ public class Code {
 
 
 	/**
-	 * A function to initialize a chromosome respecting its task precedences
+	 * A method to initialize a chromosome respecting its task precedences
 	 * @param STime - The starting time from which to calculate the task's computational time
 	 * @return - Return the chromosome's population
 	 */
@@ -129,7 +129,7 @@ public class Code {
 	}
 	
 	/**
-	 * A function to initializeand print a chromosome respecting its task precedences
+	 * A method to initializeand print a chromosome respecting its task precedences
 	 * @param a - Number of time the precedences are initialized before having a final set
 	 * @deprecated - replaced by {@link #initialPopulation(long)} 
 	 */

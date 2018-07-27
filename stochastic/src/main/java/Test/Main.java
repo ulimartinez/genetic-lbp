@@ -458,7 +458,7 @@ public class Main {
 							}
 							Task tmp = new Task(tasknum);
 							tmp.setTime(tasktime);
-							tmp.setStd(taskstd);
+							tmp.setStdDev(taskstd);
 							tasksMap.put(element.getAttribute("id"), tmp);
 						}
 					}

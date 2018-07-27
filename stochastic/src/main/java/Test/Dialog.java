@@ -16,7 +16,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * This is an abstract class for a dialog that asks and retrieves a value 
+ * An abstract class for a dialog that asks and retrieves a value. 
+ * It contains the abstract method {@link #readValue()} that must be defined by its children
  * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
  *
  */
@@ -47,9 +48,9 @@ public abstract class Dialog extends JDialog {
 
 	
 	/**
-	 * Dialog constructor
-	 * @param label - Identifies which data to input
-	 * @param type - Specifies the variable type to input
+	 * Dialog constructor, creates a dialog that contains the given labels and a textField
+	 * @param label - Identifies which data to input. Used for {@link #lblValue}
+	 * @param type - Specifies the variable type to input. Used for {@link #lblType}
 	 */
 	public Dialog(String label, String type) {
 		super();
@@ -113,7 +114,7 @@ public abstract class Dialog extends JDialog {
 	}
 
 	/**
-	 * A function to change the label of {@link #lblValue}
+	 * A method to change the label of {@link #lblValue}
 	 * @param newLabel
 	 */
 	public void changeValueLabel(String newLabel) {
@@ -121,7 +122,7 @@ public abstract class Dialog extends JDialog {
 	}
 
 	/**
-	 * A function to change the label of {@link #lblType}
+	 * A method to change the label of {@link #lblType}
 	 * @param newLabel
 	 */
 	public void changeTypeLabel(String newLabel) {

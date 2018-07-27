@@ -3,7 +3,7 @@ package Test;
 import Test.Dialog;
 
 /**
- * This is an class that extends Dialog and asks an integer value
+ * A class that extends Dialog and asks an integer value
  * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
  *
  * @see Dialog
