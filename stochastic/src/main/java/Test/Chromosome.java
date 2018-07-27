@@ -4,6 +4,7 @@ import org.apache.commons.math.MathException;
 import org.apache.commons.math.distribution.NormalDistribution;
 import org.apache.commons.math.distribution.NormalDistributionImpl;
 
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -133,6 +134,108 @@ public class Chromosome {
 	 */
 	void setGeneration(int gen) {
 		this.generation = gen;
+	}
+	
+	/**
+	 * Setter  method that initializes the chromosome's tasks using the values of {@link #tasks} 
+	 * in the order given by the values of the population parameter
+	 * @param population - An array containing the order in which the chromosome's task should be assigned
+	 */
+	void setChromosomes(int[] population)
+	 {
+		//this rearranges the array of tasks according to some initial population
+		Task[] tmp = new Task[population.length];
+		this.taskIndex = population;
+		for (int i = 0; i < population.length; i++) {
+			tmp[i] = tasks[population[i] - 1];
+		}
+		this.tasks = tmp;
+	}
+
+	/**
+	 * A method to initialize a chromosome respecting its task precedences
+	 * @param STime - The starting time from which to calculate the task's computational time
+	 * @return - An int array containing the chromosome's population
+	 */
+	int[] initialPopulation(long STime) {//having the array of tasks, we can generate an initial population respecting the precedences
+		this.startTime = STime;
+		int[] initial = new int[tasks.length];		//Create an integer array size of tasks
+		List<Integer> noPrecedence = new LinkedList<Integer>();//Create an array that will store Task with no precedence
+		for (int i = 0; i < tasks.length; i++)	 {//For each Task
+			if (tasks[i].getPrecedences() == null || tasks[i].getPrecedences()[0] == 0)  {// if Task has not any precedence
+				noPrecedence.add(i + 1);	//adds to list Task with no precedence recognized by index array
+			}
+		}
+		int first = generator.nextInt(noPrecedence.size());	//choose random any Task with no precedence
+		initial[0] = noPrecedence.get(first);	//
+		noPrecedence.remove(first);		// Reinitialize list "no precedence"
+		for (int k = 1; k < initial.length; k++) {// verify every gen (Task)
+			int[] candidates = new int[initial.length];
+			int indexOfCandidates = 0;
+			for (int i = 0; i < tasks.length; i++) {
+				int[] precedences = tasks[i].getPrecedences();
+				boolean candidate = true;		// it is already a candidate until verify it
+				for (int j = 0; j < precedences.length; j++) {
+					if (!(contains(initial, precedences[j])))	 {//verify  the precedence necessary for Task evaluated
+						candidate = false;  //if not has been assigned is not a candidate
+						break;
+					}
+				}
+				if (candidate && !contains(initial, i+1))		 {//if it's a candidate and not has been assigned,
+					candidates[indexOfCandidates] = i + 1;		// it's assigned
+					indexOfCandidates++;
+				}
+			}
+			int totalCandidates = 0;
+			for (int i = 0; i < candidates.length; i++) {
+				if (candidates[i] == 0)   {// if there's any candidate
+					totalCandidates = i;		//count them
+					break;
+				}
+			}
+			initial[k] = candidates[generator.nextInt(totalCandidates)]; //choose any random candidate if exist more than 1
+		}
+		this.computationalTime = System.nanoTime()-this.startTime;
+		return initial;
+	}
+	
+	/**
+	 * A method to initialize and print a chromosome respecting its task precedences
+	 * @param a - Number of time the precedences are initialized before having a final set
+	 * @deprecated - replaced by {@link #initialPopulation(long)} 
+	 */
+	void initialPopulation(int a) {
+		for (int l = 0; l < a; l++) {
+			int[] initial = new int[tasks.length];
+			initial[0] = 1;
+			for (int k = 1; k < initial.length; k++) {
+				int[] candidates = new int[initial.length];
+				int indexOfCandidates = 0;
+				for (int i = 1; i < tasks.length; i++) {
+					int[] precedences = tasks[i].getPrecedences();
+					boolean candidate = true;
+					for (int j = 0; j < precedences.length; j++) {
+						if (!(contains(initial, precedences[j]))) {
+							candidate = false;
+							break;
+						}
+					}
+					if (candidate && !contains(initial, i+1)) {
+						candidates[indexOfCandidates] = i + 1;
+						indexOfCandidates++;
+					}
+				}
+				int totalCandidates = 0;
+				for (int i = 0; i < candidates.length; i++) {
+					if (candidates[i] == 0) {
+						totalCandidates = i;
+						break;
+					}
+				}
+				initial[k] = candidates[generator.nextInt(totalCandidates)];
+			}
+			System.out.println(Arrays.toString(initial));
+		}
 	}
 
 	/**

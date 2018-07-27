@@ -188,17 +188,18 @@ public class Main {
 	public Chromosome getNewChromosome() {
 		double probabilityP = params.getProbability();
 		double cycle = params.getCycleTime();
+		
+		Task[] taskArray = new Task[tasks];
+		
+		for (int i = 0; i < tasks; i++)	 {//for each Task
+			taskArray[i] = new Task((i+1),precedences[i], times[i], stdDev[i]);	//Task equals new variable that contained precedence and time
+		}
 
-		// declare a variable type Code called problem
-		Code problem = new Code(tasks);
-		// assign info (precedence and time) in var problem
-		problem.setTasks(precedences, times, stdDev);
-		// call to subroutine contained in Code class
-		int[] initialPop = problem.initialPopulation(STime);
+		Chromosome chromo = new Chromosome(taskArray);
+		int[] initialPop = chromo.initialPopulation(STime);
 		// sets chromosomes of initial solution
-		problem.setChromosomes(initialPop);
-		// gets chromosomes of initial solution
-		Chromosome chromo = problem.getChromosome();
+		chromo.setChromosomes(initialPop);
+
 		// set chromosomes cycle time
 		chromo.cycleTime = cycle;
 		// sets chromosomes creation generation
