@@ -10,7 +10,7 @@ public class LBPParameters {
 	/* these are used for calculating solutions */
 	
 	/**
-	 * A double variable to store the confidence level 
+	 * A double variable to store the experiment's confidence level 
 	 */
 	private double probability;
 	

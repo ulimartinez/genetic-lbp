@@ -8,36 +8,101 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * A class used to create instances of chromosomes to solve a Line Balancing Problem
+ * 
+ * @author Ulises Martinez
+ *
+ */
 public class Chromosome {
-	
-	private Random generator = new Random(System.currentTimeMillis());
-	
-	int assigned;
-	int Varassigned;
-	String[] line;
-	Task[] tasks;
-	int[] taskIndex;
-	double cycleTime;
-	List<List<Integer>> solved;
-	String[] toTable;
-	List<Double> WSTimes;
-	double smoothness;
-	boolean isChild;
-	boolean isMutation;
-	boolean isPreserved;
-	long computationalTime;
-	long startTime;
-	int generation;
-	double sum = 0.0;
-	double devsum = 0.0;
-	private static NormalDistribution d;
-	double res = 0.0;
-	double res2 = 0.0;
-	double res3 = 0.0;
 
+	/**
+	 * A Random variable used to create random results
+	 */
+	private Random generator = new Random(System.currentTimeMillis());
+
+	/**
+	 * An array containing the chromosome's tasks
+	 */
+	protected Task[] tasks;
+
+	/**
+	 * An int array containing a numerical index for each task in the chromosome
+	 */
+	protected int[] taskIndex;
+
+	/**
+	 * A double variable containing the problem's cycle time
+	 */
+	double cycleTime;
+
+	/**
+	 * A List containing the tasks assigned to each workstation
+	 */
+	List<List<Integer>> solved;
+
+	/**
+	 * A String array containing the chromosome's coded solution
+	 */
+	String[] toTable;
+
+	/**
+	 * A List that stores the work time of each workstation
+	 */
+	List<Double> WSTimes;
+
+	/**
+	 * A double variable that stores the chromosome's smoothness value
+	 */
+	double smoothness;
+
+	/**
+	 * A boolean variable that stores whether the chromosome is a child of last
+	 * generation's chromosomes or not
+	 */
+	boolean isChild;
+
+	/**
+	 * A boolean variable that stores whether the chromosome is a mutation of last
+	 * generation's chromosome or not
+	 */
+	boolean isMutation;
+
+	/**
+	 * A boolean variable that stores whether the chromosome is preserved from the
+	 * last generation or not
+	 */
+	boolean isPreserved;
+
+	/**
+	 * A long variable that stores the time it took to computate the chromosome
+	 */
+	long computationalTime;
+
+	/**
+	 * A long variable that stores the time at which the chromosome began its
+	 * computation
+	 */
+	long startTime;
+
+	/**
+	 * An int variable that stores the chromosome's generation
+	 */
+	int generation;
+
+	// Constructors
+
+	/**
+	 * An empty class constructor
+	 */
 	Chromosome() {
 	}
 
+	/**
+	 * A class constructor that initializes {@link #tasks} and {@link #taskIndex}
+	 * 
+	 * @param tasks
+	 */
 	Chromosome(Task[] tasks) {
 		this.tasks = tasks;
 		taskIndex = new int[tasks.length];
@@ -46,20 +111,47 @@ public class Chromosome {
 		}
 	}
 
+	/**
+	 * Setter for the {@link #startTime} of a given chromosome
+	 * 
+	 * @param chromo
+	 *            - The chromosome that will contain the new startTime
+	 * @param Initial
+	 *            - A long variable containing the startTime's value
+	 * @return - The parameter's chromosome after setting it's startTime
+	 */
 	Chromosome SetInitialTime(Chromosome chromo, long Initial) {
 		chromo.startTime = Initial;
 		return chromo;
 	}
-	
+
+	/**
+	 * Setter for the variable {@link #generation}
+	 * 
+	 * @param gen
+	 *            - The numeric value that identifies the chromosome's generation
+	 */
 	void setGeneration(int gen) {
 		this.generation = gen;
 	}
 
+	/**
+	 * A method to mutate the chromosome into a new one
+	 * 
+	 * @param STime
+	 *            - A long value representing the time at which computation began
+	 * @param probability
+	 *            - A double value that represents the experiment's confidence level
+	 * @param gen
+	 *            - The numeric value that identifies the chromosome's generation
+	 * @return - The mutated chromosome
+	 * @throws MathException
+	 */
 	Chromosome mutate(long STime, double probability, int gen) throws MathException {
 		// Adding Start Time to take computational time
 		Chromosome mutated = new Chromosome();
 		mutated.startTime = STime;
-		//Make head of at least 2 genes
+		// Make head of at least 2 genes
 		int position = generator.nextInt(tasks.length - 2) + 2;
 		List<Task> selected = new LinkedList<Task>();
 		List<Task> remaining = new LinkedList<Task>();
@@ -88,24 +180,24 @@ public class Chromosome {
 						}
 					}
 				}
-				//Revise, why the !contain check?
+				// Revise, why the !contain check?
 				if (candidate && !contains(selectedIndex, remainingIndex.get(i))) {
 					candidates.add(remaining.get(i));
 					remaining.remove(i);
 					candidatesIndex.add(remainingIndex.get(i));
 					remainingIndex.remove(i);
 					to = remaining.size();
-					//Used to be i=-1, but that re-checked previous tasks
+					// Used to be i=-1, but that re-checked previous tasks
 					i = -1;
 				}
 			}
-			//Randomly choose a candidate and pass it to select
-			int rand =generator.nextInt(candidates.size());
+			// Randomly choose a candidate and pass it to select
+			int rand = generator.nextInt(candidates.size());
 			selected.add(candidates.get(rand));
 			selectedIndex.add(candidatesIndex.get(rand));
 			candidates.remove(rand);
 			candidatesIndex.remove(rand);
-			//Send the remaining candidates to remaining
+			// Send the remaining candidates to remaining
 			for (int l = 0; l < candidates.size(); l++) {
 				remaining.add(candidates.get(l));
 				remainingIndex.add(candidatesIndex.get(l));
@@ -113,10 +205,10 @@ public class Chromosome {
 		}
 
 		mutated.cycleTime = this.cycleTime;
-		//Transfor List<> to Integer[]
+		// Transfor List<> to Integer[]
 		Integer[] b = new Integer[tasks.length];
 		b = selectedIndex.toArray(b);
-		//Transform Integer[] to int[]
+		// Transform Integer[] to int[]
 		int[] ind = new int[b.length];
 		int track = 0;
 		for (int e : b) {
@@ -135,26 +227,60 @@ public class Chromosome {
 		return mutated;
 	}
 
+	/**
+	 * Getter that returns a String array containing the chromosome's coded solution
+	 * 
+	 * @return - {@link #toTable}
+	 */
 	String[] getSelected() {
 		return (toTable);
 	}
 
+	/**
+	 * Getter for the chromosome's smoothness value
+	 * 
+	 * @return - {@link #smoothness}
+	 */
 	double getSmoothness() {
 		return (smoothness);
 	}
 
-	long  getCompTime() {
+	/**
+	 * Getter for the chromosome's total computational time
+	 * 
+	 * @return {@link #computationalTime}
+	 */
+	long getCompTime() {
 		return computationalTime;
 	}
 
+	/**
+	 * Getter that returns a List containing the tasks assigned to each workstation
+	 * 
+	 * @return - {@link #solved}
+	 */
 	List<List<Integer>> getSolution() {
 		return (solved);
 	}
 
+	/**
+	 * A method to cross the chromosome with another to create a child
+	 * 
+	 * @param parent
+	 *            - The chromosome with which the cross-over is realized
+	 * @param probability
+	 *            - A double value that represents the experiment's confidence level
+	 * @param STime
+	 *            - A long value representing the time at which computation began
+	 * @param gen
+	 *            - The numeric value that identifies the chromosome's generation
+	 * @return - The child chromosome produced by the cross-over
+	 * @throws MathException
+	 */
 	Chromosome crossOver(Chromosome parent, double probability, long STime, int gen) throws MathException {
 
-		int first =generator.nextInt(parent.tasks.length / 2 - 1) + 1;
-		int last =generator.nextInt( parent.tasks.length / 2 - 1) + 1;
+		int first = generator.nextInt(parent.tasks.length / 2 - 1) + 1;
+		int last = generator.nextInt(parent.tasks.length / 2 - 1) + 1;
 		Chromosome newChild = new Chromosome();
 		newChild.startTime = STime;
 		if (parent.tasks.length == this.tasks.length) {
@@ -194,7 +320,17 @@ public class Chromosome {
 		return (newChild);
 	}
 
-	boolean contains(final int[] array, final int v) { // checks if a number is contained in an array of numbers
+	/**
+	 * Checks whether a given value exists within an array
+	 * 
+	 * @param array
+	 *            - The array in which to look the value up
+	 * @param v
+	 *            - The value looked for
+	 * @return - Returns true if the value is found; false otherwise.
+	 */
+	boolean contains(final int[] array, final int v) {
+		// checks if a number is contained in an array of numbers
 		for (final int e : array)
 			if (e == v)
 				return true;
@@ -202,7 +338,17 @@ public class Chromosome {
 		return false;
 	}
 
-	boolean contains(final List<Integer> array, final int v) {// checks if a number is contained in an array of numbers
+	/**
+	 * Checks whether a given value exists within a List
+	 * 
+	 * @param array
+	 *            - The List in which to look the value up
+	 * @param v
+	 *            - The value looked for
+	 * @return - Returns true if the value is found; false otherwise.
+	 */
+	boolean contains(final List<Integer> array, final int v) {
+		// checks if a number is contained in an array of numbers
 		for (final int e : array)
 			if (e == v)
 				return true;
@@ -210,10 +356,16 @@ public class Chromosome {
 		return false;
 	}
 
+	/**
+	 * A method to calculate the chromosme's solution to the LBP
+	 * 
+	 * @param probability
+	 *            - A double value that represents the experiment's confidence level
+	 * @throws MathException
+	 */
 	public void solution(double probability) throws MathException {
 		WSTimes = new LinkedList<Double>();
 		toTable = new String[tasks.length];
-		line = new String[tasks.length];
 		String currLine;
 		List<Integer> taskIn;
 		int index = 1;
@@ -228,9 +380,11 @@ public class Chromosome {
 		int Ind[] = new int[tasks.length];
 		List<List<Integer>> workstations = new LinkedList<List<Integer>>();
 		taskIn = new LinkedList<Integer>();
+
+		NormalDistribution d;
 		while (!(first > last) & (iterations < 1000)) {
-			sum = 0;
-			devsum = 0;
+			double sum = 0;
+			double devsum = 0;
 			for (x = 0; x < tasks.length; x++) {
 				if (Ind[x] == index) {
 					sum += MeanTimeAssigned[x];
@@ -241,10 +395,10 @@ public class Chromosome {
 			currLine = index + "&";
 			d = new NormalDistributionImpl((sum + tasks[first].getTime()),
 					(Math.sqrt(devsum + tasks[first].getStdDev())));
-			res2 = d.cumulativeProbability(cycleTime);
+			double res2 = d.cumulativeProbability(cycleTime);
 			d = new NormalDistributionImpl((sum + tasks[last].getTime()),
 					(Math.sqrt((devsum + tasks[last].getStdDev()))));
-			res3 = d.cumulativeProbability(cycleTime);
+			double res3 = d.cumulativeProbability(cycleTime);
 			if (res2 >= probability && res3 >= probability) {
 				// 1st option //stochastic
 				currLine += taskIndex[first] + "," + taskIndex[last] + "&";
@@ -312,6 +466,11 @@ public class Chromosome {
 		setSmoothness();
 	}
 
+	/**
+	 * A method to calculate and store the chromosome's smoothness value
+	 * 
+	 * @see #smoothness
+	 */
 	public void setSmoothness() {
 		double maxTime = 0;
 		for (int i = 0; i < WSTimes.size(); i++) {

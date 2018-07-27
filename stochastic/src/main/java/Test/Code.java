@@ -168,8 +168,8 @@ public class Code {
 	}
 	
 	/**
-	 * Checks wheter a given value exists within an array
-	 * @param array - The array in hich to look the value up
+	 * Checks whether a given value exists within an array
+	 * @param array - The array in which to look the value up
 	 * @param v         - The value looked for
 	 * @return			   - Returns true if the value is found; false otherwise.
 	 */
