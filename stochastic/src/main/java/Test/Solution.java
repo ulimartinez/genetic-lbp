@@ -87,7 +87,7 @@ public class Solution extends AbstractCellEditor
 	}
 	
 	/**
-	 * Getter of the buttons mnemonic
+	 * Getter of the button's mnemonic
 	 *
 	 * @return {@link #mnemonic}
 	 */

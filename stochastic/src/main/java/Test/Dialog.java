@@ -16,9 +16,10 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * An abstract class for a dialog that asks and retrieves a value. 
- * It contains the abstract method {@link #readValue()} that must be defined by its children
- * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
+ * An abstract class for a dialog that asks and retrieves a value. It contains
+ * the abstract method {@link #readValue()} that must be defined by its children
+ * 
+ * @author Ivan Monares Vélez
  *
  */
 public abstract class Dialog extends JDialog {
@@ -40,17 +41,21 @@ public abstract class Dialog extends JDialog {
 	protected JLabel lblType;
 
 	/**
-	 * Abstract method to read the value in the text field 
-	 * that must be implemented by the class' children
+	 * Abstract method to read the value in the text field that must be implemented
+	 * by the class' children
+	 * 
 	 * @return - true if the value was successfully read, false otherwise.
 	 */
 	protected abstract boolean readValue();
 
-	
 	/**
-	 * Dialog constructor, creates a dialog that contains the given labels and a textField
-	 * @param label - Identifies which data to input. Used for {@link #lblValue}
-	 * @param type - Specifies the variable type to input. Used for {@link #lblType}
+	 * Dialog constructor, creates a dialog that contains the given labels and a
+	 * textField
+	 * 
+	 * @param label
+	 *            - Identifies which data to input. Used for {@link #lblValue}
+	 * @param type
+	 *            - Specifies the variable type to input. Used for {@link #lblType}
 	 */
 	public Dialog(String label, String type) {
 		super();
@@ -73,7 +78,7 @@ public abstract class Dialog extends JDialog {
 			getContentPane().add(lblValue);
 		}
 		{
-			 lblType = new JLabel(type);
+			lblType = new JLabel(type);
 			getContentPane().add(lblType);
 		}
 		{
@@ -91,9 +96,9 @@ public abstract class Dialog extends JDialog {
 				buttonPane.add(okButton);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent ae) {
-						
+
 						boolean exit = readValue();
-						if(exit) {
+						if (exit) {
 							setVisible(false);
 						}
 					}
@@ -115,7 +120,9 @@ public abstract class Dialog extends JDialog {
 
 	/**
 	 * A method to change the label of {@link #lblValue}
+	 * 
 	 * @param newLabel
+	 *            - The new text for the label
 	 */
 	public void changeValueLabel(String newLabel) {
 		lblValue.setText(newLabel);
@@ -123,7 +130,9 @@ public abstract class Dialog extends JDialog {
 
 	/**
 	 * A method to change the label of {@link #lblType}
+	 * 
 	 * @param newLabel
+	 *            - The new text for the label
 	 */
 	public void changeTypeLabel(String newLabel) {
 		lblType.setText(newLabel);

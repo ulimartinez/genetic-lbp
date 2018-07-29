@@ -2,7 +2,7 @@ package Test;
 
 /**
  * A class that extends Dialog and asks a percentage value
- * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
+ * @author Ivan Monares Vélez
  *
  * @see Dialog
  */

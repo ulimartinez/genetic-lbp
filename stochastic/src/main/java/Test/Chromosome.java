@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.Random;
 
 /**
- * A class used to create instances of chromosomes to solve a Line Balancing Problem
+ * A class used to create instances of chromosomes to solve a Line Balancing
+ * Problem
  * 
  * @author Ulises Martinez
  *
@@ -103,6 +104,7 @@ public class Chromosome {
 	 * A class constructor that initializes {@link #tasks} and {@link #taskIndex}
 	 * 
 	 * @param tasks
+	 *            - A Task array, containing the chromosomes' tasks
 	 */
 	Chromosome(Task[] tasks) {
 		this.tasks = tasks;
@@ -135,15 +137,17 @@ public class Chromosome {
 	void setGeneration(int gen) {
 		this.generation = gen;
 	}
-	
+
 	/**
-	 * Setter  method that initializes the chromosome's tasks using the values of {@link #tasks} 
-	 * in the order given by the values of the population parameter
-	 * @param population - An array containing the order in which the chromosome's task should be assigned
+	 * Setter method that initializes the chromosome's tasks using the values of
+	 * {@link #tasks} in the order given by the values of the population parameter
+	 * 
+	 * @param population
+	 *            - An array containing the order in which the chromosome's task
+	 *            should be assigned
 	 */
-	void setChromosomes(int[] population)
-	 {
-		//this rearranges the array of tasks according to some initial population
+	void setChromosomes(int[] population) {
+		// this rearranges the array of tasks according to some initial population
 		Task[] tmp = new Task[population.length];
 		this.taskIndex = population;
 		for (int i = 0; i < population.length; i++) {
@@ -154,55 +158,65 @@ public class Chromosome {
 
 	/**
 	 * A method to initialize a chromosome respecting its task precedences
-	 * @param STime - The starting time from which to calculate the task's computational time
+	 * 
+	 * @param STime
+	 *            - The starting time from which to calculate the task's
+	 *            computational time
 	 * @return - An int array containing the chromosome's population
 	 */
-	int[] initialPopulation(long STime) {//having the array of tasks, we can generate an initial population respecting the precedences
+	int[] initialPopulation(long STime) {// having the array of tasks, we can generate an initial population respecting
+											// the precedences
 		this.startTime = STime;
-		int[] initial = new int[tasks.length];		//Create an integer array size of tasks
-		List<Integer> noPrecedence = new LinkedList<Integer>();//Create an array that will store Task with no precedence
-		for (int i = 0; i < tasks.length; i++)	 {//For each Task
-			if (tasks[i].getPrecedences() == null || tasks[i].getPrecedences()[0] == 0)  {// if Task has not any precedence
-				noPrecedence.add(i + 1);	//adds to list Task with no precedence recognized by index array
+		int[] initial = new int[tasks.length]; // Create an integer array size of tasks
+		List<Integer> noPrecedence = new LinkedList<Integer>();// Create an array that will store Task with no
+																// precedence
+		for (int i = 0; i < tasks.length; i++) {// For each Task
+			if (tasks[i].getPrecedences() == null || tasks[i].getPrecedences()[0] == 0) {// if Task has not any
+																							// precedence
+				noPrecedence.add(i + 1); // adds to list Task with no precedence recognized by index array
 			}
 		}
-		int first = generator.nextInt(noPrecedence.size());	//choose random any Task with no precedence
-		initial[0] = noPrecedence.get(first);	//
-		noPrecedence.remove(first);		// Reinitialize list "no precedence"
+		int first = generator.nextInt(noPrecedence.size()); // choose random any Task with no precedence
+		initial[0] = noPrecedence.get(first); //
+		noPrecedence.remove(first); // Reinitialize list "no precedence"
 		for (int k = 1; k < initial.length; k++) {// verify every gen (Task)
 			int[] candidates = new int[initial.length];
 			int indexOfCandidates = 0;
 			for (int i = 0; i < tasks.length; i++) {
 				int[] precedences = tasks[i].getPrecedences();
-				boolean candidate = true;		// it is already a candidate until verify it
+				boolean candidate = true; // it is already a candidate until verify it
 				for (int j = 0; j < precedences.length; j++) {
-					if (!(contains(initial, precedences[j])))	 {//verify  the precedence necessary for Task evaluated
-						candidate = false;  //if not has been assigned is not a candidate
+					if (!(contains(initial, precedences[j]))) {// verify the precedence necessary for Task evaluated
+						candidate = false; // if not has been assigned is not a candidate
 						break;
 					}
 				}
-				if (candidate && !contains(initial, i+1))		 {//if it's a candidate and not has been assigned,
-					candidates[indexOfCandidates] = i + 1;		// it's assigned
+				if (candidate && !contains(initial, i + 1)) {// if it's a candidate and not has been assigned,
+					candidates[indexOfCandidates] = i + 1; // it's assigned
 					indexOfCandidates++;
 				}
 			}
 			int totalCandidates = 0;
 			for (int i = 0; i < candidates.length; i++) {
-				if (candidates[i] == 0)   {// if there's any candidate
-					totalCandidates = i;		//count them
+				if (candidates[i] == 0) {// if there's any candidate
+					totalCandidates = i; // count them
 					break;
 				}
 			}
-			initial[k] = candidates[generator.nextInt(totalCandidates)]; //choose any random candidate if exist more than 1
+			initial[k] = candidates[generator.nextInt(totalCandidates)]; // choose any random candidate if exist more
+																			// than 1
 		}
-		this.computationalTime = System.nanoTime()-this.startTime;
+		this.computationalTime = System.nanoTime() - this.startTime;
 		return initial;
 	}
-	
+
 	/**
 	 * A method to initialize and print a chromosome respecting its task precedences
-	 * @param a - Number of time the precedences are initialized before having a final set
-	 * @deprecated - replaced by {@link #initialPopulation(long)} 
+	 * 
+	 * @param a
+	 *            - Number of time the precedences are initialized before having a
+	 *            final set
+	 * @deprecated - replaced by {@link #initialPopulation(long)}
 	 */
 	void initialPopulation(int a) {
 		for (int l = 0; l < a; l++) {
@@ -220,7 +234,7 @@ public class Chromosome {
 							break;
 						}
 					}
-					if (candidate && !contains(initial, i+1)) {
+					if (candidate && !contains(initial, i + 1)) {
 						candidates[indexOfCandidates] = i + 1;
 						indexOfCandidates++;
 					}
@@ -248,9 +262,8 @@ public class Chromosome {
 	 * @param gen
 	 *            - The numeric value that identifies the chromosome's generation
 	 * @return - The mutated chromosome
-	 * @throws MathException
 	 */
-	Chromosome mutate(long STime, double probability, int gen) throws MathException {
+	Chromosome mutate(long STime, double probability, int gen)  {
 		// Adding Start Time to take computational time
 		Chromosome mutated = new Chromosome();
 		mutated.startTime = STime;
@@ -378,9 +391,8 @@ public class Chromosome {
 	 * @param gen
 	 *            - The numeric value that identifies the chromosome's generation
 	 * @return - The child chromosome produced by the cross-over
-	 * @throws MathException
 	 */
-	Chromosome crossOver(Chromosome parent, double probability, long STime, int gen) throws MathException {
+	Chromosome crossOver(Chromosome parent, double probability, long STime, int gen)  {
 
 		int first = generator.nextInt(parent.tasks.length / 2 - 1) + 1;
 		int last = generator.nextInt(parent.tasks.length / 2 - 1) + 1;
@@ -424,7 +436,7 @@ public class Chromosome {
 	}
 
 	/**
-	 * Checks whether a given value exists within an array
+	 * A method to check whether a given value exists within an array
 	 * 
 	 * @param array
 	 *            - The array in which to look the value up
@@ -442,7 +454,7 @@ public class Chromosome {
 	}
 
 	/**
-	 * Checks whether a given value exists within a List
+	 * A method to check whether a given value exists within a List
 	 * 
 	 * @param array
 	 *            - The List in which to look the value up
@@ -464,9 +476,8 @@ public class Chromosome {
 	 * 
 	 * @param probability
 	 *            - A double value that represents the experiment's confidence level
-	 * @throws MathException
 	 */
-	public void solution(double probability) throws MathException {
+	public void solution(double probability)  {
 		WSTimes = new LinkedList<Double>();
 		toTable = new String[tasks.length];
 		String currLine;
@@ -496,12 +507,30 @@ public class Chromosome {
 			}
 			iterations += 1;
 			currLine = index + "&";
-			d = new NormalDistributionImpl((sum + tasks[first].getTime()),
-					(Math.sqrt(devsum + tasks[first].getStdDev())));
-			double res2 = d.cumulativeProbability(cycleTime);
-			d = new NormalDistributionImpl((sum + tasks[last].getTime()),
-					(Math.sqrt((devsum + tasks[last].getStdDev()))));
-			double res3 = d.cumulativeProbability(cycleTime);
+			
+
+			double res2 = 0;
+			double res3 = 0;
+			
+			try {
+
+				d = new NormalDistributionImpl((sum + tasks[first].getTime()),
+						(Math.sqrt(devsum + tasks[first].getStdDev())));
+				res2 = d.cumulativeProbability(cycleTime);
+			}
+			catch (Exception e) {
+				//do nothing, res2 = 0
+			}
+			
+			try {
+				d = new NormalDistributionImpl((sum + tasks[last].getTime()),
+						(Math.sqrt((devsum + tasks[last].getStdDev()))));
+				res3 = d.cumulativeProbability(cycleTime);
+			}
+			catch (Exception e) {
+				//do nothing, res3 = 0
+			}
+			
 			if (res2 >= probability && res3 >= probability) {
 				// 1st option //stochastic
 				currLine += taskIndex[first] + "," + taskIndex[last] + "&";

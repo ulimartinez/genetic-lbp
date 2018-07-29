@@ -4,7 +4,7 @@ import Test.Dialog;
 
 /**
  * A class that extends Dialog and asks an integer value
- * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
+ * @author Ivan Monares Vélez
  *
  * @see Dialog
  */

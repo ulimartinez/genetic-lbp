@@ -4,7 +4,7 @@ import Test.Dialog;
 
 /**
  * A class that extends Dialog and asks an for the Cycle Time of the problem
- * @author Ivan Monares Vélez <ivanmonares@hotmail.com>
+ * @author Iván Monares Vélez
  *
  * @see Dialog
  */

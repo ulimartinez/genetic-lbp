@@ -1,7 +1,7 @@
 package Test;
 
 /**
- * A class that stores the parameters used to solve the LBP problem
+ * A class that stores the parameters used to solve a Line Balancing Problem
  * @author Ulises Martinez
  *
  */
