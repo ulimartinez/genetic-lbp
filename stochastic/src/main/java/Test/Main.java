@@ -180,9 +180,11 @@ public class Main {
 				STime = System.nanoTime();
 				generationCounter = 1;
 				for (int j = 0; j < params.getNumChromosomes(); j++) {
+					int count = 0;
 					do {
 						chromos[j] = getNewChromosome();
-					} while( allChromos.contains( chromos[j] ) );
+						count++;
+					} while( count < 100 && allChromos.contains( chromos[j] ) );
 					allChromos.add(chromos[j]);
 				}
 			}
@@ -355,7 +357,6 @@ public class Main {
 		}
 
 		int minWS = 0;
-		System.out.println(sumTasks);
 
 		if(sumTasks <= cycle) {
 			minWS = 1;
@@ -441,9 +442,11 @@ public class Main {
 		}
 		Chromosome[] mutated = bestChromosomes(mutatedAmount);
 		for (int i = 0; i < mutated.length; i++) {
+			int count = 0;
 			do {
 				newGeneration[i + preserve.length] = mutated[i].mutate(STime, params.getProbability(), generationCounter);
-			} while( allChromos.contains( newGeneration[i + preserve.length] ) );
+				count++;
+			} while(count < 100 && allChromos.contains( newGeneration[i + preserve.length] ) );
 			allChromos.add(newGeneration[i + preserve.length]);
 		}
 		Chromosome[] reproduction = bestChromosomes(childAmount);
@@ -475,9 +478,11 @@ public class Main {
 		}
 		for (int i = 0; i < remaining; i++) {
 
+			int count = 0;
 			do {
 				newGeneration[i + (chromos.length - remaining)] = getNewChromosome();
-			} while( allChromos.contains( newGeneration[i + (chromos.length - remaining)] ) );
+				count++;
+			} while(count < 100 && allChromos.contains( newGeneration[i + (chromos.length - remaining)] ) );
 			allChromos.add( newGeneration[i + (chromos.length - remaining)] );
 		}
 		return newGeneration;
@@ -835,7 +840,6 @@ public class Main {
 		gridBagLayout.rowHeights = new int[] { 0, 0, 0, 0, 0 };
 		gridBagLayout.columnWeights = new double[] { 0.0, 0.0, Double.MIN_VALUE };
 		gridBagLayout.rowWeights = new double[] { 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE };
-		System.out.println("working");
 
 		JDialog contentPanel = new JDialog();
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
@@ -870,8 +874,6 @@ public class Main {
 
 				lblMinimumWorkstations.setText("The minimum number of workstations is: " + getMinNumOfWS());
 				lblMinimumWorkstations.setVisible(true);
-				
-				System.out.println(allChromos.size());
 
 				frame.repaint();
 				frame.setVisible(true);
