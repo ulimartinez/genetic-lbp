@@ -117,6 +117,11 @@ public class Main {
 	 * @see Chromosome
 	 */
 	private Chromosome[] chromos;
+	
+	/**
+	 * An array storing all created chromosomes to avoid repetition
+	 */
+	private ArrayList<Chromosome> allChromos;
 
 	/**
 	 * A long variable that stores the solution's global start time used to
@@ -175,7 +180,10 @@ public class Main {
 				STime = System.nanoTime();
 				generationCounter = 1;
 				for (int j = 0; j < params.getNumChromosomes(); j++) {
-					chromos[j] = getNewChromosome();
+					do {
+						chromos[j] = getNewChromosome();
+					} while( allChromos.contains( chromos[j] ) );
+					allChromos.add(chromos[j]);
 				}
 			}
 
@@ -432,22 +440,45 @@ public class Main {
 			newGeneration[i] = preserve[i];
 		}
 		Chromosome[] mutated = bestChromosomes(mutatedAmount);
-		for (int i = 0; i < mutated.length; i++) {				
-			newGeneration[i + preserve.length] = mutated[i].mutate(STime, params.getProbability(), generationCounter);
+		for (int i = 0; i < mutated.length; i++) {
+			do {
+				newGeneration[i + preserve.length] = mutated[i].mutate(STime, params.getProbability(), generationCounter);
+			} while( allChromos.contains( newGeneration[i + preserve.length] ) );
+			allChromos.add(newGeneration[i + preserve.length]);
 		}
 		Chromosome[] reproduction = bestChromosomes(childAmount);
 		int ind = preserve.length + mutated.length;
 		for (int i = 0; i < reproduction.length; i += 2) {
+
+			/*
+			do {
+				newGeneration[ind] = reproduction[i].crossOver(reproduction[i + 1], params.getProbability(), STime, generationCounter);
+			} while( allChromos.contains(newGeneration[ind] ) );
+			allChromos.add(newGeneration[ind]);
+			ind++;
+
+			do {
+				newGeneration[ind] = reproduction[i + 1].crossOver(reproduction[i], params.getProbability(), STime, generationCounter);
+			} while( allChromos.contains( newGeneration[ind] ) );
+			allChromos.add(newGeneration[ind]);
+			ind++;
+			*/
 			
 			newGeneration[ind] = reproduction[i].crossOver(reproduction[i + 1], params.getProbability(), STime, generationCounter);
+			allChromos.add(newGeneration[ind]);
 			ind++;
 
 			newGeneration[ind] = reproduction[i + 1].crossOver(reproduction[i], params.getProbability(), STime, generationCounter);
+			allChromos.add(newGeneration[ind]);
 			ind++;
 			
 		}
 		for (int i = 0; i < remaining; i++) {
-			newGeneration[i + (chromos.length - remaining)] = getNewChromosome();
+
+			do {
+				newGeneration[i + (chromos.length - remaining)] = getNewChromosome();
+			} while( allChromos.contains( newGeneration[i + (chromos.length - remaining)] ) );
+			allChromos.add( newGeneration[i + (chromos.length - remaining)] );
 		}
 		return newGeneration;
 	}
@@ -832,12 +863,15 @@ public class Main {
 				params.setCycleTime(askCycle.showDialog(high));
 				setParams(tasks);
 				chromos = new Chromosome[params.getNumChromosomes()];
+				allChromos = new  ArrayList<Chromosome>();
 				generateSolution();
 				table_1.repaint();
 				table_1.setVisible(true);
 
 				lblMinimumWorkstations.setText("The minimum number of workstations is: " + getMinNumOfWS());
 				lblMinimumWorkstations.setVisible(true);
+				
+				System.out.println(allChromos.size());
 
 				frame.repaint();
 				frame.setVisible(true);
@@ -986,6 +1020,7 @@ public class Main {
 				params.setNumChromosomes(chrm[j]);
 
 				chromos = new Chromosome[params.getNumChromosomes()];
+				allChromos = new  ArrayList<Chromosome>();
 				generateSolution();
 				table_1.repaint();
 				table_1.setVisible(true);
