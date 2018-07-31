@@ -32,7 +32,7 @@ public class Task {
 	/**
 	 * An int variable that stores the task's identifying number
 	 */
-	private int taskNum;
+	private int taskIndex;
 
 	/**
 	 * An empty class constructor
@@ -41,14 +41,14 @@ public class Task {
 	}
 
 	/**
-	 * A class constructor that initializes {@link #taskNum} with the given
+	 * A class constructor that initializes {@link #taskIndex} with the given
 	 * parameter and initializes {@link #precedence} as an empty array
 	 * 
 	 * @param num
 	 *            - An int number that identifies the task
 	 */
 	Task(int num) {
-		this.taskNum = num;
+		this.taskIndex = num;
 		this.precedence = new ArrayList<Integer>();
 	}
 
@@ -66,7 +66,7 @@ public class Task {
 	 *            - A double used to initialize {@link #stdDeviation}
 	 */
 	Task(int taskNum, ArrayList<Integer> precedence, double time, double stdDev) {
-		this.taskNum = taskNum;
+		this.taskIndex = taskNum;
 		this.precedence = precedence;
 		this.meanTime = time;
 		this.stdDeviation = stdDev;
@@ -86,7 +86,7 @@ public class Task {
 	 *            - A double used to initialize {@link #stdDeviation}
 	 */
 	Task(int taskNum, int[] precedence, double time, double stdDev) {
-		this.taskNum = taskNum;
+		this.taskIndex = taskNum;
 		this.precedence = new ArrayList<Integer>(precedence.length);
 		for (int aPrecedence : precedence) {
 			this.precedence.add(aPrecedence);
@@ -135,7 +135,7 @@ public class Task {
 	 * @return - The task's maximum possible time
 	 */
 	public double getMaxTime(double probability) {
-		NormalDistribution probabilityA = new NormalDistributionImpl(meanTime, stdDeviation);
+		NormalDistribution probabilityA = new NormalDistributionImpl(meanTime, Math.sqrt(stdDeviation));
 		double res = 0;
 		try {
 			res = probabilityA.inverseCumulativeProbability(probability);
@@ -148,10 +148,10 @@ public class Task {
 	/**
 	 * Getter for the task's identifying number
 	 * 
-	 * @return - {@link #taskNum}
+	 * @return - {@link #taskIndex}
 	 */
 	public int getTaskNum() {
-		return taskNum;
+		return taskIndex;
 	}
 
 	/**

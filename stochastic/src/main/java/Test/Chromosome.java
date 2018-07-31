@@ -113,6 +113,13 @@ public class Chromosome {
 			taskIndex[i] = i + 1;
 		}
 	}
+	
+	
+
+	@Override
+	public boolean equals(Object obj) {
+		return (Arrays.toString(this.taskIndex).equals(Arrays.toString( ((Chromosome)obj).taskIndex) ) );
+	}
 
 	/**
 	 * Setter for the {@link #startTime} of a given chromosome
@@ -378,6 +385,14 @@ public class Chromosome {
 	List<List<Integer>> getSolution() {
 		return (solved);
 	}
+	
+	/**
+	 * Setter for {@link #cycleTime}
+	 * @param time	- The new value of cycleTime
+	 */
+	void setCycleTime(double time) {
+		this.cycleTime = time;
+	}
 
 	/**
 	 * A method to cross the chromosome with another to create a child
@@ -406,10 +421,12 @@ public class Chromosome {
 			int[] body = new int[tasks.length - (first + last)];
 			int[] newBody = new int[tasks.length - (first + last)];
 			int newInd = 0;
+			
 			for (int i = 0; i < body.length; i++) {
 				body[i] = taskIndex[i + first];
 				childBody[i] = tasks[i + first];
 			}
+			
 			for (int i = 0; i < parent.taskIndex.length; i++) {
 				if (contains(body, parent.taskIndex[i])) {
 					newBody[newInd] = parent.taskIndex[i];
@@ -417,10 +434,12 @@ public class Chromosome {
 					newInd++;
 				}
 			}
+			
 			for (int i = first; i < child.length - last; i++) {
 				child[i] = newChildBody[i - first];
 				childIndex[i] = newBody[i - first];
 			}
+			
 			newChild.tasks = child;
 			newChild.taskIndex = childIndex;
 			newChild.cycleTime = this.cycleTime;

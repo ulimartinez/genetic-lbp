@@ -11,9 +11,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import java.awt.GridLayout;
 import java.awt.Rectangle;
-import java.awt.Robot;
-import java.awt.Toolkit;
-import java.awt.AWTException;
 import java.awt.BorderLayout;
 
 import javax.swing.JMenuBar;
@@ -42,18 +39,17 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import javax.swing.ListSelectionModel;
 import javax.swing.JMenu;
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.math.MathException;
-import org.apache.commons.math.distribution.NormalDistributionImpl;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -95,19 +91,9 @@ public class Main {
 	private JTable table;
 
 	/**
-	 * A double array that stores each task's mean completion time
+	 * An ArrayList that stores the problem's tasks's data
 	 */
-	double[] times;
-
-	/**
-	 * An int array that stores each task's immediate predecessors
-	 */
-	int[][] precedences;
-
-	/**
-	 * A double array that sores each task's time's standars deviation
-	 */
-	double[] stdDev;
+	ArrayList<Task> taskArray;
 
 	/**
 	 * A File used to load/save data to/from the program
@@ -173,75 +159,85 @@ public class Main {
 	}
 
 	/**
-	 * A method that solves the given Line Balaning Problem and displays it into a
+	 * A method that solves the given Line Balancing Problem and displays it into a
 	 * table
 	 */
 	void generateSolution() {
-		int numberOfChromosomes = params.getNumChromosomes();
+		
 		int generations = params.getIterations();
+		configureTables(1);
+
 		for (int l = 0; l < generations; l++) {
-			// For Cycle to run all generations L
-			configureTables(1);
-
-			// If no file has been opened
-			if (file == null) {
-				// array to store time of each Task
-				times = new double[tasks];
-				// array to store precedence of each Task
-				precedences = new int[tasks][];
-				// array to store variance of each Task
-				stdDev = new double[tasks];
-				// for Cycle for each Task
-				for (int i = 0; i < tasks; i++) {
-					// fill array with time of each Task
-					times[i] = Double.parseDouble((String) table.getValueAt(i, 1));
-
-					stdDev[i] = Double.parseDouble((String) (table.getValueAt(i, 2)));
-					// if Task has precedence
-					if (table.getValueAt(i, 3) != null && table.getValueAt(i, 3) != "") {
-						// then create string array with precedence
-						String[] a = ((String) table.getValueAt(i, 3)).split(",");
-						// create integer array to storage each precedence
-						int[] vals = new int[a.length];
-
-						// For cycle to storage
-						for (int k = 0; k < a.length; k++) {
-							// storage in vals each precedence
-							vals[k] = Integer.parseInt(a[k]);
-						}
-						// fill precedence array with vals for each Task
-						precedences[i] = vals;
-					} else {
-						// if it was not filled by user assign 0 to precedence
-						int[] vals = { 0 };
-						precedences[i] = vals;
-					}
-				}
-			}
+			System.out.println(l);
 
 			// if generation L is the first then initialize chromosomes
 			if (l == 0) {
 				STime = System.nanoTime();
 				generationCounter = 1;
-				for (int j = 0; j < numberOfChromosomes; j++) {
+				for (int j = 0; j < params.getNumChromosomes(); j++) {
 					chromos[j] = getNewChromosome();
 				}
 			}
 
 			// if generation L is NOT the first
 			if (l != 0) {
-				try {
-					chromos = setNextGeneration();
+				chromos = setNextGeneration();
+			}
+		}
 
-				} catch (Exception e) {
-					e.printStackTrace();
+		// Fill Table with chromosome data
+		for (int j = 0; j < params.getNumChromosomes(); j++) {
+			fillTableRow(j);
+		}
+	}
+	
+	/**
+	 * A method to dump {@link #table}'s data into {@link #taskArray}
+	 */
+	void tableToArray () {
+		taskArray = new ArrayList<Task>();
+
+		// for Cycle for each Task
+		for (int i = 0; i < tasks; i++) {
+			
+			Task temp = new Task(i);
+			
+			if( table.getValueAt(i, 1) instanceof Double) {
+				temp.setTime( (Double) table.getValueAt(i, 1));
+			} else {
+				if ( table.getValueAt(i, 1) instanceof String) {
+					temp.setTime( Double.parseDouble((String) table.getValueAt(i, 1)) );
 				}
 			}
 
-			// Fill Table with chromosome data
-			for (int j = 0; j < numberOfChromosomes; j++) {
-				fillTableRow(j);
+			if( table.getValueAt(i, 2) instanceof Double) {
+				temp.setStdDev( (Double) table.getValueAt(i, 2));
+			} else {
+				if ( table.getValueAt(i, 2) instanceof String) {
+					temp.setStdDev( Double.parseDouble((String) table.getValueAt(i, 2)) );
+				}
 			}
+			
+			if (table.getValueAt(i, 3) != null && table.getValueAt(i, 3) != "") {
+				// then create string array with precedence
+				String[] a = ((String) table.getValueAt(i, 3)).split(",");
+				// create integer array to storage each precedence
+				int[] vals = new int[a.length];
+
+				// For cycle to storage
+				for (int k = 0; k < a.length; k++) {
+					// storage in vals each precedence
+					vals[k] = Integer.parseInt(a[k]);
+					temp.setPrecedences(vals);
+				}
+			} else {
+				// if it was not filled by user assign 0 to precedence
+				int[] vals = { 0 };
+				temp.setPrecedences(vals);
+			}
+			
+			taskArray.add(temp);
+			
 		}
 	}
 
@@ -253,27 +249,21 @@ public class Main {
 	 * @see Chromosome
 	 */
 	public Chromosome getNewChromosome() {
-		double probabilityP = params.getProbability();
-		double cycle = params.getCycleTime();
 
-		Task[] taskArray = new Task[tasks];
+		Task[] tempArray = new Task[tasks];
 
 		for (int i = 0; i < tasks; i++) {// for each Task
-			taskArray[i] = new Task((i + 1), precedences[i], times[i], stdDev[i]); // Task equals new variable that
-																					// contained precedence and time
+			tempArray[i] = taskArray.get(i);
 		}
 
-		Chromosome chromo = new Chromosome(taskArray);
+		Chromosome chromo = new Chromosome(tempArray);
 		int[] initialPop = chromo.initialPopulation(STime);
-		// sets chromosomes of initial solution
 		chromo.setChromosomes(initialPop);
-
-		// set chromosomes cycle time
-		chromo.cycleTime = cycle;
-		// sets chromosomes creation generation
-		chromo.generation = generationCounter;
+		chromo.setCycleTime(params.getCycleTime());
+		chromo.setGeneration(generationCounter);
+		
 		try {
-			chromo.solution(probabilityP);
+			chromo.solution(params.getProbability());
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
@@ -332,13 +322,12 @@ public class Main {
 	 * @deprecated - The program uses a fixed number of generations
 	 */
 	void nextGeneration() {
-		int numberOfChromosomes = params.getNumChromosomes();
 		try {
 			chromos = setNextGeneration();
 		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
-		for (int j = 0; j < numberOfChromosomes; j++) {
+		for (int j = 0; j < params.getNumChromosomes(); j++) {
 			fillTableRow(j);
 		}
 	}
@@ -350,19 +339,24 @@ public class Main {
 	 * @return - The minimum number of workstations
 	 */
 	int getMinNumOfWS() {
-		int sumTasks = 0;
+		double sumTasks = 0;
 		double cycle = params.getCycleTime();
 
-		for (int i = 0; i < chromos[0].tasks.length; i++) {
-			sumTasks += chromos[0].tasks[i].getMaxTime(params.getProbability());
+		for (int i = 0; i < tasks; i++) {
+			sumTasks +=taskArray.get(i).getTime();
 		}
 
 		int minWS = 0;
+		System.out.println(sumTasks);
 
-		if (sumTasks % cycle == 0) {
-			minWS = (int) (sumTasks / cycle);
+		if(sumTasks <= cycle) {
+			minWS = 1;
 		} else {
-			minWS = ((int) (sumTasks / cycle)) + 1;
+			if (sumTasks % cycle == 0) {
+				minWS = (int) (sumTasks / cycle);
+			} else {
+				minWS = ((int) (sumTasks / cycle)) + 1;
+			}
 		}
 		return minWS;
 	}
@@ -424,15 +418,11 @@ public class Main {
 	 */
 	private Chromosome[] setNextGeneration() {
 		generationCounter++;
-		double mutationPercent = params.getMutationsPercent();
-		double preservedPercent = params.getPreservedPercent();
-		double probabilityP = params.getProbability();
-		double cycle = params.getCycleTime();
 
 		Chromosome[] newGeneration = new Chromosome[chromos.length];
-		int mutatedAmount = (int) (mutationPercent * chromos.length);
+		int mutatedAmount = (int) (params.getMutationsPercent() * chromos.length);
 		int childAmount = amountOfChildren();
-		int preservedAmount = (int) (preservedPercent * chromos.length);
+		int preservedAmount = (int) (params.getPreservedPercent() * chromos.length);
 		int remaining = chromos.length - (mutatedAmount + childAmount + preservedAmount);
 		Chromosome[] preserve = bestChromosomes(preservedAmount);
 		for (int i = 0; i < preserve.length; i++) {
@@ -442,16 +432,19 @@ public class Main {
 			newGeneration[i] = preserve[i];
 		}
 		Chromosome[] mutated = bestChromosomes(mutatedAmount);
-		for (int i = 0; i < mutated.length; i++) {
-			newGeneration[i + preserve.length] = mutated[i].mutate(STime, probabilityP, generationCounter);
+		for (int i = 0; i < mutated.length; i++) {				
+			newGeneration[i + preserve.length] = mutated[i].mutate(STime, params.getProbability(), generationCounter);
 		}
 		Chromosome[] reproduction = bestChromosomes(childAmount);
 		int ind = preserve.length + mutated.length;
 		for (int i = 0; i < reproduction.length; i += 2) {
-			newGeneration[ind] = reproduction[i].crossOver(reproduction[i + 1], probabilityP, STime, generationCounter);
+			
+			newGeneration[ind] = reproduction[i].crossOver(reproduction[i + 1], params.getProbability(), STime, generationCounter);
 			ind++;
-			newGeneration[ind] = reproduction[i + 1].crossOver(reproduction[i], probabilityP, STime, generationCounter);
+
+			newGeneration[ind] = reproduction[i + 1].crossOver(reproduction[i], params.getProbability(), STime, generationCounter);
 			ind++;
+			
 		}
 		for (int i = 0; i < remaining; i++) {
 			newGeneration[i + (chromos.length - remaining)] = getNewChromosome();
@@ -479,9 +472,16 @@ public class Main {
 	 */
 	public void load() {
 		if (file != null) {
+			
+			taskArray = new ArrayList<Task>();
+			
 			try {
 				if (FilenameUtils.getExtension(file.getName()).equals("lbp")) {
+
 					double[] toTime = null;
+					double[] toStdev = null;
+					int[][] toPrecedences = null;
+					
 					String sCurrentLine;
 					BufferedReader br = new BufferedReader(new FileReader(file));
 					sCurrentLine = br.readLine();
@@ -493,9 +493,6 @@ public class Main {
 						toTime[i] = Double.parseDouble(textTime[i]);
 					}
 
-					times = toTime;
-
-					double[] toStdev = null;
 					sCurrentLine = br.readLine();
 					sCurrentLine = sCurrentLine.substring(1, sCurrentLine.length() - 1);
 					sCurrentLine = sCurrentLine.replaceAll("\\s+", "");
@@ -504,10 +501,8 @@ public class Main {
 					for (int i = 0; i < textTime.length; i++) {
 						toStdev[i] = Double.parseDouble(textTime[i]);
 					}
-					stdDev = toStdev;
 
-					tasks = toTime.length;
-					int[][] toPrecedences = new int[toTime.length][];
+					toPrecedences = new int[toTime.length][];
 					toPrecedences[0] = null;
 					int ind = 0;
 					while ((sCurrentLine = br.readLine()) != null) {
@@ -525,7 +520,16 @@ public class Main {
 						toPrecedences[ind] = curr;
 						ind++;
 					}
-					precedences = toPrecedences;
+					
+					br.close();
+					
+					tasks = toTime.length;
+					
+					for(int i = 0; i< tasks; i++) {
+						Task temp = new Task(i, toPrecedences[i], toTime[i], toStdev[i]);
+						taskArray.add(temp);
+					}
+					
 				} else if (FilenameUtils.getExtension(file.getName()).equals("graphml")) {
 					// parse the graphml xml
 					DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
@@ -587,22 +591,16 @@ public class Main {
 						}
 					}
 					// save all times, std and precedences
-					times = new double[tasksMap.size()];
-					stdDev = new double[tasksMap.size()];
-					precedences = new int[tasksMap.size()][];
-					for (int i = 0; i < times.length; i++) {
+					for (int i = 0; i < nodeList.getLength(); i++) {
 						Task curr = null;
-						// TODO: save a map of task numbers to id's to make this step faster
 						for (Task j : tasksMap.values()) {
 							if (j.getTaskNum() == i + 1) {
 								curr = j;
+								taskArray.add(curr);
 								break;
 							}
 						}
 						assert curr != null;
-						times[i] = curr.getTime();
-						precedences[i] = curr.getPrecedences();
-						stdDev[i] = curr.getStdDev();
 					}
 				}
 
@@ -618,12 +616,12 @@ public class Main {
 
 			DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 			dtm.removeRow(0);
-			for (int i = 0; i < times.length; i++) {
+			for (int i = 0; i < tasks; i++) {
 				dtm.addRow((Object[]) null);
 				dtm.setValueAt((i + 1), (i), 0);
-				dtm.setValueAt(times[i], (i), 1);
-				dtm.setValueAt(stdDev[i], (i), 2);
-				String set = Arrays.toString(precedences[i]);
+				dtm.setValueAt(taskArray.get(i).getTime(), (i), 1);
+				dtm.setValueAt(taskArray.get(i).getStdDev(), (i), 2);
+				String set = Arrays.toString(taskArray.get(i).getPrecedences());
 				set = set.substring(1, set.length() - 1);
 				set = set.replaceAll("\\s+", "");
 				dtm.setValueAt(set, (i), 3);
@@ -822,18 +820,14 @@ public class Main {
 			public void actionPerformed(ActionEvent ae) {
 				table_1.setVisible(false);
 				double high = 0;
-				NormalDistributionImpl d;
 				double res;
+				
+				tableToArray();
 				for (int i = 0; i < tasks; i++) {
-					d = new NormalDistributionImpl(times[i], Math.sqrt(stdDev[i]));
-					try {
-						res = d.inverseCumulativeProbability(params.getProbability());
+					res = taskArray.get(i).getMaxTime(params.getProbability());
 						if (res > high) {
 							high = res;
 						}
-					} catch (MathException e) {
-						e.printStackTrace();
-					}
 				}
 				params.setCycleTime(askCycle.showDialog(high));
 				setParams(tasks);
@@ -865,7 +859,6 @@ public class Main {
 		askTasks.addComponentListener(new ComponentAdapter() {
 			@Override
 			public void componentHidden(ComponentEvent e) {
-				System.out.println("working");
 				DefaultTableModel dtm = (DefaultTableModel) table.getModel();
 				dtm.removeRow(0);
 				for (int i = 0; i < tasks; i++) {
@@ -873,7 +866,6 @@ public class Main {
 					dtm.setValueAt((i + 1), (i), 0);
 				}
 				table.setVisible(true);
-				// table.repaint();
 			}
 		});
 
@@ -891,7 +883,7 @@ public class Main {
 					File file = save.getSelectedFile();
 					String filepath = file.toString();
 					String[] sep = filepath.split(".lbp");
-					if (sep.length != 1) {
+					if (sep.length != 1 || filepath == sep[0]) {
 						filepath += ".lbp";
 					}
 					try {
@@ -900,30 +892,23 @@ public class Main {
 						e.printStackTrace();
 					}
 				}
-				times = new double[tasks];
-				precedences = new int[tasks][];
-				stdDev = new double[tasks];
-				for (int i = 0; i < tasks; i++) {
-					times[i] = Integer.parseInt("" + (table.getValueAt(i, 1)));
-					stdDev[i] = Double.parseDouble("" + (table.getValueAt(i, 2)));
-					if (i >= 0) {
-						String precStr = (String) table.getValueAt(i, 3);
-						if (precStr != null && precStr.length() > 0) {
-							String[] a = precStr.split(",");
-							int[] vals = new int[a.length];
-							for (int k = 0; k < a.length; k++) {
-								vals[k] = Integer.parseInt(a[k]);
-							}
-							precedences[i] = vals;
-						} else {
-							precedences[i] = new int[0];
-						}
-					}
+				
+				tableToArray();
+
+				double times[] = new double[tasks];
+				double stdDev[] = new double[tasks];
+				
+				for(int i = 0; i < tasks; i++) {
+					Task temp = taskArray.get(i);
+					times[i] = temp.getTime();
+					stdDev[i] = temp.getStdDev();
 				}
+				
 				write.println(Arrays.toString(times));
 				write.println(Arrays.toString(stdDev));
-				for (int i = 0; i < times.length; i++) {
-					write.println(Arrays.toString(precedences[i]));
+				
+				for (int i = 0; i < tasks; i++) {
+					write.println(Arrays.toString( taskArray.get(i).getPrecedences() ));
 				}
 				write.close();
 			}
@@ -931,8 +916,6 @@ public class Main {
 
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
-				mntmSolution.setEnabled(true);
-				configureTables(0);
 				JFileChooser fc = new JFileChooser();
 				FileFilter filter = new FileNameExtensionFilter("Line Balancing Problem file",
 						new String[] { "lbp", "graphml" });
@@ -941,7 +924,9 @@ public class Main {
 				int result = fc.showOpenDialog(frame);
 				if (result == JFileChooser.APPROVE_OPTION) {
 					file = fc.getSelectedFile();
+					configureTables(0);
 					load();
+					mntmSolution.setEnabled(true);
 				}
 			}
 		});
@@ -980,7 +965,7 @@ public class Main {
 
 		PrintWriter write = null;
 		try {
-			write = new PrintWriter(filepath + "\\s\\" + filename + ".txt");
+			write = new PrintWriter(filepath + filename + ".txt");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
